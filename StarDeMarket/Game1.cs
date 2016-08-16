@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace StarDeMarket
 {
@@ -11,11 +12,13 @@ namespace StarDeMarket
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Lager system;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            system = new Lager();
         }
 
         /// <summary>
@@ -27,6 +30,20 @@ namespace StarDeMarket
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+
+            system.Add(EItem.Getreide);
+            system.Add(EItem.Kohle, 4);
+            system.Add(EItem.Holz, 2);
+
+            Console.WriteLine(system.ToString());
+            Console.WriteLine(system.ToString());
+
+            Tile tile = new Tile(ETile.Wasser);
+
+            if (tile.lager.Check(EItem.Holz, 1))
+                Console.WriteLine("Holz ist vorhanden!");
+
 
             base.Initialize();
         }
