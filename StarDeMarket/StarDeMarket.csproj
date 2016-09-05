@@ -43,12 +43,16 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="Gebäude.cs" />
+    <Compile Include="Human.cs" />
     <Compile Include="IGameStates.cs" />
     <Compile Include="Lager.cs" />
     <Compile Include="MainMenu.cs" />
+    <Compile Include="NonWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="Woodcutter.cs" />
+    <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
