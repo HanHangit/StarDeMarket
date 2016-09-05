@@ -12,7 +12,7 @@ namespace StarDeMarket
         {
             None = -1,
             Mainmenu,
-            Map
+            PlayState
         }
 
         interface IGameState

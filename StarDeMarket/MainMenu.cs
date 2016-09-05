@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace StarDeMarket
 {
@@ -42,7 +43,15 @@ namespace StarDeMarket
 
         public EGameState Update(GameTime gTime)
         {
+
+            KeyboardState state = Keyboard.GetState();
+
+            if (state.IsKeyDown(Keys.Enter) && !BuildingHandler.Instance.prevState.IsKeyDown(Keys.Enter))
+                return EGameState.PlayState;
+
             return EGameState.Mainmenu;
+
+
         }
     }
 }
