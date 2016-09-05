@@ -21,6 +21,9 @@ namespace StarDeMarket
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
+
+            Graphics.graph = graphics;
+
         }
 
         /// <summary>
@@ -33,6 +36,8 @@ namespace StarDeMarket
         {
             // TODO: Add your initialization logic here
 
+
+            BuildingHandler.Instance.camera = new Camera(graphics.GraphicsDevice.Viewport, Content);
 
             base.Initialize();
         }
@@ -89,11 +94,12 @@ namespace StarDeMarket
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix:  BuildingHandler.Instance.camera.GetViewMatrix());
 
 
             state.Draw(spriteBatch);
 
+            BuildingHandler.Instance.camera.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

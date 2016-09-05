@@ -42,8 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildingHandler.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Gebäude.cs" />
+    <Compile Include="Graphics.cs" />
     <Compile Include="IGameStates.cs" />
     <Compile Include="Lager.cs" />
     <Compile Include="MainMenu.cs" />

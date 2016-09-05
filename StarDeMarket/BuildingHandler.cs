@@ -10,6 +10,7 @@ namespace StarDeMarket
     class BuildingHandler
     {
 
+        public Camera camera;
         public Tilemap map;
         static BuildingHandler instance;
         public KeyboardState prevState;

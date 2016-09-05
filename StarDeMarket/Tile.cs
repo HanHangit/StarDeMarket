@@ -22,7 +22,9 @@ namespace StarDeMarket
 
         public SSystem lager;
 
-        Texture2D text;
+        public Color[] color { get; private set; }
+
+        public Rectangle bounds { get; private set; }
 
         ContentManager cont;
 
@@ -33,20 +35,22 @@ namespace StarDeMarket
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             lager = new SSystem();
             pos = position;
+            color = new Color[32 * 32];
+            bounds = new Rectangle((int)position.X, (int)position.Y, 32, 32);
 
             switch (type)
             {
                 case ETile.Water:
                     lager.Add(EItem.Holz, 1000);
-                    text = cont.Load<Texture2D>("Tile/Water01");
+                    cont.Load<Texture2D>("Tile/Water01").GetData(color);
                     break;
                 case ETile.Rock:
                     lager.Add(EItem.Holz, 1000);
-                    text = cont.Load<Texture2D>("Tile/Rock01");
+                    cont.Load<Texture2D>("Tile/Rock01").GetData(color);
                     break;
                 case ETile.Grass:
                     lager.Add(EItem.Holz, 1000);
-                    text = cont.Load<Texture2D>("Tile/Grass01");
+                    cont.Load<Texture2D>("Tile/Grass01").GetData(color);
                     break;
                 default:
                     break;
@@ -56,11 +60,6 @@ namespace StarDeMarket
         public void Update(GameTime gTime)
         {
 
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(text, pos, Color.White);
         }
 
 
