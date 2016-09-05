@@ -13,3 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Font/Title.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Font/Title.spritefont
+

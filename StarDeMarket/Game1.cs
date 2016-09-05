@@ -12,13 +12,13 @@ namespace StarDeMarket
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Lager system;
+        IGameState state;
+        EGameState prev = EGameState.None, curr = EGameState.Mainmenu;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            system = new Lager();
         }
 
         /// <summary>
@@ -30,19 +30,6 @@ namespace StarDeMarket
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-
-            system.Add(EItem.Getreide);
-            system.Add(EItem.Kohle, 4);
-            system.Add(EItem.Holz, 2);
-
-            Console.WriteLine(system.ToString());
-            Console.WriteLine(system.ToString());
-
-            Tile tile = new Tile(ETile.Wasser);
-
-            if (tile.lager.Check(EItem.Holz, 1))
-                Console.WriteLine("Holz ist vorhanden!");
 
 
             base.Initialize();
@@ -79,6 +66,11 @@ namespace StarDeMarket
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            HandleGameStates();
+
+            curr = state.Update(gameTime);
+
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -93,8 +85,42 @@ namespace StarDeMarket
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
 
+
+            state.Draw(spriteBatch);
+
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        void HandleGameStates()
+        {
+            if(prev != curr)
+            {
+
+                if (state != null)
+                    state.UnloadContent();
+
+                switch(curr)
+                {
+                    case EGameState.Mainmenu:
+                        state = new MainMenu(Content);
+                        state.Initialize();
+                        state.LoadContent();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            prev = curr;
+
+        }
+
     }
+
+    
+
 }
