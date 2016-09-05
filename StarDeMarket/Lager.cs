@@ -15,7 +15,7 @@ namespace StarDeMarket
         Count
     }
 
-    class Lager
+    class SSystem
     {
 
         int[] system = new int[(int)EItem.Count];
@@ -25,6 +25,8 @@ namespace StarDeMarket
             system[(int)item] -= value;
         }
          
+
+
         public bool Check(EItem item, int value)
         {
             if (system[(int)item] >= value)
@@ -33,17 +35,23 @@ namespace StarDeMarket
                 return false;
         }
 
+
+
         public void Add(EItem item)
         {
             system[(int)item] += 1;
         }
+
+
 
         public void Add(EItem item, int count)
         {
             system[(int)item] += count;
         }
 
-        public string ToString()
+
+
+        public override string ToString()
         {
             string str = "";
 

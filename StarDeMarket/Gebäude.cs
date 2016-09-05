@@ -8,7 +8,7 @@ namespace StarDeMarket
 {
     class Gebäude
     {
-        Lager lager;
+        SSystem lager;
 
         EItem[] input = { EItem.Getreide, EItem.Holz, EItem.Kohle };
         int[] inputCount = { 1, 2, 4 };
@@ -19,7 +19,7 @@ namespace StarDeMarket
 
         public Gebäude()
         {
-            lager = new Lager();
+            lager = new SSystem();
         }
 
         public bool checkItem()

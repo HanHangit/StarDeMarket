@@ -18,6 +18,8 @@ namespace StarDeMarket
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
         }
 
@@ -73,6 +75,8 @@ namespace StarDeMarket
 
             // TODO: Add your update logic here
 
+            BuildingHandler.Instance.prevState = Keyboard.GetState();
+
             base.Update(gameTime);
         }
 
@@ -107,6 +111,11 @@ namespace StarDeMarket
                 {
                     case EGameState.Mainmenu:
                         state = new MainMenu(Content);
+                        state.Initialize();
+                        state.LoadContent();
+                        break;
+                    case EGameState.PlayState:
+                        state = new PlayState(Content);
                         state.Initialize();
                         state.LoadContent();
                         break;
