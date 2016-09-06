@@ -14,11 +14,16 @@ namespace StarDeMarket
     {
 
         public Rectangle bounds { get; private set; }
+
         public int tilesize = 32;
+
         Tile[,] tileMap;
-        public Texture2D textMap { get; private set; }
+
         Color[] miniMap;
+
+        public Texture2D textMap { get; private set; }
         Texture2D textMiniMap;
+        Texture2D miniMapBackground;
 
         int miniMapScale = 20;
         Point miniMapSize;
@@ -31,6 +36,7 @@ namespace StarDeMarket
 
             bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
 
+            miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
 
             BuildMap(map);
             BuildMiniMap();
@@ -49,7 +55,7 @@ namespace StarDeMarket
             for (int i = 0; i < miniMapSize.X; ++i)
                 for (int j = 0; j < miniMapSize.Y; ++j)
                 {
-                    miniMap[i + j * miniMapSize.X] = tileMap[i * miniMapScale / tilesize , j * miniMapScale / tilesize ].color[16 * 16];
+                    miniMap[i + j * miniMapSize.X] = tileMap[i * miniMapScale / tilesize, j * miniMapScale / tilesize].color[16 * 16];
                 }
 
             textMiniMap.SetData(miniMap);
@@ -59,13 +65,16 @@ namespace StarDeMarket
         public void BuildMiniMap(Rectangle rect, Color[] color)
         {
 
-            for (int i = rect.X / tilesize; i < rect.Width / tilesize; ++i)
-                for (int j = rect.Y / tilesize; j < rect.Height / tilesize; ++j)
-                {
-                    miniMap[i + j * miniMapSize.X] = tileMap[i * miniMapScale / tilesize, j * miniMapScale / tilesize].color[16 * 16];
-                }
+            rect = new Rectangle(rect.X / miniMapScale, rect.Y / miniMapScale, rect.Width / miniMapScale + 1, rect.Height / miniMapScale + 1);
 
-            textMiniMap.SetData(miniMap);
+            Color[] miniColor = new Color[color.Length / miniMapScale];
+
+            for (int i = 0; i < miniColor.Length; ++i)
+            {
+                miniColor[i] = color[i * (color.Length / miniColor.Length)];
+            }
+
+            textMiniMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
 
         }
 
@@ -101,26 +110,44 @@ namespace StarDeMarket
         public void BuildMap(Rectangle rect, Color[] color)
         {
             textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
+            BuildMiniMap(rect, color);
         }
 
         public void Update(GameTime gTime)
         {
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Space))
-            
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.Space))
+            {
+                tileMap[10, 10] = new Tile(ETile.Water, new Vector2(10 * tilesize, 10 * tilesize), Content);
+                BuildMap(tileMap[10, 10].bounds, tileMap[10, 10].color);
+                tileMap[11, 11] = new Tile(ETile.Water, new Vector2(11 * tilesize, 11 * tilesize), Content);
+                BuildMap(tileMap[11, 11].bounds, tileMap[11, 11].color);
+                tileMap[12, 12] = new Tile(ETile.Water, new Vector2(12 * tilesize, 12 * tilesize), Content);
+                BuildMap(tileMap[12, 12].bounds, tileMap[12, 12].color);
+                tileMap[13, 13] = new Tile(ETile.Water, new Vector2(13 * tilesize, 13 * tilesize), Content);
+                BuildMap(tileMap[13, 13].bounds, tileMap[13, 13].color);
+            }
+
             for (int i = 0; i < tileMap.GetLength(0); ++i)
                 for (int j = 0; j < tileMap.GetLength(1); ++j)
                     tileMap[i, j].Update(gTime);
-                   
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+            int offset = 15;
+
+            Rectangle miniMapRect = new Rectangle(new Point(CameraHandler.Instance.camera.view.X + 1050, CameraHandler.Instance.camera.view.Y + 30), miniMapSize);
+
+            Rectangle miniMapOffset = new Rectangle(miniMapRect.Location - new Point(offset, offset), miniMapRect.Size + new Point(2 * offset, 2 * offset));
+
 
             spriteBatch.Draw(textMap, CameraHandler.Instance.camera.view, CameraHandler.Instance.camera.view, Color.White);
 
-            spriteBatch.Draw(textMiniMap, new Rectangle(new Point(CameraHandler.Instance.camera.view.X + 950, CameraHandler.Instance.camera.view.Y + 50), miniMapSize), Color.White);
+            spriteBatch.Draw(miniMapBackground, miniMapOffset, Color.White);
+
+            spriteBatch.Draw(textMiniMap, miniMapRect, Color.White);
 
         }
 

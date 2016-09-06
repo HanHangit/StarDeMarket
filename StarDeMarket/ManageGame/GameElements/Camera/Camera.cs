@@ -51,11 +51,11 @@ namespace StarDeMarket
 
             if (Keyboard.GetState().IsKeyDown(Keys.W) && position.Y > 0)
                 position.Y -= 5;
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && position.Y < BuildingHandler.Instance.map.bounds.Height)
+            if (Keyboard.GetState().IsKeyDown(Keys.S) && position.Y + viewport.Height < BuildingHandler.Instance.map.bounds.Height)
                 position.Y += 5;
             if (Keyboard.GetState().IsKeyDown(Keys.A) && position.X > 0)
                 position.X -= 5;
-            if (Keyboard.GetState().IsKeyDown(Keys.D) && position.X < BuildingHandler.Instance.map.bounds.Width)
+            if (Keyboard.GetState().IsKeyDown(Keys.D) && position.X + viewport.Width < BuildingHandler.Instance.map.bounds.Width)
                 position.X += 5;
 
             view = new Rectangle(new Point((int)position.X, (int)position.Y), new Point(viewport.Width, viewport.Height));
