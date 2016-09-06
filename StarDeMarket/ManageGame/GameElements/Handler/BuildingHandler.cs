@@ -12,10 +12,11 @@ namespace StarDeMarket
 
         public Tilemap map;
         static BuildingHandler instance;
+        public List<BuildingWithInput> InpBuilding;
 
         BuildingHandler()
         {
-            
+            InpBuilding = new List<BuildingWithInput>();
         }
 
         public static BuildingHandler Instance

@@ -14,8 +14,6 @@ namespace StarDeMarket
 
         ContentManager Content;
 
-        GUI gui;
-
         public PlayState(ContentManager cont)
         {
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -26,7 +24,7 @@ namespace StarDeMarket
         {
             BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/Basic Map"), Content);
 
-            gui = new GUI(Content);
+            GUIHandler.Instance.gui = new GUI(Content);
         }
 
         public void LoadContent()
@@ -43,12 +41,12 @@ namespace StarDeMarket
         {
             BuildingHandler.Instance.map.Draw(spriteBatch);
 
-            gui.Draw(spriteBatch);
+            GUIHandler.Instance.gui.Draw(spriteBatch);
         }
 
         public EGameState Update(GameTime gTime)
         {
-            gui.Update(gTime);
+            GUIHandler.Instance.gui.Update(gTime);
 
             BuildingHandler.Instance.map.Update(gTime);
             return EGameState.PlayState;

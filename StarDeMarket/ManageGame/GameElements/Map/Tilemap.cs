@@ -147,7 +147,13 @@ namespace StarDeMarket
 
         public Tile GetTile(Point position)
         {
-            return tileMap[position.X / tilesize, position.Y / tilesize];
+            try {
+                return tileMap[position.X / tilesize, position.Y / tilesize];
+            }
+            catch(IndexOutOfRangeException)
+            {
+                return tileMap[0, 0];
+            }
         }
 
         public void Update(GameTime gTime)

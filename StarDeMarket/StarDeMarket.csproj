@@ -45,6 +45,7 @@
     <Compile Include="ManageGame\GameElements\Buildings\BuildingWithInput.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\WoodCutter.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\Mill.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\GUIHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\InputHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\BuildingHandler.cs" />
     <Compile Include="ManageGame\Game1.cs" />
