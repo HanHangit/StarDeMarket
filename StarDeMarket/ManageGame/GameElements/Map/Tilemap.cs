@@ -13,21 +13,31 @@ namespace StarDeMarket
     class Tilemap
     {
 
+        //Die Position und Größe der Karte
         public Rectangle bounds { get; private set; }
 
+        //Tilesize
         public int tilesize = 32;
 
+        //Die aufgeteilte TileMap
         Tile[,] tileMap;
-
-        Color[] miniMap;
-
+        
+        //Die Textur der Map, die am Ende gezeichnet wird
         public Texture2D textMap { get; private set; }
+
+        //Die Textur der MiniMap
         Texture2D textMiniMap;
+
+        //Die Textur des Hintergrunds der MiniMap
         Texture2D miniMapBackground;
 
+        //Der Scale der MiniMap
         int miniMapScale = 20;
+
+        //Die Größe der MiniMap
         Point miniMapSize;
 
+        //ContentManager
         ContentManager Content;
 
         public Tilemap(Texture2D map, ContentManager cont)
@@ -43,8 +53,11 @@ namespace StarDeMarket
 
         }
 
+        //Die komplette MiniMap wird neu gezeichnet
+        //Sie wird in textMiniMap abgespeichert
         public void BuildMiniMap()
         {
+            Color[] miniMap;
 
             miniMap = new Color[bounds.Width / miniMapScale * bounds.Height / miniMapScale];
 
@@ -62,7 +75,8 @@ namespace StarDeMarket
 
         }
 
-        public void BuildMiniMap(Rectangle rect, Color[] color)
+        //Baut einen Bereich der MiniMap neu auf.
+        void BuildMiniMap(Rectangle rect, Color[] color)
         {
 
             rect = new Rectangle(rect.X / miniMapScale, rect.Y / miniMapScale, rect.Width / miniMapScale + 1, rect.Height / miniMapScale + 1);
@@ -78,6 +92,10 @@ namespace StarDeMarket
 
         }
 
+        /// <summary>
+        /// Baut die Map auf Grundlage einer BitMap auf.
+        /// </summary>
+        /// <param name="map">Die Bitmap</param>
         public void BuildMap(Texture2D map)
         {
 
@@ -107,6 +125,11 @@ namespace StarDeMarket
 
         }
 
+        /// <summary>
+        /// Ändert die Textur der Map.
+        /// </summary>
+        /// <param name="rect"> Ein Bereich, welche seine "Farbe" geändert hat.</param>
+        /// <param name="color"> Die neue Farbe</param>
         public void BuildMap(Rectangle rect, Color[] color)
         {
             textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
