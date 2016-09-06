@@ -20,7 +20,7 @@ namespace StarDeMarket
     class Tile
     {
 
-        public SSystem lager;
+        public Storage lager;
 
         public Color[] color { get; private set; }
 
@@ -33,7 +33,7 @@ namespace StarDeMarket
         public Tile(ETile type, Vector2 position, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
-            lager = new SSystem();
+            lager = new Storage();
             pos = position;
             color = new Color[32 * 32];
             bounds = new Rectangle((int)position.X, (int)position.Y, 32, 32);

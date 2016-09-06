@@ -10,7 +10,7 @@ namespace StarDeMarket
 {
     public abstract class Worker : Human
     {
-        SSystem personalStorage;
+        Storage personalStorage;
 
         virtual public void Update(GameTime gTime)
         {
