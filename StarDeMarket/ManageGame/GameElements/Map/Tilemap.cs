@@ -179,7 +179,8 @@ namespace StarDeMarket
 
             Rectangle miniMapOffset = new Rectangle(miniMapRect.Location - new Point(offset, offset), miniMapRect.Size + new Point(2 * offset, 2 * offset));
 
-            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.camera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.camera.view.Y/miniMapScale, miniMapCurrentView.Width, miniMapCurrentView.Height);
+            //TODO: may need to be reworked in case of a new Scale
+            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.camera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.camera.view.Y/miniMapScale, (miniMapRect.Width*1280)/bounds.Width, (miniMapRect.Height*720)/bounds.Height);
 
             spriteBatch.Draw(textMap, CameraHandler.Instance.camera.view, CameraHandler.Instance.camera.view, Color.White);
 
