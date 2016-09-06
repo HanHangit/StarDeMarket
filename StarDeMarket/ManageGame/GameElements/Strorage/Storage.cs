@@ -9,13 +9,21 @@ namespace StarDeMarket
 
     enum EItem
     {
-        Getreide,
         Holz,
+        Bretter,
+        Stein,
+        Getreide,
+        Mehl,
+        Brot,
+        Fisch,
         Kohle,
+        Eisen,
+        Eisenbarren,
         Count
     }
 
-    class SSystem
+    class Storage
+
     {
 
         int[] system = new int[(int)EItem.Count];

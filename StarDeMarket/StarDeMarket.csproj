@@ -41,17 +41,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\BuildingWithInput.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\WoodCutter.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\Mill.cs" />
     <Compile Include="ManageGame\GameElements\Handler\InputHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\BuildingHandler.cs" />
     <Compile Include="ManageGame\Game1.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\Gebäude.cs" />
     <Compile Include="ManageGame\GameElements\Handler\CameraHandler.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Camera.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Graphics.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Human.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
+    <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
-    <Compile Include="ManageGame\GameElements\SSystem.cs" />
     <Compile Include="GameStates\MainMenu.cs" />
     <Compile Include="GameStates\PlayState.cs" />
     <Compile Include="Program.cs" />
