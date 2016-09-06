@@ -12,25 +12,46 @@ namespace StarDeMarket
 {
     class NonWorker : Human
     {
-        ContentManager cont;
+        Vector2 target;
 
-        public NonWorker(Vector2 _position, EGender _gender)
+        public NonWorker(Vector2 _position, EGender _gender, Texture2D _texture)
         {
-            cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             position = _position;
             gender = _gender;
             speed = 2f;
-            sprite = cont.Load<SpriteBatch>("Human/BasicHuman");
+            texture = _texture;
+            SetTarget(new Vector2(200, 200));
+        }
+
+        public void SetTarget(Vector2 _target)
+        {
+            target = _target;
+        }
+
+        void MoveToTarget()
+        {
+            if (position == target)
+            {
+                Random rand = new Random(System.DateTime.Now.Millisecond);
+                SetTarget(new Vector2(rand.Next(0, 1000), rand.Next(0, 1000)));
+            }
+            Vector2 move = target - position;
+            if (Math.Abs(move.X) > speed || Math.Abs(move.Y)>speed)
+            {
+                move.Normalize();
+                move *= speed;
+            }
+            position += move;
         }
 
         public void Update(GameTime gTime)
         {
-            throw new NotImplementedException();
+            MoveToTarget();
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, 32, 64), Color.White);
         }
     }
 }

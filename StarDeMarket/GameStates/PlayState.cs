@@ -13,6 +13,7 @@ namespace StarDeMarket
     {
 
         ContentManager Content;
+        NonWorker tom;
 
         public PlayState(ContentManager cont)
         {
@@ -23,7 +24,7 @@ namespace StarDeMarket
         public void Initialize()
         {
             BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/Basic Map"), Content);
-
+            tom = new NonWorker(new Vector2(1, 2), Human.EGender.Male, Content.Load<Texture2D>("Human/BasicHuman"));
             GUIHandler.Instance.gui = new GUI(Content);
         }
 
@@ -40,7 +41,7 @@ namespace StarDeMarket
         public void Draw(SpriteBatch spriteBatch)
         {
             BuildingHandler.Instance.map.Draw(spriteBatch);
-
+            tom.Draw(spriteBatch);
             GUIHandler.Instance.gui.Draw(spriteBatch);
         }
 
@@ -49,6 +50,7 @@ namespace StarDeMarket
             GUIHandler.Instance.gui.Update(gTime);
 
             BuildingHandler.Instance.map.Update(gTime);
+            tom.Update(gTime);
             return EGameState.PlayState;
         }
     }

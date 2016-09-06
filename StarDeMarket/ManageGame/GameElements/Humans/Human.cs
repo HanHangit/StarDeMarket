@@ -20,6 +20,6 @@ namespace StarDeMarket
         protected EGender gender;
         protected float speed;
 
-        protected SpriteBatch sprite;
+        protected Texture2D texture;
     }
 }

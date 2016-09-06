@@ -36,6 +36,8 @@ namespace StarDeMarket
         //Die Textur des Hintergrunds der MiniMap
         Texture2D miniMapBackground;
 
+        Texture2D miniMapCurrentView;
+
         //Der Scale der MiniMap
         int miniMapScale = 20;
 
@@ -52,12 +54,12 @@ namespace StarDeMarket
             bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
 
             miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
+            miniMapCurrentView = cont.Load<Texture2D>("Map/MapArea");
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
             BuildMap(map);
             BuildMiniMap();
-
         }
 
         //Die komplette MiniMap wird neu gezeichnet
@@ -177,6 +179,7 @@ namespace StarDeMarket
 
             Rectangle miniMapOffset = new Rectangle(miniMapRect.Location - new Point(offset, offset), miniMapRect.Size + new Point(2 * offset, 2 * offset));
 
+            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.camera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.camera.view.Y/miniMapScale, miniMapCurrentView.Width, miniMapCurrentView.Height);
 
             spriteBatch.Draw(textMap, CameraHandler.Instance.camera.view, CameraHandler.Instance.camera.view, Color.White);
 
@@ -184,6 +187,7 @@ namespace StarDeMarket
 
             spriteBatch.Draw(textMiniMap, miniMapRect, Color.White);
 
+            spriteBatch.Draw(miniMapCurrentView, miniMapCameraRect, new Color(Color.White, 128));
         }
 
 
