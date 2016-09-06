@@ -24,7 +24,7 @@ namespace StarDeMarket
         public void Initialize()
         {
             BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/Basic Map"), Content);
-            tom = new NonWorker(new Vector2(1, 2), Human.EGender.Male, Content.Load<Texture2D>("Human/BasicHuman"));
+            tom = new NonWorker(new Vector2(1, 2), Human.EGender.Male, Content.Load<Texture2D>("Human/Hunter"));
             GUIHandler.Instance.gui = new GUI(Content);
         }
 
