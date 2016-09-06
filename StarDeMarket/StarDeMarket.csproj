@@ -41,9 +41,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ManageGame\GameElements\BuildingHandler.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\InputHandler.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\BuildingHandler.cs" />
     <Compile Include="ManageGame\Game1.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Gebäude.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\CameraHandler.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Camera.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Graphics.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Human.cs" />

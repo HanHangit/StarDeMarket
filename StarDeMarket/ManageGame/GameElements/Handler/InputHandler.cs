@@ -7,30 +7,31 @@ using System.Threading.Tasks;
 
 namespace StarDeMarket
 {
-    class BuildingHandler
+    class InputHandler
     {
 
-        public Camera camera;
-        public Tilemap map;
-        static BuildingHandler instance;
+        static InputHandler instance;
         public KeyboardState prevState;
 
-        BuildingHandler()
+        InputHandler()
         {
-            
+
         }
 
-        public static BuildingHandler Instance
+        public static InputHandler Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new BuildingHandler();
+                    instance = new InputHandler();
 
                 return instance;
             }
         }
 
-
+        public bool IsKeyPressedOnce(Keys key)
+        {
+            return Keyboard.GetState().IsKeyDown(key) && !prevState.IsKeyDown(key);
+        }
     }
 }

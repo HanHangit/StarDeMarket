@@ -37,7 +37,7 @@ namespace StarDeMarket
             // TODO: Add your initialization logic here
 
 
-            BuildingHandler.Instance.camera = new Camera(graphics.GraphicsDevice.Viewport, Content);
+            CameraHandler.Instance.camera = new Camera(graphics.GraphicsDevice.Viewport, Content);
 
             base.Initialize();
         }
@@ -80,7 +80,7 @@ namespace StarDeMarket
 
             // TODO: Add your update logic here
 
-            BuildingHandler.Instance.prevState = Keyboard.GetState();
+            InputHandler.Instance.prevState = Keyboard.GetState();
 
             base.Update(gameTime);
         }
@@ -94,12 +94,12 @@ namespace StarDeMarket
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(transformMatrix:  BuildingHandler.Instance.camera.GetViewMatrix());
+            spriteBatch.Begin(transformMatrix:  CameraHandler.Instance.camera.GetViewMatrix());
 
 
             state.Draw(spriteBatch);
 
-            BuildingHandler.Instance.camera.Draw(spriteBatch);
+            CameraHandler.Instance.camera.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

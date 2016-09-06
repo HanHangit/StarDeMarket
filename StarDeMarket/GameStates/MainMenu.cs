@@ -46,7 +46,7 @@ namespace StarDeMarket
 
             KeyboardState state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.Enter) && !BuildingHandler.Instance.prevState.IsKeyDown(Keys.Enter))
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.Enter))
                 return EGameState.PlayState;
 
             return EGameState.Mainmenu;
