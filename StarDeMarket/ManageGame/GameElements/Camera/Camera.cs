@@ -51,6 +51,7 @@ namespace StarDeMarket
 
             if (Keyboard.GetState().IsKeyDown(Keys.W) && position.Y > 0)
                 position.Y -= 5;
+
             if (Keyboard.GetState().IsKeyDown(Keys.S) && position.Y + viewport.Height < BuildingHandler.Instance.map.bounds.Height)
                 position.Y += 5;
             if (Keyboard.GetState().IsKeyDown(Keys.A) && position.X > 0)
