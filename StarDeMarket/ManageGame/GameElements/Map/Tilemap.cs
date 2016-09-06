@@ -13,6 +13,9 @@ namespace StarDeMarket
     class Tilemap
     {
 
+        //SchriftArt
+        SpriteFont font;
+
         //Die Position und Größe der Karte
         public Rectangle bounds { get; private set; }
 
@@ -24,6 +27,8 @@ namespace StarDeMarket
         
         //Die Textur der Map, die am Ende gezeichnet wird
         public Texture2D textMap { get; private set; }
+
+        
 
         //Die Textur der MiniMap
         Texture2D textMiniMap;
@@ -47,6 +52,8 @@ namespace StarDeMarket
             bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
 
             miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
+
+            font = Content.Load<SpriteFont>("Font/FPSFont");
 
             BuildMap(map);
             BuildMiniMap();
@@ -132,8 +139,15 @@ namespace StarDeMarket
         /// <param name="color"> Die neue Farbe</param>
         public void BuildMap(Rectangle rect, Color[] color)
         {
+
             textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
             BuildMiniMap(rect, color);
+        }
+
+
+        public Tile GetTile(Point position)
+        {
+            return tileMap[position.X / tilesize, position.Y / tilesize];
         }
 
         public void Update(GameTime gTime)
@@ -141,14 +155,6 @@ namespace StarDeMarket
 
             if (InputHandler.Instance.IsKeyPressedOnce(Keys.Space))
             {
-                tileMap[10, 10] = new Tile(ETile.Water, new Vector2(10 * tilesize, 10 * tilesize), Content);
-                BuildMap(tileMap[10, 10].bounds, tileMap[10, 10].color);
-                tileMap[11, 11] = new Tile(ETile.Water, new Vector2(11 * tilesize, 11 * tilesize), Content);
-                BuildMap(tileMap[11, 11].bounds, tileMap[11, 11].color);
-                tileMap[12, 12] = new Tile(ETile.Water, new Vector2(12 * tilesize, 12 * tilesize), Content);
-                BuildMap(tileMap[12, 12].bounds, tileMap[12, 12].color);
-                tileMap[13, 13] = new Tile(ETile.Water, new Vector2(13 * tilesize, 13 * tilesize), Content);
-                BuildMap(tileMap[13, 13].bounds, tileMap[13, 13].color);
             }
 
             for (int i = 0; i < tileMap.GetLength(0); ++i)
