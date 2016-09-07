@@ -18,26 +18,28 @@ namespace StarDeMarket
             position = _position;
             texture2D = _cont.Load<Texture2D>("Building/Woodcutter01");
             avaiableWorker = new List<StarDeMarket.HNonWorker>(10);
+            listWorker = null;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), texture2D.Bounds.Size.ToVector2().ToPoint()), Color.White);
         }
 
+        // should not yet be used
         public override bool HasFullWorkforce()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override void Update(GameTime gTime)
         {
-            throw new NotImplementedException();
+
         }
 
         public override void Workerwork()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
