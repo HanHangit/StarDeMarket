@@ -17,7 +17,8 @@ namespace StarDeMarket
 
         public PlayState(ContentManager _cont)
         {
-            cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
+            cont = _cont;
+
         }
 
 

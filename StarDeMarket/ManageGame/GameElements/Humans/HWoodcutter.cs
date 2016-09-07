@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StarDeMarket
 {
-    public class HWoodcutter : Worker
+    public class HWoodcutter : HWorker
     {
         public HWoodcutter(Vector2 _position, EGender _gender)
         {

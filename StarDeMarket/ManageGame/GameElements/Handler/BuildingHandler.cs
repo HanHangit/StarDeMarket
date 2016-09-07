@@ -14,14 +14,14 @@ using Microsoft.Xna.Framework.Content;namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<OnlyOutput> InpBuilding;
-        B_WoodCutter b_WoodCutter;
+        BWoodCutter b_WoodCutter;
 
         ContentManager cont;
 
         BuildingHandler()
         {
             InpBuilding = new List<OnlyOutput>();
-            b_WoodCutter = new B_WoodCutter(new Vector2(200,200));
+
         }
 
         public static BuildingHandler Instance
@@ -35,20 +35,24 @@ using Microsoft.Xna.Framework.Content;namespace StarDeMarket
             }
         }
 
+
         public void Update(GameTime gTime)
         {
-
+            map.Update(gTime);
+            b_WoodCutter.Update();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            map.Draw(spriteBatch);
+            b_WoodCutter.Draw(spriteBatch);
 
         }
-        public void SetContentManager(ContentManager cont)
+        public void SetContentManager(ContentManager _cont)
         {
-            cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+            Console.WriteLine("SetContentManager");
+            cont = _cont;
+            b_WoodCutter = new BWoodCutter(new Vector2(200, 200), cont);
         }
-    }
-
     }
 }
