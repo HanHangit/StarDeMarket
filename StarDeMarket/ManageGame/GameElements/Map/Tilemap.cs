@@ -22,6 +22,8 @@ namespace StarDeMarket
         //Tilesize
         public int tilesize = 16;
 
+        public int splitSize = 256;
+
         //Die aufgeteilte TileMap
         Tile[,] tileMap;
 
@@ -32,6 +34,8 @@ namespace StarDeMarket
         Texture2D miniMapBackground;
 
         Texture2D miniMapCurrentView;
+
+        Texture2D[,] textSplitMap;
 
         //Die Größe der MiniMap
         Point miniMapSize;
@@ -69,15 +73,8 @@ namespace StarDeMarket
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
-            //Für Menschen mit zu wenig Grafikartenspeicher oder was auch immer zu wenig sein soll
-            try
-            {
-                BuildMapFile(strMap);
-            }
-            catch(System.IO.FileNotFoundException)
-            {
                 BuildMap(strMap);
-            }
+            
                 
 
         }
@@ -149,7 +146,13 @@ namespace StarDeMarket
 
             bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
 
-            textMap = new Texture2D(Graphics.graph.GraphicsDevice, map.Width * tilesize, map.Height * tilesize);
+            //textMap = new Texture2D(Graphics.graph.GraphicsDevice, map.Width * tilesize, map.Height * tilesize);
+
+            textSplitMap = new Texture2D[(bounds.Width / splitSize) + 1 , (bounds.Height / splitSize) + 1];
+
+            for (int i = 0; i < textSplitMap.GetLength(0); ++i)
+                for (int j = 0; j < textSplitMap.GetLength(1); ++j)
+                    textSplitMap[i, j] = new Texture2D(Graphics.graph.GraphicsDevice, splitSize, splitSize);
 
             Color[] color = new Color[map.Width * map.Height];
             map.GetData(color);
@@ -174,9 +177,17 @@ namespace StarDeMarket
                     if (j == 0)
                         Console.WriteLine("Finished " + i / (map.Width / 100) + "%");
 
-                    textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
+                    int r = i * tilesize / splitSize;
+                    int c = j * tilesize / splitSize;
+
+                    //Console.WriteLine(r + "|" + c);
+
+                    textSplitMap[r, c].SetData(0, new Rectangle(i * tilesize % splitSize, j * tilesize % splitSize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
+
+                    //textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
 
                 }
+            /*
             //!System.IO.File.Exists(@Environment.CurrentDirectory + "/" + strMap + ".txt")
             if (true)
             {
@@ -192,7 +203,7 @@ namespace StarDeMarket
 
                 System.IO.File.WriteAllLines(strMap + ".txt", lines);
             }
-
+            */
             Console.WriteLine("Finished Complete Map");
 
         }
@@ -211,7 +222,21 @@ namespace StarDeMarket
                     color[i] = tileMap[(rect.X + i % rect.Width) / tilesize, (rect.Y + i / rect.Width) / tilesize].color[i % (tilesize * tilesize)];
             }
 
-            textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
+
+            int minrow = rect.X / splitSize;
+            int maxrow = (rect.X + rect.Width) / splitSize;
+            int mincol = rect.Y / splitSize;
+            int maxcol = (rect.Y + rect.Height) / splitSize;
+
+            Color[][] newColor = new Color[1 + maxrow - minrow + maxcol - mincol][];
+
+            for (int i = minrow; i <= maxrow; ++i)
+                for (int j = mincol; j <= maxcol; ++j)
+                {
+
+                    textSplitMap[i, j].SetData(0, new Rectangle(rect.X % splitSize,rect.Y % splitSize,splitSize,splitSize), color, 0, rect.Width * rect.Height);
+
+                }
         }
 
 
@@ -249,7 +274,25 @@ namespace StarDeMarket
             Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.screenCamera.view.X / (bounds.Width / miniMapSize.X), miniMapRect.Y + CameraHandler.Instance.screenCamera.view.Y / (bounds.Height / miniMapSize.Y), (miniMapRect.Width * 1280) / bounds.Width, (miniMapRect.Height * 720) / bounds.Height);
 
             //The Current View
-            spriteBatch.Draw(textMap, CameraHandler.Instance.screenCamera.view, CameraHandler.Instance.screenCamera.view, Color.White);
+            //spriteBatch.Draw(textMap, CameraHandler.Instance.screenCamera.view, CameraHandler.Instance.screenCamera.view, Color.White);
+
+            Rectangle cam = CameraHandler.Instance.screenCamera.view;
+
+            int minrow = cam.X / splitSize;
+            int maxrow = (cam.X + cam.Width) / splitSize;
+            int mincol = cam.Y / splitSize;
+            int maxcol = (cam.Y + cam.Height) / splitSize;
+
+            MathHelper.Clamp(minrow, 0, textSplitMap.GetLength(0));
+            MathHelper.Clamp(mincol, 0, textSplitMap.GetLength(0));
+            MathHelper.Clamp(maxrow, 0, textSplitMap.GetLength(1));
+            MathHelper.Clamp(maxcol, 0, textSplitMap.GetLength(1));
+
+            for (int i = minrow; i <= maxrow; ++i)
+                for(int j = mincol; j <= maxcol; ++j)
+                {
+                    spriteBatch.Draw(textSplitMap[i, j], new Rectangle(i * splitSize, j * splitSize, splitSize, splitSize), Color.White);
+                }
 
 
             spriteBatch.Draw(miniMapBackground, miniMapOffset, Color.White);
