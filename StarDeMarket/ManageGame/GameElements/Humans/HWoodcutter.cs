@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StarDeMarket
 {
-    public class HWoodcutter : Worker
+    public class HWoodcutter : HWorker
     {
+        Vector2 target;
+
         public HWoodcutter(Vector2 _position, EGender _gender)
         {
             position = _position;
@@ -17,14 +19,35 @@ namespace StarDeMarket
             speed = 2f;
         }
 
-        public override void Update(GameTime gTime)
+        public void SetTarget(Vector2 _target)
         {
-            throw new NotImplementedException();
+            target = _target;
         }
 
-        public override void Draw()
+        void MoveToTarget()
         {
-            throw new NotImplementedException();
+            if (position == target)
+            {
+                Random rand = new Random(System.DateTime.Now.Millisecond);
+                SetTarget(new Vector2(rand.Next(0, 1000), rand.Next(0, 1000)));
+            }
+            Vector2 move = target - position;
+            if (Math.Abs(move.X) > speed || Math.Abs(move.Y) > speed)
+            {
+                move.Normalize();
+                move *= speed;
+            }
+            position += move;
+        }
+
+        public override void Update(GameTime gTime)
+        {
+            MoveToTarget();
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, 32, 64), Color.White);
         }
     }
 }

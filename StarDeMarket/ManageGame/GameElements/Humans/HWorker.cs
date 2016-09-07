@@ -17,7 +17,7 @@ namespace StarDeMarket
             throw new NotImplementedException();
         }
 
-        virtual public void Draw()
+        virtual public void Draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }
