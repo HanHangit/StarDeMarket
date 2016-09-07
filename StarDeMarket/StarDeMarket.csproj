@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="1ToDoListe\ChrisToDoListe.txt" />
+    <Content Include="1ToDoListe\JohannesToDoListe.txt" />
+    <Content Include="1ToDoListe\MatthisToDoListe.txt" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

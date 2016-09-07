@@ -14,7 +14,7 @@ namespace StarDeMarket
     {
         
         Storage storage;
-        EItem[] output = { EItem.Fisch };
+        EItem[] output = { EItem.Stein };
         int[] outputCount = { 2 };
         //ToDo: StoneMason
         HWoodcutter tom;
