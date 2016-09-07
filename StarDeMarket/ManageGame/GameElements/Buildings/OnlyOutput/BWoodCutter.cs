@@ -9,26 +9,29 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    class B_WoodCutter : OnlyOutput
+    class BWoodCutter : OnlyOutput
     {
         Storage storage;
         EItem[] output = { EItem.Holz };
         int[] outputCount = { 2 };
 
 
-        public B_WoodCutter(Vector2 _pos)
+        public BWoodCutter(Vector2 _pos, ContentManager cont)
         {
+
+            Console.WriteLine("Bin hier drin i LOVE SFML!");
+            texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
         }
 
         public override void Update()
         {
-            throw new NotImplementedException();
+
         }
 
         public override void Workerwork()
