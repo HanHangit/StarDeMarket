@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
@@ -13,6 +15,8 @@ namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<BuildingWithInput> InpBuilding;
+
+        ContentManager cont;
 
         BuildingHandler()
         {
@@ -30,6 +34,9 @@ namespace StarDeMarket
             }
         }
 
-
+        public void SetContentManager(ContentManager cont)
+        {
+            cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+        }
     }
 }

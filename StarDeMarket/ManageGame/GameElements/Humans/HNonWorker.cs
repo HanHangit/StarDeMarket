@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    class NonWorker : Human
+    class HNonWorker : Human
     {
         Vector2 target;
 
-        public NonWorker(Vector2 _position, EGender _gender, Texture2D _texture)
+        public HNonWorker(Vector2 _position, EGender _gender, Texture2D _texture)
         {
             position = _position;
             gender = _gender;
