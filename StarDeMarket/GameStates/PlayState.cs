@@ -12,20 +12,21 @@ namespace StarDeMarket
     class PlayState : IGameState
     {
 
-        ContentManager Content;
-        NonWorker tom;
+        ContentManager cont;
+        HNonWorker tom;
 
-        public PlayState(ContentManager cont)
+        public PlayState(ContentManager _cont)
         {
-            Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+            cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
         }
 
 
         public void Initialize()
         {
-            BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/Basic Map"), Content);
-            tom = new NonWorker(new Vector2(1, 2), Human.EGender.Male, Content.Load<Texture2D>("Human/Hunter"));
-            GUIHandler.Instance.gui = new GUI(Content);
+            BuildingHandler.Instance.SetContentManager(cont); // Does need to be the first thing to initialize!!!
+            BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/Basic Map"), cont);
+            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+            GUIHandler.Instance.gui = new GUI(cont);
         }
 
         public void LoadContent()

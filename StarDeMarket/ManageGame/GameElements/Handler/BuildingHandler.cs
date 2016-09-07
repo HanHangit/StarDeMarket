@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-namespace StarDeMarket
+using Microsoft.Xna.Framework.Content;namespace StarDeMarket
 {
     class BuildingHandler
     {
@@ -16,6 +15,8 @@ namespace StarDeMarket
         static BuildingHandler instance;
         public List<OnlyOutput> InpBuilding;
         B_WoodCutter b_WoodCutter;
+
+        ContentManager cont;
 
         BuildingHandler()
         {
@@ -43,7 +44,11 @@ namespace StarDeMarket
         {
 
         }
-
+        public void SetContentManager(ContentManager cont)
+        {
+            cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+        }
+    }
 
     }
 }
