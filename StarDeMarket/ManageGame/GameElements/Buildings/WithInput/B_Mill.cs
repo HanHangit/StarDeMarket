@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarDeMarket
 {
-    class Mill : BuildingWithInput
+    class B_Mill : BuildingWithInput
     {
         Storage storage;
 
@@ -15,7 +15,7 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Mehl };
         int[] outputCount = { 1 };
-        public Mill()
+        public B_Mill()
         {
             storage = new Storage();
         }

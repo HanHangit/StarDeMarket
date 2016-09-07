@@ -40,7 +40,8 @@ namespace StarDeMarket
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            BuildingHandler.Instance.map.Draw(spriteBatch);
+            BuildingHandler.Instance.Draw(spriteBatch);
+            //BuildingHandler.Instance.map.Draw(spriteBatch);
             tom.Draw(spriteBatch);
             GUIHandler.Instance.gui.Draw(spriteBatch);
         }
@@ -50,8 +51,8 @@ namespace StarDeMarket
             
 
             GUIHandler.Instance.gui.Update(gTime);
-
-            BuildingHandler.Instance.map.Update(gTime);
+            BuildingHandler.Instance.Update(gTime);
+            //BuildingHandler.Instance.map.Update(gTime);
             tom.Update(gTime);
             return EGameState.PlayState;
         }
