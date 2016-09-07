@@ -85,9 +85,10 @@ namespace StarDeMarket
 
         public void BuildMapFile(string path)
         {
+            Console.WriteLine("BuildFromFile");
 
             //TODO: Hier der Pfad für die Text Datei
-            string[] lines = System.IO.File.ReadAllLines(Environment.CurrentDirectory + "/" + path + ".txt");
+            string[] lines = System.IO.File.ReadAllLines(path + ".txt");
 
 
 
@@ -189,7 +190,7 @@ namespace StarDeMarket
                     lines[i] = color[i - 2].R + "," + color[i - 2].G + "," + color[i - 2].B;
                 }
 
-                System.IO.File.WriteAllLines(Environment.CurrentDirectory + "/" + strMap + ".txt", lines);
+                System.IO.File.WriteAllLines(strMap + ".txt", lines);
             }
 
             Console.WriteLine("Finished Complete Map");
