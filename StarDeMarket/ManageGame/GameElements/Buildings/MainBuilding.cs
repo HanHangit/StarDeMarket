@@ -16,7 +16,7 @@ namespace StarDeMarket
         public MainBuilding(Vector2 _position, ContentManager _cont)
         {
             position = _position;
-            texture2D = _cont.Load<Texture2D>("Building/Woodcutter01");
+            texture2D = _cont.Load<Texture2D>("Building/Main");
             avaiableWorker = new List<StarDeMarket.HNonWorker>(10);
             listWorker = null;
         }
