@@ -37,7 +37,7 @@ namespace StarDeMarket
             // TODO: Add your initialization logic here
 
 
-            CameraHandler.Instance.camera = new Camera(graphics.GraphicsDevice.Viewport, Content);
+            CameraHandler.Instance.screenCamera = new Camera(graphics.GraphicsDevice.Viewport, Content);
 
             base.Initialize();
         }
@@ -94,12 +94,12 @@ namespace StarDeMarket
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(transformMatrix:  CameraHandler.Instance.camera.GetViewMatrix());
+            spriteBatch.Begin(transformMatrix:  CameraHandler.Instance.screenCamera.GetViewMatrix());
 
 
             state.Draw(spriteBatch);
 
-            CameraHandler.Instance.camera.Draw(spriteBatch);
+            CameraHandler.Instance.screenCamera.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

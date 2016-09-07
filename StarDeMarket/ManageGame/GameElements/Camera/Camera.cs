@@ -30,10 +30,12 @@ namespace StarDeMarket
 
             scale = 1;
             viewport = _viewport;
-            position = new Vector2(200, 200);
+            position = new Vector2(0, 0);
             origin = new Vector2(viewport.Width / 2f, viewport.Height / 2f);
 
         }
+
+        
 
         public void Reset()
         {
@@ -60,8 +62,6 @@ namespace StarDeMarket
                 position.X += 5;
 
             view = new Rectangle(new Point((int)position.X, (int)position.Y), new Point(viewport.Width, viewport.Height));
-
-            //view = viewport.Bounds;
 
             return Matrix.CreateScale(scale)
                 * Matrix.CreateTranslation(new Vector3(-position, 1));

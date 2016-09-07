@@ -55,51 +55,13 @@ namespace StarDeMarket
 
             miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
             miniMapCurrentView = cont.Load<Texture2D>("Map/MapArea");
+            miniMapSize = new Point(bounds.Width / miniMapScale, bounds.Height / miniMapScale);
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
             BuildMap(map);
-            BuildMiniMap();
         }
 
-        //Die komplette MiniMap wird neu gezeichnet
-        //Sie wird in textMiniMap abgespeichert
-        public void BuildMiniMap()
-        {
-            Color[] miniMap;
-
-            miniMap = new Color[bounds.Width / miniMapScale * bounds.Height / miniMapScale];
-
-            miniMapSize = new Point(bounds.Width / miniMapScale, bounds.Height / miniMapScale);
-
-            textMiniMap = new Texture2D(Graphics.graph.GraphicsDevice, bounds.Width / miniMapScale, bounds.Height / miniMapScale);
-
-            for (int i = 0; i < miniMapSize.X; ++i)
-                for (int j = 0; j < miniMapSize.Y; ++j)
-                {
-                    miniMap[i + j * miniMapSize.X] = tileMap[i * miniMapScale / tilesize, j * miniMapScale / tilesize].color[16 * 16];
-                }
-
-            textMiniMap.SetData(miniMap);
-
-        }
-
-        //Baut einen Bereich der MiniMap neu auf.
-        void BuildMiniMap(Rectangle rect, Color[] color)
-        {
-
-            rect = new Rectangle(rect.X / miniMapScale, rect.Y / miniMapScale, rect.Width / miniMapScale + 1, rect.Height / miniMapScale + 1);
-
-            Color[] miniColor = new Color[color.Length / miniMapScale];
-
-            for (int i = 0; i < miniColor.Length; ++i)
-            {
-                miniColor[i] = color[i * (color.Length / miniColor.Length)];
-            }
-
-            textMiniMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
-
-        }
 
         /// <summary>
         /// Baut die Map auf Grundlage einer BitMap auf.
@@ -141,9 +103,7 @@ namespace StarDeMarket
         /// <param name="color"> Die neue Farbe</param>
         public void BuildMap(Rectangle rect, Color[] color)
         {
-
             textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
-            BuildMiniMap(rect, color);
         }
 
 
@@ -175,18 +135,20 @@ namespace StarDeMarket
         {
             int offset = 15;
 
-            Rectangle miniMapRect = new Rectangle(new Point(CameraHandler.Instance.camera.view.X + 1050, CameraHandler.Instance.camera.view.Y + 30), miniMapSize);
+            Rectangle miniMapRect = new Rectangle(new Point(CameraHandler.Instance.screenCamera.view.X + 1050, CameraHandler.Instance.screenCamera.view.Y + 30), miniMapSize);
 
             Rectangle miniMapOffset = new Rectangle(miniMapRect.Location - new Point(offset, offset), miniMapRect.Size + new Point(2 * offset, 2 * offset));
 
             //TODO: may need to be reworked in case of a new Scale
-            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.camera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.camera.view.Y/miniMapScale, (miniMapRect.Width*1280)/bounds.Width, (miniMapRect.Height*720)/bounds.Height);
+            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.screenCamera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.screenCamera.view.Y/miniMapScale, (miniMapRect.Width*1280)/bounds.Width, (miniMapRect.Height*720)/bounds.Height);
 
-            spriteBatch.Draw(textMap, CameraHandler.Instance.camera.view, CameraHandler.Instance.camera.view, Color.White);
+            //The Current View
+            spriteBatch.Draw(textMap, CameraHandler.Instance.screenCamera.view, CameraHandler.Instance.screenCamera.view, Color.White);
 
+            
             spriteBatch.Draw(miniMapBackground, miniMapOffset, Color.White);
 
-            spriteBatch.Draw(textMiniMap, miniMapRect, Color.White);
+            spriteBatch.Draw(textMap, miniMapRect, Color.White);
 
             spriteBatch.Draw(miniMapCurrentView, miniMapCameraRect, new Color(Color.White, 128));
         }
