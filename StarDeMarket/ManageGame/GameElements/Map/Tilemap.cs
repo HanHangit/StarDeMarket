@@ -28,7 +28,7 @@ namespace StarDeMarket
         Tile[,] tileMap;
 
         //Die Textur der Map, die am Ende gezeichnet wird
-        public Texture2D textMap { get; private set; }
+        //public Texture2D textMap { get; private set; }
 
         //Die Textur des Hintergrunds der MiniMap
         Texture2D miniMapBackground;
@@ -77,61 +77,6 @@ namespace StarDeMarket
             
                 
 
-        }
-
-
-        public void BuildMapFile(string path)
-        {
-            Console.WriteLine("BuildFromFile");
-
-            //TODO: Hier der Pfad für die Text Datei
-            string[] lines = System.IO.File.ReadAllLines(path + ".txt");
-
-
-
-            Viewport map = new Viewport(0, 0, int.Parse(lines[0]), int.Parse(lines[1]));
-
-            Color[] color = new Color[int.Parse(lines[0]) * int.Parse(lines[1])];
-
-            for (int i = 2; i < color.Length + 2; ++i)
-            {
-
-                string[] values = lines[i].Split(new[] { ',' });
-                int r = int.Parse(values[0]);
-                int g = int.Parse(values[1]);
-                int b = int.Parse(values[2]);
-
-                color[i - 2] = new Color(r, g, b);
-            }
-
-
-            bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
-
-            textMap = new Texture2D(Graphics.graph.GraphicsDevice, map.Width * tilesize, map.Height * tilesize);
-
-
-            tileMap = new Tile[map.Width, map.Height];
-
-            for (int i = 0; i < map.Width; ++i)
-                for (int j = 0; j < map.Height; ++j)
-                {
-
-                    if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Rock]))
-                        tileMap[i, j] = new Tile(ETile.Rock, new Vector2(i * tilesize, j * tilesize), tilesize);
-                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Water]))
-                        tileMap[i, j] = new Tile(ETile.Water, new Vector2(i * tilesize, j * tilesize), tilesize);
-                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Grass]))
-                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
-                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Tree]))
-                        tileMap[i, j] = new Tile(ETile.Tree, new Vector2(i * tilesize, j * tilesize), tilesize);
-                    else
-                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
-                    if (j == 0)
-                        Console.WriteLine("Finished " + i / (map.Width / 100) + "%");
-
-                    textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
-
-                }
         }
 
 
@@ -187,23 +132,6 @@ namespace StarDeMarket
                     //textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
 
                 }
-            /*
-            //!System.IO.File.Exists(@Environment.CurrentDirectory + "/" + strMap + ".txt")
-            if (true)
-            {
-                string[] lines = new string[2 + color.Length];
-                lines[0] = map.Width.ToString();
-                lines[1] = map.Height.ToString();
-
-
-                for (int i = 2; i < color.Length + 2; ++i)
-                {
-                    lines[i] = color[i - 2].R + "," + color[i - 2].G + "," + color[i - 2].B;
-                }
-
-                System.IO.File.WriteAllLines(strMap + ".txt", lines);
-            }
-            */
             Console.WriteLine("Finished Complete Map");
 
         }
@@ -297,7 +225,7 @@ namespace StarDeMarket
 
             spriteBatch.Draw(miniMapBackground, miniMapOffset, Color.White);
 
-            spriteBatch.Draw(textMap, miniMapRect, Color.White);
+            //spriteBatch.Draw(textMap, miniMapRect, Color.White);
 
             spriteBatch.Draw(miniMapCurrentView, miniMapCameraRect, new Color(Color.White, 128));
         }
