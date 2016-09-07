@@ -61,7 +61,7 @@ namespace StarDeMarket
 
 
 
-            markPosition = BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.camera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2();
+            markPosition = BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2();
 
 
 
@@ -73,8 +73,8 @@ namespace StarDeMarket
         {
             spriteBatch.Draw(markTile, markPosition, Color.White);
 
-            spriteBatch.DrawString(fpsFont, "FPS: " + fps, CameraHandler.Instance.camera.position + new Vector2(10, 10), Color.Black);
-            spriteBatch.DrawString(fpsFont, "Position: " + BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.camera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2(), CameraHandler.Instance.camera.position + new Vector2(10, 30), Color.Black);
+            spriteBatch.DrawString(fpsFont, "FPS: " + fps, CameraHandler.Instance.screenCamera.position + new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(fpsFont, "Position: " + BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 30), Color.Black);
         }
     }
 }

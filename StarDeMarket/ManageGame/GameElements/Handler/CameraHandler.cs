@@ -9,7 +9,8 @@ namespace StarDeMarket
     class CameraHandler
     {
 
-        public Camera camera;
+        public Camera screenCamera;
+        public Camera globalCamera;
         static CameraHandler instance;
 
         CameraHandler()
