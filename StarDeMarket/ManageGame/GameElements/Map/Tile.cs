@@ -12,13 +12,31 @@ namespace StarDeMarket
 
     enum ETile
     {
+        None,
         Grass,
         Water,
-        Rock
+        Rock,
+        Tree,
+        Count
     }
+
+
 
     class Tile
     {
+        public static Color[] tileColor =
+        {
+            new Color(),
+            new Color(34,177,76),
+            new Color(63,72,204),
+            new Color(127,127,127),
+            new Color (181,230,29 ),
+
+        };
+
+        public static Texture2D[] tileText;
+
+        public static Color[][] tileColorData;
 
         public Storage lager;
 
@@ -26,31 +44,28 @@ namespace StarDeMarket
 
         public Rectangle bounds { get; private set; }
 
-        ContentManager cont;
-
         Vector2 pos;
 
-        public Tile(ETile type, Vector2 position, ContentManager cont)
+        public Tile(ETile type, Vector2 position, int tilesize)
         {
-            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             lager = new Storage();
             pos = position;
-            color = new Color[32 * 32];
-            bounds = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+            color = new Color[tilesize * tilesize];
+            color = tileColorData[(int)type];
+            bounds = new Rectangle((int)position.X, (int)position.Y, tilesize, tilesize);
 
             switch (type)
             {
                 case ETile.Water:
-                    lager.Add(EItem.Holz, 1000);
-                    cont.Load<Texture2D>("Tile/Water01").GetData(color);
+                    lager.Add(EItem.Fisch, 1000);
                     break;
                 case ETile.Rock:
-                    lager.Add(EItem.Holz, 1000);
-                    cont.Load<Texture2D>("Tile/Rock01").GetData(color);
+                    lager.Add(EItem.Eisen, 100);
+                    lager.Add(EItem.Kohle, 100);
+                    lager.Add(EItem.Stein, 300);
                     break;
                 case ETile.Grass:
                     lager.Add(EItem.Holz, 1000);
-                    cont.Load<Texture2D>("Tile/Grass01").GetData(color);
                     break;
                 default:
                     break;

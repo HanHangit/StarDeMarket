@@ -54,6 +54,7 @@
     <Compile Include="ManageGame\GameElements\Camera\Graphics.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Human.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
     <Compile Include="GameStates\MainMenu.cs" />
