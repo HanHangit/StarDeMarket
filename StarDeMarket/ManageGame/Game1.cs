@@ -80,7 +80,8 @@ namespace StarDeMarket
 
             // TODO: Add your update logic here
 
-            InputHandler.Instance.prevState = Keyboard.GetState();
+            InputHandler.Instance.keyPrevState = Keyboard.GetState();
+            InputHandler.Instance.mousePrevState = Mouse.GetState();
 
             base.Update(gameTime);
         }

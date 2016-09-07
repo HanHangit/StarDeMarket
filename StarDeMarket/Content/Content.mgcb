@@ -169,6 +169,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Woodcutter.png
 
+#begin Map/RealBigMap.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/RealBigMap.bmp
+
 #begin Building/Mill.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -180,4 +192,3 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Building/Mill.png
-

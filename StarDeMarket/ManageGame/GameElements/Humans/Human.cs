@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
@@ -20,6 +21,7 @@ namespace StarDeMarket
         protected EGender gender;
         protected float speed;
 
+        protected ContentManager cont;
         protected Texture2D texture;
     }
 }

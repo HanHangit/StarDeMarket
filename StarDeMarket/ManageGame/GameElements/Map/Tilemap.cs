@@ -20,7 +20,7 @@ namespace StarDeMarket
         public Rectangle bounds { get; private set; }
 
         //Tilesize
-        public int tilesize = 32;
+        public int tilesize = 16;
 
         //Die aufgeteilte TileMap
         Tile[,] tileMap;
@@ -28,18 +28,10 @@ namespace StarDeMarket
         //Die Textur der Map, die am Ende gezeichnet wird
         public Texture2D textMap { get; private set; }
 
-        
-
-        //Die Textur der MiniMap
-        Texture2D textMiniMap;
-
         //Die Textur des Hintergrunds der MiniMap
         Texture2D miniMapBackground;
 
         Texture2D miniMapCurrentView;
-
-        //Der Scale der MiniMap
-        int miniMapScale = 20;
 
         //Die Größe der MiniMap
         Point miniMapSize;
@@ -51,11 +43,32 @@ namespace StarDeMarket
         {
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
 
+
+            //For faster loading
+            Tile.tileText = new Texture2D[(int)ETile.Count];
+            Tile.tileColorData = new Color[(int)ETile.Count][];
+            Tile.tileColorData[0] = new Color[tilesize * tilesize];
+            Tile.tileColorData[1] = new Color[tilesize * tilesize];
+            Tile.tileColorData[2] = new Color[tilesize * tilesize];
+            Tile.tileColorData[3] = new Color[tilesize * tilesize];
+            Tile.tileColorData[4] = new Color[tilesize * tilesize];
+
+            Tile.tileText[0] = Content.Load<Texture2D>("Tile/Grass01");
+            Tile.tileText[1] = Content.Load<Texture2D>("Tile/Grass01");
+            Tile.tileText[2] = Content.Load<Texture2D>("Tile/Water01");
+            Tile.tileText[3] = Content.Load<Texture2D>("Tile/Rock01");
+            Tile.tileText[4] = Content.Load<Texture2D>("Tile/Grass01");
+
+            for (int i = 0; i < Tile.tileText.Length; ++i)
+            {
+                Tile.tileText[i].GetData(Tile.tileColorData[i]);
+            }
+
             bounds = new Rectangle(new Point(0, 0), new Point(map.Width * tilesize, map.Height * tilesize));
 
             miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
             miniMapCurrentView = cont.Load<Texture2D>("Map/MapArea");
-            miniMapSize = new Point(bounds.Width / miniMapScale, bounds.Height / miniMapScale);
+            miniMapSize = new Point(200, 200);
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
@@ -74,25 +87,30 @@ namespace StarDeMarket
 
             Color[] color = new Color[map.Width * map.Height];
             map.GetData(color);
-
             tileMap = new Tile[map.Width, map.Height];
 
             for (int i = 0; i < map.Width; ++i)
                 for (int j = 0; j < map.Height; ++j)
                 {
 
-                    if (color[i + j * map.Width].Equals(new Color(127, 127, 127)))
-                        tileMap[i, j] = new Tile(ETile.Rock, new Vector2(i * tilesize, j * tilesize), Content);
-                    else if (color[i + j * map.Width].Equals(new Color(0, 162, 232)))
-                        tileMap[i, j] = new Tile(ETile.Water, new Vector2(i * tilesize, j * tilesize), Content);
-                    else if (color[i + j * map.Width].Equals(new Color(34, 177, 76)))
-                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), Content);
+                    if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Rock]))
+                        tileMap[i, j] = new Tile(ETile.Rock, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Water]))
+                        tileMap[i, j] = new Tile(ETile.Water, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Grass]))
+                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if(color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Tree]))
+                        tileMap[i, j] = new Tile(ETile.Tree, new Vector2(i * tilesize, j * tilesize), tilesize);
                     else
-                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), Content);
+                        tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    if (j == 0)
+                        Console.WriteLine("Finished " + i / (map.Width / 100) + "%");
 
                     textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
 
                 }
+
+            Console.WriteLine("Finished Complete Map");
 
         }
 
@@ -103,8 +121,16 @@ namespace StarDeMarket
         /// <param name="color"> Die neue Farbe</param>
         public void BuildMap(Rectangle rect, Color[] color)
         {
+
+            for(int i = 0; i < color.Length; ++i)
+            {
+                if (color[i].A == 0)
+                    color[i] = tileMap[(rect.X + i % rect.Width) / tilesize, (rect.Y + i / rect.Width) / tilesize].color[i % (tilesize * tilesize)];
+            }
+
             textMap.SetData(0, rect, color, 0, rect.Width * rect.Height);
         }
+
 
 
         public Tile GetTile(Point position)
@@ -121,10 +147,6 @@ namespace StarDeMarket
         public void Update(GameTime gTime)
         {
 
-            if (InputHandler.Instance.IsKeyPressedOnce(Keys.Space))
-            {
-            }
-
             for (int i = 0; i < tileMap.GetLength(0); ++i)
                 for (int j = 0; j < tileMap.GetLength(1); ++j)
                     tileMap[i, j].Update(gTime);
@@ -139,8 +161,8 @@ namespace StarDeMarket
 
             Rectangle miniMapOffset = new Rectangle(miniMapRect.Location - new Point(offset, offset), miniMapRect.Size + new Point(2 * offset, 2 * offset));
 
-            //TODO: may need to be reworked in case of a new Scale
-            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.screenCamera.view.X/miniMapScale, miniMapRect.Y + CameraHandler.Instance.screenCamera.view.Y/miniMapScale, (miniMapRect.Width*1280)/bounds.Width, (miniMapRect.Height*720)/bounds.Height);
+            
+            Rectangle miniMapCameraRect = new Rectangle(miniMapRect.X + CameraHandler.Instance.screenCamera.view.X / (bounds.Width/miniMapSize.X), miniMapRect.Y + CameraHandler.Instance.screenCamera.view.Y/ (bounds.Height / miniMapSize.Y), (miniMapRect.Width*1280)/bounds.Width, (miniMapRect.Height*720)/bounds.Height);
 
             //The Current View
             spriteBatch.Draw(textMap, CameraHandler.Instance.screenCamera.view, CameraHandler.Instance.screenCamera.view, Color.White);
