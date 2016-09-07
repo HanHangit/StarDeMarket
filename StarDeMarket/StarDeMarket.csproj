@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFishingHut.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWoodCutter.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\OnlyOutput.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BuildingWithInput.cs" />
