@@ -25,7 +25,12 @@ namespace StarDeMarket
             throw new NotImplementedException();
         }
 
-        public override void Update()
+        public override bool HasFullWorkforce()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(GameTime gTime)
         {
             throw new NotImplementedException();
         }
