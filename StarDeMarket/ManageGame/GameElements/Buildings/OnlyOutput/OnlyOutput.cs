@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarDeMarket.ManageGame.GameElements.Buildings.OnlyOutput
+namespace StarDeMarket
 {
-    class OnlyOutput
+    public abstract class OnlyOutput : Building
     {
+
     }
 }

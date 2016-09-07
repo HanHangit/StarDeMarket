@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarDeMarket
 {
-    class WoodCutter : Building
+    class WoodCutter : OnlyOutput
     {
         Storage storage;
         EItem[] output = { EItem.Holz };

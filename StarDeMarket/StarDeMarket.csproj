@@ -42,7 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\BuildingWithInput.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\OnlyOutput.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BuildingWithInput.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\WoodCutter.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\Mill.cs" />
     <Compile Include="ManageGame\GameElements\Handler\GUIHandler.cs" />
