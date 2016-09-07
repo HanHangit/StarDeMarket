@@ -159,7 +159,7 @@ namespace StarDeMarket
             for (int i = 0; i < map.Width; ++i)
                 for (int j = 0; j < map.Height; ++j)
                 {
-
+                        
                     if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Rock]))
                         tileMap[i, j] = new Tile(ETile.Rock, new Vector2(i * tilesize, j * tilesize), tilesize);
                     else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Water]))
