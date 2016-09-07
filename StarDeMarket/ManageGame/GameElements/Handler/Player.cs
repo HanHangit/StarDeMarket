@@ -64,6 +64,24 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
+
+            Vector2 position = CameraHandler.Instance.screenCamera.position;
+
+            Viewport viewport = CameraHandler.Instance.screenCamera.viewport;
+
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && position.Y > 0)
+                position.Y -= CameraHandler.Instance.screenCamera.speed * gTime.ElapsedGameTime.Milliseconds;
+
+            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && position.Y + viewport.Height < BuildingHandler.Instance.map.bounds.Height)
+                position.Y += CameraHandler.Instance.screenCamera.speed * gTime.ElapsedGameTime.Milliseconds;
+            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)) && position.X > 0)
+                position.X -= CameraHandler.Instance.screenCamera.speed * gTime.ElapsedGameTime.Milliseconds;
+            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)) && position.X + viewport.Width < BuildingHandler.Instance.map.bounds.Width)
+                position.X += CameraHandler.Instance.screenCamera.speed * gTime.ElapsedGameTime.Milliseconds;
+
+            CameraHandler.Instance.screenCamera.position = position;
+
+
             if (InputHandler.Instance.IsKeyPressedOnce(Keys.B))
             {
                 mode = EPlayerMode.Build;

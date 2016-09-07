@@ -24,10 +24,13 @@ namespace StarDeMarket
 
         public float scale { get; private set; }
 
+        public float speed { get; private set; }
+
         public Camera(Viewport _viewport, ContentManager cont)
         {
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
 
+            speed = 1;
             scale = 1;
             viewport = _viewport;
             position = new Vector2(0, 0);
@@ -50,16 +53,6 @@ namespace StarDeMarket
 
         public Matrix GetViewMatrix()
         {
-
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && position.Y > 0)
-                position.Y -= 5;
-
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && position.Y + viewport.Height < BuildingHandler.Instance.map.bounds.Height)
-                position.Y += 5;
-            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)) && position.X > 0)
-                position.X -= 5;
-            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)) && position.X + viewport.Width < BuildingHandler.Instance.map.bounds.Width)
-                position.X += 5;
 
             view = new Rectangle(new Point((int)position.X, (int)position.Y), new Point(viewport.Width, viewport.Height));
 

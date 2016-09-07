@@ -10,7 +10,6 @@ namespace StarDeMarket
     {
 
         public Camera screenCamera;
-        public Camera globalCamera;
         static CameraHandler instance;
 
         CameraHandler()

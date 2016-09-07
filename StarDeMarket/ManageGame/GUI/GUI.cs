@@ -61,7 +61,7 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-            fps = (int)(1000f / gTime.ElapsedGameTime.Milliseconds);
+            fps = (int)(1000f / (float)gTime.ElapsedGameTime.Milliseconds);
 
 
 
