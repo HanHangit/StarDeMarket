@@ -55,7 +55,6 @@ namespace StarDeMarket
         }
         public void SetContentManager(ContentManager _cont)
         {
-            Console.WriteLine("SetContentManager");
             cont = _cont;
             b_WoodCutter = new BFishingHut(new Vector2(200, 200), cont);
             b_Mill = new BMill(new Vector2(400, 400), cont);
