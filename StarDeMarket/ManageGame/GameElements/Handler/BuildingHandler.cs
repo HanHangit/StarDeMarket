@@ -12,18 +12,16 @@ namespace StarDeMarket
 {
     class BuildingHandler
     {
-        HNonWorker tom;
         public Tilemap map;
         static BuildingHandler instance;
-        public List<OnlyOutput> InpBuilding;
-        BFishingHut b_WoodCutter;
-        BMill b_Mill;
+        public List<Building> buildingList;
+        MainBuilding bMainBuilding;
 
         ContentManager cont;
 
         BuildingHandler()
         {
-            InpBuilding = new List<OnlyOutput>();
+            buildingList = new List<Building>();
 
         }
 
@@ -42,22 +40,28 @@ namespace StarDeMarket
         public void Update(GameTime gTime)
         {
             map.Update(gTime);
-            b_WoodCutter.Update(gTime);
-            b_Mill.Update(gTime);
+            foreach(Building b in buildingList)
+            {
+                b.Update(gTime);
+            }
+            bMainBuilding.Update(gTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             map.Draw(spriteBatch);
-            b_WoodCutter.Draw(spriteBatch);
-            b_Mill.Draw(spriteBatch);
-
+            foreach(Building b in buildingList)
+            {
+                b.Draw(spriteBatch);
+            }
+            bMainBuilding.Draw(spriteBatch);
         }
         public void SetContentManager(ContentManager _cont)
         {
             cont = _cont;
-            b_WoodCutter = new BFishingHut(new Vector2(200, 200), cont);
-            b_Mill = new BMill(new Vector2(400, 400), cont);
+            buildingList.Add(new BWoodCutter(new Vector2(200, 200), cont));
+            buildingList.Add(new BMill(new Vector2(400, 400), cont));
+            bMainBuilding = new MainBuilding(new Vector2(700, 300), cont);
         }
     }
 }
