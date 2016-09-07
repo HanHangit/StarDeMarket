@@ -13,7 +13,7 @@ namespace StarDeMarket
     {
 
         ContentManager cont;
-        HNonWorker tom;
+
 
         public PlayState(ContentManager _cont)
         {
@@ -21,12 +21,11 @@ namespace StarDeMarket
 
         }
 
-
         public void Initialize()
         {
             BuildingHandler.Instance.SetContentManager(cont); // Does need to be the first thing to initialize!!!
             BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/Basic Map"), cont);
-            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+
             GUIHandler.Instance.gui = new GUI(cont);
         }
 
@@ -44,18 +43,16 @@ namespace StarDeMarket
         {
             BuildingHandler.Instance.Draw(spriteBatch);
             //BuildingHandler.Instance.map.Draw(spriteBatch);
-            tom.Draw(spriteBatch);
+
             GUIHandler.Instance.gui.Draw(spriteBatch);
         }
 
         public EGameState Update(GameTime gTime)
         {
-            
-
             GUIHandler.Instance.gui.Update(gTime);
             BuildingHandler.Instance.Update(gTime);
             //BuildingHandler.Instance.map.Update(gTime);
-            tom.Update(gTime);
+
             return EGameState.PlayState;
         }
     }

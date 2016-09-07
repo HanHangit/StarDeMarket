@@ -18,24 +18,29 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Mehl };
         int[] outputCount = { 1 };
-        public BMill()
+        public BMill(Vector2 _pos, ContentManager _cont)
         {
             storage = new Storage();
+            cont = _cont;
+            listWorker = new List<HWorker>();
+            texture2D = cont.Load<Texture2D>("Building/Mill");
+            position = _pos;
         }
 
-        public override void Update()
+        public override void Update(GameTime gTime)
         {
             Production();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
         }
 
         public override void Workerwork()
         {
-            throw new NotImplementedException();
+            if (HasFullWorkforce())
+                Console.WriteLine("Ein Mueller fehlt hier! HILFE!@Matthis");
         }
 
         public override void Production()
@@ -62,6 +67,14 @@ namespace StarDeMarket
                     return false;
             }
             return true;
+        }
+
+        public override bool HasFullWorkforce()
+        {
+            if (listWorker.Count == 2)
+                return true;
+            else
+                return false;
         }
     }
 }

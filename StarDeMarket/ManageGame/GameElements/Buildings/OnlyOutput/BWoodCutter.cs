@@ -9,17 +9,19 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
+
     class BWoodCutter : OnlyOutput
     {
+        
         Storage storage;
         EItem[] output = { EItem.Holz };
         int[] outputCount = { 2 };
+        HWoodcutter tom;
 
-
-        public BWoodCutter(Vector2 _pos, ContentManager cont)
+        public BWoodCutter(Vector2 _pos, ContentManager _cont)
         {
-
-            Console.WriteLine("Bin hier drin i LOVE SFML!");
+            cont = _cont;
+            listWorker = new List<HWorker>();
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
@@ -27,16 +29,28 @@ namespace StarDeMarket
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
+            if (tom != null)
+                tom.Draw(spriteBatch);
         }
 
-        public override void Update()
+        public override void Update(GameTime gTime)
         {
-
+            if(tom != null)
+                tom.Update(gTime);
         }
 
         public override void Workerwork()
         {
-            throw new NotImplementedException();
+            if (HasFullWorkforce())
+                Console.WriteLine("Matthis hat scheiße gebaut");
+                //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+        }
+        public override bool HasFullWorkforce()
+        {
+            if (listWorker.Count == 2)
+                return true;
+            else
+                return false;
         }
     }
 }
