@@ -11,7 +11,8 @@ namespace StarDeMarket
     {
 
         static InputHandler instance;
-        public KeyboardState prevState;
+        public KeyboardState keyPrevState;
+        public MouseState mousePrevState;
 
         InputHandler()
         {
@@ -31,7 +32,12 @@ namespace StarDeMarket
 
         public bool IsKeyPressedOnce(Keys key)
         {
-            return Keyboard.GetState().IsKeyDown(key) && !prevState.IsKeyDown(key);
+            return Keyboard.GetState().IsKeyDown(key) && !keyPrevState.IsKeyDown(key);
+        }
+
+        public bool IsLeftMouseButtonPressedOnce()
+        {
+            return (Mouse.GetState().LeftButton == ButtonState.Pressed && mousePrevState.LeftButton != ButtonState.Pressed);
         }
     }
 }

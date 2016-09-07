@@ -15,6 +15,9 @@ namespace StarDeMarket
         ContentManager cont;
         HNonWorker tom;
 
+        //only for testing
+        Player player;
+
         public PlayState(ContentManager _cont)
         {
             cont = _cont;
@@ -25,9 +28,11 @@ namespace StarDeMarket
         public void Initialize()
         {
             BuildingHandler.Instance.SetContentManager(cont); // Does need to be the first thing to initialize!!!
-            BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/Basic Map"), cont);
-            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont);
+            BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/RealBigMap"), cont);
+
             GUIHandler.Instance.gui = new GUI(cont);
+
+            player = new Player(cont);
         }
 
         public void LoadContent()
@@ -46,11 +51,14 @@ namespace StarDeMarket
             //BuildingHandler.Instance.map.Draw(spriteBatch);
             tom.Draw(spriteBatch);
             GUIHandler.Instance.gui.Draw(spriteBatch);
+
+            player.Draw(spriteBatch);
         }
 
         public EGameState Update(GameTime gTime)
         {
-            
+            player.Update(gTime);
+
 
             GUIHandler.Instance.gui.Update(gTime);
             BuildingHandler.Instance.Update(gTime);
