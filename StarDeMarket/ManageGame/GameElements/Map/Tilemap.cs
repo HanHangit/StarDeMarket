@@ -229,11 +229,11 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-
+            /*
             for (int i = 0; i < tileMap.GetLength(0); ++i)
                 for (int j = 0; j < tileMap.GetLength(1); ++j)
                     tileMap[i, j].Update(gTime);
-
+                    */
         }
 
         public void Draw(SpriteBatch spriteBatch)
