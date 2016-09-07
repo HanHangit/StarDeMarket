@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    class Mill : BuildingWithInput
+    class BMill : BuildingWithInput
     {
         Storage storage;
 
@@ -15,7 +18,7 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Mehl };
         int[] outputCount = { 1 };
-        public Mill()
+        public BMill()
         {
             storage = new Storage();
         }
@@ -25,7 +28,7 @@ namespace StarDeMarket
             Production();
         }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }

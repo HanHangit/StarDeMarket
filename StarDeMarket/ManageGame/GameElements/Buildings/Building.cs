@@ -11,13 +11,13 @@ namespace StarDeMarket
 {
     public abstract class Building
     {
-        public abstract void Draw();                //Zeichnet
+        public abstract void Draw(SpriteBatch spriteBatch);                //Zeichnet
         public abstract void Update();
 
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
 
 
-        protected SpriteBatch sprite;
+        protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;
         protected int output;

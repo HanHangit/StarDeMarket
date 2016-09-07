@@ -42,9 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\BuildingWithInput.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\WoodCutter.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\WithInput\Mill.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWoodCutter.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\OnlyOutput.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BuildingWithInput.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BMill.cs" />
     <Compile Include="ManageGame\GameElements\Handler\GUIHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\InputHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\BuildingHandler.cs" />
@@ -63,9 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ManageGame\GameElements\Map\Tile.cs" />
     <Compile Include="ManageGame\GameElements\Map\Tilemap.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\NonWorker.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Worker.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Woodcutter.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\HNonWorker.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\HWorker.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\HWoodcutter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

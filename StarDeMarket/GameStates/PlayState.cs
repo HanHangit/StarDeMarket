@@ -12,27 +12,27 @@ namespace StarDeMarket
     class PlayState : IGameState
     {
 
-        ContentManager Content;
-        NonWorker tom;
+        ContentManager cont;
+        HNonWorker tom;
 
-        //Class to control our "Player"
+        //only for testing
         Player player;
 
-        public PlayState(ContentManager cont)
+        public PlayState(ContentManager _cont)
         {
-            Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+            cont = _cont;
+
         }
 
 
         public void Initialize()
         {
-            //MapAuswahl
-            BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/RealBigMap"), Content);
-            //BuildingHandler.Instance.map = new Tilemap(Content.Load<Texture2D>("Map/Basic Map"), Content);
-            tom = new NonWorker(new Vector2(1, 2), Human.EGender.Male, Content.Load<Texture2D>("Human/Hunter"));
-            GUIHandler.Instance.gui = new GUI(Content);
+            BuildingHandler.Instance.SetContentManager(cont); // Does need to be the first thing to initialize!!!
+            BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/RealBigMap"), cont);
+            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+            GUIHandler.Instance.gui = new GUI(cont);
 
-            player = new Player(Content);
+            player = new Player(cont);
         }
 
         public void LoadContent()
@@ -47,7 +47,8 @@ namespace StarDeMarket
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            BuildingHandler.Instance.map.Draw(spriteBatch);
+            BuildingHandler.Instance.Draw(spriteBatch);
+            //BuildingHandler.Instance.map.Draw(spriteBatch);
             tom.Draw(spriteBatch);
             GUIHandler.Instance.gui.Draw(spriteBatch);
 
@@ -60,8 +61,8 @@ namespace StarDeMarket
 
 
             GUIHandler.Instance.gui.Update(gTime);
-
-            BuildingHandler.Instance.map.Update(gTime);
+            BuildingHandler.Instance.Update(gTime);
+            //BuildingHandler.Instance.map.Update(gTime);
             tom.Update(gTime);
             return EGameState.PlayState;
         }

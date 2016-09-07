@@ -8,21 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StarDeMarket
 {
-    public class Woodcutter : Worker
+    public abstract class HWorker : Human
     {
-        public Woodcutter(Vector2 _position, EGender _gender)
-        {
-            position = _position;
-            gender = _gender;
-            speed = 2f;
-        }
+        Storage personalStorage;
 
-        public override void Update(GameTime gTime)
+        virtual public void Update(GameTime gTime)
         {
             throw new NotImplementedException();
         }
 
-        public override void Draw()
+        virtual public void Draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }
