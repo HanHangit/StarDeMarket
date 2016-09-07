@@ -16,7 +16,7 @@ namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<OnlyOutput> InpBuilding;
-        BWoodCutter b_WoodCutter;
+        BFishingHut b_WoodCutter;
         BMill b_Mill;
 
         ContentManager cont;
@@ -57,7 +57,7 @@ namespace StarDeMarket
         {
             Console.WriteLine("SetContentManager");
             cont = _cont;
-            b_WoodCutter = new BWoodCutter(new Vector2(200, 200), cont);
+            b_WoodCutter = new BFishingHut(new Vector2(200, 200), cont);
             b_Mill = new BMill(new Vector2(400, 400), cont);
         }
     }
