@@ -26,7 +26,7 @@ namespace StarDeMarket
         {
             BuildingHandler.Instance.SetContentManager(cont); // Does need to be the first thing to initialize!!!
             BuildingHandler.Instance.map = new Tilemap(cont.Load<Texture2D>("Map/Basic Map"), cont);
-            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+            tom = new HNonWorker(new Vector2(1, 2), Human.EGender.Male, cont);
             GUIHandler.Instance.gui = new GUI(cont);
         }
 

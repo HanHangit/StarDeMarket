@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
@@ -12,11 +13,13 @@ namespace StarDeMarket
     {
         Vector2 target;
 
-        public HWoodcutter(Vector2 _position, EGender _gender)
+        public HWoodcutter(Vector2 _position, EGender _gender, ContentManager _cont)
         {
             position = _position;
             gender = _gender;
             speed = 2f;
+            cont = _cont;
+            texture = cont.Load<Texture2D>("Human/Woodcutter");
         }
 
         public void SetTarget(Vector2 _target)

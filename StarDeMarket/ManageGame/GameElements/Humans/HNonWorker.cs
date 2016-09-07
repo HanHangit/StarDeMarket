@@ -14,12 +14,13 @@ namespace StarDeMarket
     {
         Vector2 target;
 
-        public HNonWorker(Vector2 _position, EGender _gender, Texture2D _texture)
+        public HNonWorker(Vector2 _position, EGender _gender, ContentManager _cont)
         {
             position = _position;
             gender = _gender;
             speed = 2f;
-            texture = _texture;
+            cont = _cont;
+            texture = cont.Load<Texture2D>("Human/BasicHuman");
             SetTarget(new Vector2(200, 200));
         }
 
