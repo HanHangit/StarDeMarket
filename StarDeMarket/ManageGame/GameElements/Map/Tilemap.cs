@@ -20,7 +20,7 @@ namespace StarDeMarket
         public Rectangle bounds { get; private set; }
 
         //Tilesize
-        public int tilesize = 16;
+        public int tilesize = 8;
 
         public int splitSize = 256;
 
@@ -73,9 +73,9 @@ namespace StarDeMarket
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
-                BuildMap(strMap);
-            
-                
+            BuildMap(strMap);
+
+
 
         }
 
@@ -93,7 +93,7 @@ namespace StarDeMarket
 
             //textMap = new Texture2D(Graphics.graph.GraphicsDevice, map.Width * tilesize, map.Height * tilesize);
 
-            textSplitMap = new Texture2D[(bounds.Width / splitSize) + 1 , (bounds.Height / splitSize) + 1];
+            textSplitMap = new Texture2D[(bounds.Width / splitSize) + 1, (bounds.Height / splitSize) + 1];
 
             for (int i = 0; i < textSplitMap.GetLength(0); ++i)
                 for (int j = 0; j < textSplitMap.GetLength(1); ++j)
@@ -108,7 +108,7 @@ namespace StarDeMarket
             for (int i = 0; i < map.Width; ++i)
                 for (int j = 0; j < map.Height; ++j)
                 {
-                        
+
                     if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Rock]))
                         tileMap[i, j] = new Tile(ETile.Rock, new Vector2(i * tilesize, j * tilesize), tilesize);
                     else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Water]))
@@ -125,8 +125,6 @@ namespace StarDeMarket
                     int r = i * tilesize / splitSize;
                     int c = j * tilesize / splitSize;
 
-                    //Console.WriteLine(r + "|" + c);
-
                     textSplitMap[r, c].SetData(0, new Rectangle(i * tilesize % splitSize, j * tilesize % splitSize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
 
                     //textMap.SetData(0, new Rectangle(i * tilesize, j * tilesize, tilesize, tilesize), tileMap[i, j].color, 0, tilesize * tilesize);
@@ -134,37 +132,6 @@ namespace StarDeMarket
                 }
             Console.WriteLine("Finished Complete Map");
 
-        }
-
-        /// <summary>
-        /// Ändert die Textur der Map.
-        /// </summary>
-        /// <param name="rect"> Ein Bereich, welche seine "Farbe" geändert hat.</param>
-        /// <param name="color"> Die neue Farbe</param>
-        public void BuildMap(Rectangle rect, Color[] color)
-        {
-
-            for (int i = 0; i < color.Length; ++i)
-            {
-                if (color[i].A == 0)
-                    color[i] = tileMap[(rect.X + i % rect.Width) / tilesize, (rect.Y + i / rect.Width) / tilesize].color[i % (tilesize * tilesize)];
-            }
-
-
-            int minrow = rect.X / splitSize;
-            int maxrow = (rect.X + rect.Width) / splitSize;
-            int mincol = rect.Y / splitSize;
-            int maxcol = (rect.Y + rect.Height) / splitSize;
-
-            Color[][] newColor = new Color[1 + maxrow - minrow + maxcol - mincol][];
-
-            for (int i = minrow; i <= maxrow; ++i)
-                for (int j = mincol; j <= maxcol; ++j)
-                {
-
-                    textSplitMap[i, j].SetData(0, new Rectangle(rect.X % splitSize,rect.Y % splitSize,splitSize,splitSize), color, 0, rect.Width * rect.Height);
-
-                }
         }
 
 
@@ -216,16 +183,32 @@ namespace StarDeMarket
             MathHelper.Clamp(maxrow, 0, textSplitMap.GetLength(1));
             MathHelper.Clamp(maxcol, 0, textSplitMap.GetLength(1));
 
-            for (int i = minrow; i <= maxrow; ++i)
-                for(int j = mincol; j <= maxcol; ++j)
-                {
-                    spriteBatch.Draw(textSplitMap[i, j], new Rectangle(i * splitSize, j * splitSize, splitSize, splitSize), Color.White);
-                }
 
+
+
+
+
+            for (int i = minrow; i <= maxrow; ++i)
+                for (int j = mincol; j <= maxcol; ++j)
+                {
+                    Rectangle mapPos = new Rectangle(i * splitSize, j * splitSize, splitSize, splitSize);
+
+                    spriteBatch.Draw(textSplitMap[i, j], mapPos, Color.White);
+                }
 
             spriteBatch.Draw(miniMapBackground, miniMapOffset, Color.White);
 
-            //spriteBatch.Draw(textMap, miniMapRect, Color.White);
+            for (int i = 0; i < textSplitMap.GetLength(0); ++i)
+                for (int j = 0; j < textSplitMap.GetLength(1); ++j)
+                {
+                    Rectangle exactMiniMap = new Rectangle(miniMapRect.X + i * miniMapSize.X / textSplitMap.GetLength(0)  , 
+                        miniMapRect.Y  + j * miniMapSize.X / textSplitMap.GetLength(1)
+                        , miniMapSize.X / textSplitMap.GetLength(0) + 1, miniMapSize.X / textSplitMap.GetLength(1) + 1);
+
+                    spriteBatch.Draw(textSplitMap[i, j], exactMiniMap, Color.White);
+                }
+
+
 
             spriteBatch.Draw(miniMapCurrentView, miniMapCameraRect, new Color(Color.White, 128));
         }
