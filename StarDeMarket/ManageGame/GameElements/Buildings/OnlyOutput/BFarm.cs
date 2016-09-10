@@ -10,23 +10,23 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BFishingHut : OnlyOutput
+    class BFarm : OnlyOutput
     {
         
         Storage storage;
-        EItem[] output = { EItem.Fisch };
+        EItem[] output = { EItem.Getreide };
         int[] outputCount = { 2 };
         //ToDo: Fischer
         HWoodcutter tom;
 
-        public BFishingHut(Vector2 _pos, ContentManager _cont)
+        public BFarm(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
             listWorker = new List<HWorker>();
-            texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
+            texture2D = cont.Load<Texture2D>("Building/Farm");
             position = _pos;
             storage = new Storage();
-            name = "Fishing Hut";
+            name = "Farm";
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,7 +45,7 @@ namespace StarDeMarket
         public override void Workerwork()
         {
             if (HasFullWorkforce())
-                Console.WriteLine("Matthis hat scheiße gebaut");
+                Console.WriteLine("Farme fehlt!");
                 //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
         }
 
@@ -55,11 +55,6 @@ namespace StarDeMarket
                 return true;
             else
                 return false;
-        }
-
-        public override void EmployHuman(Human _human)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -43,6 +43,12 @@
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BIronMelt.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BBaker.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\WithInput\BSawmill.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BStonemason.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFishingHut.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWoodCutter.cs" />

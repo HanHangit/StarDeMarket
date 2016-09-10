@@ -17,6 +17,7 @@ namespace StarDeMarket
         Water,
         Rock,
         Tree,
+        Road,
         Count
     }
 
@@ -31,8 +32,11 @@ namespace StarDeMarket
             new Color(63,72,204),
             new Color(127,127,127),
             new Color (181,230,29 ),
+            new Color()
 
         };
+
+        public Building refBuilding { get; set; }
 
         public static Texture2D[] tileText;
 
@@ -46,12 +50,18 @@ namespace StarDeMarket
 
         public string name { get; private set; }
 
+        bool buildable;
+
         bool walkable;
+
+
 
         Vector2 pos;
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
+            walkable = false;
+            refBuilding = null;
             lager = new Storage();
             pos = position;
             color = new Color[tilesize * tilesize];
@@ -63,27 +73,27 @@ namespace StarDeMarket
                 case ETile.Water:
                     lager.Add(EItem.Fisch, 1000);
                     name = "Water";
-                    walkable = false;
+                    buildable = false;
                     break;
                 case ETile.Rock:
                     lager.Add(EItem.Eisen, 100);
                     lager.Add(EItem.Kohle, 100);
                     lager.Add(EItem.Stein, 300);
                     name = "Rock";
-                    walkable = true;
+                    buildable = true;
                     break;
                 case ETile.Grass:
                     name = "Grass";
-                    walkable = true;
+                    buildable = true;
                     break;
                 case ETile.Tree:
                     name = "Tree";
                     lager.Add(EItem.Holz, 1000);
-                    walkable = false;
+                    buildable = false;
                     break;
                 default:
                     name = "NA";
-                    walkable = false;
+                    buildable = false;
                     break;
             }
         }
@@ -93,14 +103,43 @@ namespace StarDeMarket
 
         }
 
-        public bool Walkable()
+        public void BuildRoad()
         {
-            return walkable;
+            Walkable = true;
+            Buildable = false;
+            color = tileColorData[(int)ETile.Road];
+        }
+
+        public bool Walkable
+        {
+            get
+            {
+                return walkable;
+            }
+            private set
+            {
+                walkable = value;
+            }
+        }
+
+        public bool Buildable
+        {
+            get
+            {
+                return buildable;
+            }
+            set
+            {
+                buildable = value;
+            }
         }
 
         public override string ToString()
         {
-            return name;
+            if (refBuilding != null)
+                return refBuilding.ToString();
+            else
+                return name;
         }
 
 

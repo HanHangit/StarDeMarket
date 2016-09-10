@@ -15,7 +15,8 @@ namespace StarDeMarket
     {
         None,
         View,
-        Build
+        Build,
+        RoadBuild
     }
 
 
@@ -41,12 +42,14 @@ namespace StarDeMarket
         Building targetBuild;
         EBuilding targetTypeBuild;
 
+        Point roadStartPoint;
+
         ContentManager Content;
 
         public Player(ContentManager cont)
         {
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
-
+            roadStartPoint = new Point(0, 0);
             mode = EPlayerMode.View;
             prevMode = EPlayerMode.None;
         }
@@ -69,6 +72,11 @@ namespace StarDeMarket
                 mode = EPlayerMode.View;
             }
 
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.R))
+            {
+                mode = EPlayerMode.RoadBuild;
+            }
+
 
             //Falls sich der Modus ändert, wird der Modus an andere Handler weitergegeben
             if (prevMode != mode)
@@ -82,6 +90,10 @@ namespace StarDeMarket
                         break;
                     case EPlayerMode.Build:
                         targetTypeBuild = EBuildings[currBuild];
+                        break;
+                    case EPlayerMode.RoadBuild:
+                        GUIHandler.Instance.gui.SetMarkSize(new Point(BuildingHandler.Instance.map.tilesize, BuildingHandler.Instance.map.tilesize));
+                        GUIHandler.Instance.gui.SetRoadMarkSize(new Rectangle(64, 64, 64, 64));
                         break;
                     default:
                         break;
@@ -132,9 +144,38 @@ namespace StarDeMarket
 
 
                         if (InputHandler.Instance.IsLeftMouseButtonPressedOnce() && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.markBounds))
-                            BuildingHandler.Instance.buildingList.Add(targetBuild);
+                            BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, targetBuild);
                     }
 
+                    break;
+                case EPlayerMode.RoadBuild:
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    {
+                        if (InputHandler.Instance.IsLeftMouseButtonPressedOnce())
+                        {
+                            roadStartPoint = GUIHandler.Instance.gui.markBounds.Location;
+                        }
+
+                        
+
+                        int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X + BuildingHandler.Instance.map.tilesize;
+                        int roadY = GUIHandler.Instance.gui.markBounds.Location.
+                            Y - roadStartPoint.Y;
+
+
+
+
+                        GUIHandler.Instance.gui.SetRoadMarkSize(new Rectangle(roadStartPoint, new Point(roadX, roadY)));
+
+
+                    }
+                    else if
+                    (BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkX)
+                    && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkY))
+                    {
+                        BuildingHandler.Instance.map.BuildRoad(GUIHandler.Instance.gui.roadMarkX);
+                        BuildingHandler.Instance.map.BuildRoad(GUIHandler.Instance.gui.roadMarkY);
+                    }
                     break;
                 default:
                     break;

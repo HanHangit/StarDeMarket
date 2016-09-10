@@ -56,12 +56,14 @@ namespace StarDeMarket
             Tile.tileColorData[2] = new Color[tilesize * tilesize];
             Tile.tileColorData[3] = new Color[tilesize * tilesize];
             Tile.tileColorData[4] = new Color[tilesize * tilesize];
+            Tile.tileColorData[5] = new Color[tilesize * tilesize];
 
             Tile.tileText[0] = Content.Load<Texture2D>("Tile/Grass01");
             Tile.tileText[1] = Content.Load<Texture2D>("Tile/Grass01");
             Tile.tileText[2] = Content.Load<Texture2D>("Tile/Water01");
             Tile.tileText[3] = Content.Load<Texture2D>("Tile/Rock01");
             Tile.tileText[4] = Content.Load<Texture2D>("Tile/Tree01");
+            Tile.tileText[5] = Content.Load<Texture2D>("Tile/road01");
 
             for (int i = 0; i < Tile.tileText.Length; ++i)
             {
@@ -121,7 +123,7 @@ namespace StarDeMarket
                     else
                         tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
                     if (j == 0)
-                        Console.WriteLine("Finished " + i / (map.Width / 100) + "%");
+                        Console.WriteLine("Finished " + (j + i * map.Width) / ((map.Width * map.Height) / 100) + "%");
 
                     int r = i * tilesize / splitSize;
                     int c = j * tilesize / splitSize;
@@ -135,18 +137,84 @@ namespace StarDeMarket
 
         }
 
+        public void BuildMap(Point location, Color[] color)
+        {
+
+            Point p = new Point(location.X % splitSize, location.Y % splitSize);
+            for (int i = p.Y; i < p.Y + tilesize; ++i)
+            {
+                textSplitMap[location.X / splitSize, location.Y / splitSize].SetData(0, new Rectangle(p, new Point(tilesize, tilesize)), color, 0, tilesize * tilesize);
+            }
+        }
+
+        public void BuildRoad(Rectangle bounds)
+        {
+
+            bounds = AbsoluteRect(bounds);
+
+            for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
+                {
+                    Tile tile = GetTile(new Point(i, j));
+                    tile.BuildRoad();
+                    BuildMap(new Point(i, j), tile.color);
+                }
+        }
+
+        Rectangle AbsoluteRect(Rectangle rect)
+        {
+
+            Rectangle nRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+
+            if (nRect.Width < 0)
+            {
+                nRect.X = nRect.Location.X + nRect.Width;
+                nRect.Width *= -1;
+                nRect.Width += tilesize;
+            }
+
+            if (nRect.Height < 0)
+            {
+                nRect.Y = nRect.Location.Y + nRect.Height;
+                nRect.Height *= -1;
+                nRect.Height += tilesize;
+            }
+
+            return nRect;
+        }
+
         public void Build(Rectangle bounds, Building building)
         {
 
+            bounds = AbsoluteRect(bounds);
+
+            if (Buildable(bounds))
+            {
+
+                for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
+                    for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+                    {
+                        Tile tile = GetTile(new Point(i, j));
+                        tile.Buildable = false;
+                        tile.refBuilding = building;
+                        BuildingHandler.Instance.buildingList.Add(building);
+                    }
+            }
         }
 
         public bool Buildable(Rectangle bounds)
         {
-            for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
-                for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+
+            bounds = AbsoluteRect(bounds);
+
+            for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
-                    if (!GetTile(new Point(i, j)).Walkable())
+
+                    if (!GetTile(new Point(i, j)).Buildable)
+                    {
                         return false;
+                    }
                 }
 
             return true;
