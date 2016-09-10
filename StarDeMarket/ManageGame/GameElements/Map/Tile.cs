@@ -93,9 +93,16 @@ namespace StarDeMarket
 
         }
 
-        public bool Walkable()
+        public bool Walkable
         {
-            return walkable;
+            get
+            {
+                return walkable;
+            }
+            set
+            {
+                walkable = value;
+            }
         }
 
         public override string ToString()

@@ -121,7 +121,7 @@ namespace StarDeMarket
                     else
                         tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
                     if (j == 0)
-                        Console.WriteLine("Finished " + i / (map.Width / 100) + "%");
+                        Console.WriteLine("Finished " + (j + i * map.Width) / ((map.Width * map.Height) / 100) + "%");
 
                     int r = i * tilesize / splitSize;
                     int c = j * tilesize / splitSize;
@@ -137,15 +137,23 @@ namespace StarDeMarket
 
         public void Build(Rectangle bounds, Building building)
         {
-
+            if(Buildable(bounds))
+            {
+                for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
+                    for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+                    {
+                        GetTile(new Point(i, j)).Walkable = false;
+                        BuildingHandler.Instance.buildingList.Add(building);
+                    }
+            }
         }
 
         public bool Buildable(Rectangle bounds)
         {
-            for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
-                for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+            for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
-                    if (!GetTile(new Point(i, j)).Walkable())
+                    if (!GetTile(new Point(i, j)).Walkable)
                         return false;
                 }
 

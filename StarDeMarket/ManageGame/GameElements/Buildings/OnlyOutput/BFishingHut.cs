@@ -28,6 +28,7 @@ namespace StarDeMarket
             storage = new Storage();
             name = "Fishing Hut";
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
@@ -47,6 +48,7 @@ namespace StarDeMarket
                 Console.WriteLine("Matthis hat scheiße gebaut");
                 //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
         }
+
         public override bool HasFullWorkforce()
         {
             if (listWorker.Count == 2)
