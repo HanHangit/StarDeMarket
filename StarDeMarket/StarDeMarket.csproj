@@ -59,6 +59,13 @@
     <Compile Include="ManageGame\GameElements\Humans\Human.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
     <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\CollectRessource.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\DropRessource.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\GetNewJob.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\MoveToTarget.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\PickUpNewJob.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\ProduceRessource.cs" />
+    <Compile Include="ManageGame\GameElements\Humans\Tasks\Task.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
     <Compile Include="GameStates\MainMenu.cs" />

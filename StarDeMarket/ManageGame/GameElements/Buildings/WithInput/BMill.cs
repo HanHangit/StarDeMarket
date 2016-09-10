@@ -77,5 +77,10 @@ namespace StarDeMarket
             else
                 return false;
         }
+
+        public override void EmployHuman(Human _human)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

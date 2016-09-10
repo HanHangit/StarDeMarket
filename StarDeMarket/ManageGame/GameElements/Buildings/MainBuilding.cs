@@ -11,13 +11,18 @@ namespace StarDeMarket
 {
     class MainBuilding : Building
     {
-        List<HNonWorker> avaiableWorker;
+        public List<HNonWorker> avaiableWorker;
 
         public MainBuilding(Vector2 _position, ContentManager _cont)
         {
             position = _position;
-            texture2D = _cont.Load<Texture2D>("Building/Main");
-            avaiableWorker = new List<StarDeMarket.HNonWorker>(10);
+            cont = _cont;
+            texture2D = cont.Load<Texture2D>("Building/Main");
+            avaiableWorker = new List<StarDeMarket.HNonWorker>();
+            for(int i = 0; i < 5; i++)
+            {
+                avaiableWorker.Add(new HNonWorker(position, Human.EGender.Male, cont, this));
+            }
             listWorker = null;
             name = "MainBuilding";
         }
@@ -35,12 +40,20 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-
+            if(avaiableWorker.Count > 0)
+            {
+                avaiableWorker[0].Update(gTime);
+            }
         }
 
         public override void Workerwork()
         {
 
+        }
+
+        public override void EmployHuman(Human human)
+        {
+            throw new NotImplementedException();
         }
     }
 }

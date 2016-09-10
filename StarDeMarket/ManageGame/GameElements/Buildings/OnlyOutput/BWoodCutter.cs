@@ -30,14 +30,18 @@ namespace StarDeMarket
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
-            if (tom != null)
-                tom.Draw(spriteBatch);
+            foreach(HWorker w in listWorker)
+            {
+                w.Draw(spriteBatch);
+            }
         }
 
         public override void Update(GameTime gTime)
         {
-            if(tom != null)
-                tom.Update(gTime);
+            foreach(HWorker w in listWorker)
+            {
+                w.Update(gTime);
+            }
         }
 
         public override void Workerwork()
@@ -52,6 +56,15 @@ namespace StarDeMarket
                 return true;
             else
                 return false;
+        }
+
+        public override void EmployHuman(Human _human)
+        {
+            if(HasFullWorkforce())
+            {
+                throw new Exception("AlreadyHasFullWorkforce");
+            }
+            listWorker.Add(new HWoodcutter(_human, this));
         }
     }
 }

@@ -13,15 +13,20 @@ namespace StarDeMarket
     class HNonWorker : Human
     {
         Vector2 target;
+        MainBuilding mainBuilding;
 
-        public HNonWorker(Vector2 _position, EGender _gender, ContentManager _cont)
+        public HNonWorker(Vector2 _position, EGender _gender, ContentManager _cont, MainBuilding _mainBuilding)
         {
             position = _position;
             gender = _gender;
             speed = 2f;
             cont = _cont;
+            Console.WriteLine(cont == null);
             texture = cont.Load<Texture2D>("Human/BasicHuman");
             SetTarget(new Vector2(200, 200));
+            mainBuilding = _mainBuilding;
+            building = mainBuilding;
+            taskList = new List<Task>();
         }
 
         public void SetTarget(Vector2 _target)
@@ -47,7 +52,22 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-            MoveToTarget();
+            Building _building = BuildingHandler.Instance.buildingList.Find(b => b is BWoodCutter && !b.HasFullWorkforce());
+            if (_building != null)
+            {
+                Console.WriteLine("I am gettin a new Job");
+                taskList.Add(new GetNewJob(_building, mainBuilding, this));
+            }
+            splitFirstTask();
+            if (taskList != null && !(taskList.Count == 0))
+            {
+                if(taskList[0] is PickUpNewJob)
+                {
+                    
+                    taskList[0].ExecuteSpecialTask();
+                    taskList.RemoveAt(0);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

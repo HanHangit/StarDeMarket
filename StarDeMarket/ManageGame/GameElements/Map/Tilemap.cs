@@ -22,7 +22,7 @@ namespace StarDeMarket
         //Tilesize
         public int tilesize = 8;
 
-        //Muss ein Vielfaches der TileSize sein
+        //Muss ein Vielfaches TileSize sein
         public int splitSize = 256;
 
         //Die aufgeteilte TileMap

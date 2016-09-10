@@ -22,6 +22,17 @@ namespace StarDeMarket
             texture = cont.Load<Texture2D>("Human/Woodcutter");
         }
 
+        public HWoodcutter(Human human, Building _building)
+        {
+            position = human.position;
+            gender = human.gender;
+            speed = human.speed;
+            taskList = human.taskList;
+            cont = human.cont;
+            texture = cont.Load<Texture2D>("Human/Woodcutter");
+            building = _building;
+        }
+
         public void SetTarget(Vector2 _target)
         {
             target = _target;
@@ -31,8 +42,7 @@ namespace StarDeMarket
         {
             if (position == target)
             {
-                Random rand = new Random(System.DateTime.Now.Millisecond);
-                SetTarget(new Vector2(rand.Next(0, 1000), rand.Next(0, 1000)));
+                taskList.RemoveAt(0);
             }
             Vector2 move = target - position;
             if (Math.Abs(move.X) > speed || Math.Abs(move.Y) > speed)
@@ -45,7 +55,18 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            MoveToTarget();
+            if(taskList != null && taskList.Count > 0)
+            {
+                splitFirstTask();
+                if(taskList[0] is MoveToTarget)
+                {
+                    SetTarget(taskList[0].GetTargetVector());
+                    MoveToTarget();
+                }
+                if(taskList[0] is PickUpNewJob)
+                {
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
