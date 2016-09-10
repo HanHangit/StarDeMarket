@@ -173,10 +173,19 @@ namespace StarDeMarket
                 }
                 else
                 {
-                    for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
-                        spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
-                    for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
-                        spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                    if (roadMark.Width > 0)
+                        for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
+                    else
+                        for (int i = -1 * roadMark.Width; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() - new Vector2(i, 0), Color.White);
+
+                    if (roadMark.Height > 0)
+                        for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                    else
+                        for (int i = -1 * roadMark.Height; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() - new Vector2(0, i), Color.White);
                 }
             }
 

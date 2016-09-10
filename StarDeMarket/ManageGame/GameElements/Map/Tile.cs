@@ -105,8 +105,8 @@ namespace StarDeMarket
 
         public void BuildRoad()
         {
-            walkable = true;
-            buildable = false;
+            Walkable = true;
+            Buildable = false;
             color = tileColorData[(int)ETile.Road];
         }
 

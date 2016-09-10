@@ -155,7 +155,7 @@ namespace StarDeMarket
             for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
                 for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
-                    Tile tile = GetTile(new Point(i / tilesize, j / tilesize));
+                    Tile tile = GetTile(new Point(i, j));
                     tile.BuildRoad();
                     BuildMap(new Point(i, j), tile.color);
                 }
