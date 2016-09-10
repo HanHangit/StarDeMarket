@@ -153,7 +153,7 @@ namespace StarDeMarket
                     {
                         if (InputHandler.Instance.IsLeftMouseButtonPressedOnce())
                         {
-                            roadStartPoint = BuildingHandler.Instance.map.GetTile(Mouse.GetState().Position).bounds.Location;
+                            roadStartPoint = GUIHandler.Instance.gui.markBounds.Location;
                         }
 
                         
@@ -161,6 +161,9 @@ namespace StarDeMarket
                         int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X + BuildingHandler.Instance.map.tilesize;
                         int roadY = GUIHandler.Instance.gui.markBounds.Location.
                             Y - roadStartPoint.Y;
+
+
+
 
                         GUIHandler.Instance.gui.SetRoadMarkSize(new Rectangle(roadStartPoint, new Point(roadX, roadY)));
 

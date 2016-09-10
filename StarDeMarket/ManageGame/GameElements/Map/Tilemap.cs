@@ -149,19 +149,48 @@ namespace StarDeMarket
 
         public void BuildRoad(Rectangle bounds)
         {
+
+            bounds = AbsoluteRect(bounds);
+
             for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
                 for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
-                    Tile tile = GetTile(new Point(i/tilesize, j/tilesize));
+                    Tile tile = GetTile(new Point(i / tilesize, j / tilesize));
                     tile.BuildRoad();
                     BuildMap(new Point(i, j), tile.color);
                 }
         }
 
+        Rectangle AbsoluteRect(Rectangle rect)
+        {
+
+            Rectangle nRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+
+            if (nRect.Width < 0)
+            {
+                nRect.X = nRect.Location.X + nRect.Width;
+                nRect.Width *= -1;
+                nRect.Width += tilesize;
+            }
+
+            if (nRect.Height < 0)
+            {
+                nRect.Y = nRect.Location.Y + nRect.Height;
+                nRect.Height *= -1;
+                nRect.Height += tilesize;
+            }
+
+            return nRect;
+        }
+
         public void Build(Rectangle bounds, Building building)
         {
-            if(Buildable(bounds))
+
+            bounds = AbsoluteRect(bounds);
+
+            if (Buildable(bounds))
             {
+
                 for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
                     for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
                     {
@@ -175,11 +204,17 @@ namespace StarDeMarket
 
         public bool Buildable(Rectangle bounds)
         {
+
+            bounds = AbsoluteRect(bounds);
+
             for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
-                for (int j = bounds.Y; j < bounds.Y + Math.Abs(bounds.Height); j += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
+
                     if (!GetTile(new Point(i, j)).Buildable)
+                    {
                         return false;
+                    }
                 }
 
             return true;

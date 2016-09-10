@@ -124,7 +124,7 @@ namespace StarDeMarket
 
             roadMark = bounds;
             roadMarkX = new Rectangle(bounds.Location, new Point(bounds.Width, BuildingHandler.Instance.map.tilesize));
-            roadMarkY = new Rectangle(new Point(roadMarkX.X + roadMarkX.Width - BuildingHandler.Instance.map.tilesize, roadMarkX.Y + roadMarkX.Height - BuildingHandler.Instance.map.tilesize),new Point(BuildingHandler.Instance.map.tilesize,bounds.Height));
+            roadMarkY = new Rectangle(new Point(roadMarkX.X + roadMarkX.Width - BuildingHandler.Instance.map.tilesize, roadMarkX.Y + roadMarkX.Height - BuildingHandler.Instance.map.tilesize), new Point(BuildingHandler.Instance.map.tilesize, bounds.Height));
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -144,24 +144,32 @@ namespace StarDeMarket
 
                 spriteBatch.DrawString(fpsFont, BuildingHandler.Instance.map.GetTile(markBounds.Location).ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
-            
-            
-                //Der Marker wird gezeichnet
-                if (BuildingHandler.Instance.map.Buildable(markBounds))
-                    spriteBatch.Draw(yellowMarkTile, markBounds.Location.ToVector2(), Color.White);
-                else
-                    spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
 
-                if (plyMode == EPlayerMode.RoadBuild)
-                {
+
+            //Der Marker wird gezeichnet
+            if (BuildingHandler.Instance.map.Buildable(markBounds))
+                spriteBatch.Draw(yellowMarkTile, markBounds.Location.ToVector2(), Color.White);
+            else
+                spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
+
+            if (plyMode == EPlayerMode.RoadBuild)
+            {
                 if (BuildingHandler.Instance.map.Buildable(roadMarkX)
                     && BuildingHandler.Instance.map.Buildable(roadMarkY))
                 {
+                    if (roadMark.Width > 0)
+                        for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(yellowMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
+                    else
+                        for (int i = -1 * roadMark.Width; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(yellowMarkTile, roadMarkX.Location.ToVector2() - new Vector2(i, 0), Color.White);
 
-                    for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
-                        spriteBatch.Draw(yellowMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
-                    for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
-                        spriteBatch.Draw(yellowMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                    if (roadMark.Height > 0)
+                        for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(yellowMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                    else
+                        for (int i = -1 * roadMark.Height; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
+                            spriteBatch.Draw(yellowMarkTile, roadMarkY.Location.ToVector2() - new Vector2(0, i), Color.White);
                 }
                 else
                 {
