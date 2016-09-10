@@ -56,12 +56,14 @@ namespace StarDeMarket
             Tile.tileColorData[2] = new Color[tilesize * tilesize];
             Tile.tileColorData[3] = new Color[tilesize * tilesize];
             Tile.tileColorData[4] = new Color[tilesize * tilesize];
+            Tile.tileColorData[5] = new Color[tilesize * tilesize];
 
             Tile.tileText[0] = Content.Load<Texture2D>("Tile/Grass01");
             Tile.tileText[1] = Content.Load<Texture2D>("Tile/Grass01");
             Tile.tileText[2] = Content.Load<Texture2D>("Tile/Water01");
             Tile.tileText[3] = Content.Load<Texture2D>("Tile/Rock01");
             Tile.tileText[4] = Content.Load<Texture2D>("Tile/Tree01");
+            Tile.tileText[5] = Content.Load<Texture2D>("Tile/road01");
 
             for (int i = 0; i < Tile.tileText.Length; ++i)
             {
@@ -135,6 +137,27 @@ namespace StarDeMarket
 
         }
 
+        public void BuildMap(Point location, Color[] color)
+        {
+
+            Point p = new Point(location.X % splitSize, location.Y % splitSize);
+            for (int i = p.Y; i < p.Y + tilesize; ++i)
+            {
+                textSplitMap[location.X / splitSize, location.Y / splitSize].SetData(0, new Rectangle(p, new Point(tilesize, tilesize)), color, 0, tilesize * tilesize);
+            }
+        }
+
+        public void BuildRoad(Rectangle bounds)
+        {
+            for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
+                {
+                    Tile tile = GetTile(new Point(i/tilesize, j/tilesize));
+                    tile.BuildRoad();
+                    BuildMap(new Point(i, j), tile.color);
+                }
+        }
+
         public void Build(Rectangle bounds, Building building)
         {
             if(Buildable(bounds))
@@ -142,7 +165,9 @@ namespace StarDeMarket
                 for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
                     for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
                     {
-                        GetTile(new Point(i, j)).Walkable = false;
+                        Tile tile = GetTile(new Point(i, j));
+                        tile.Buildable = false;
+                        tile.refBuilding = building;
                         BuildingHandler.Instance.buildingList.Add(building);
                     }
             }
@@ -151,9 +176,9 @@ namespace StarDeMarket
         public bool Buildable(Rectangle bounds)
         {
             for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
-                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + Math.Abs(bounds.Height); j += tilesize)
                 {
-                    if (!GetTile(new Point(i, j)).Walkable)
+                    if (!GetTile(new Point(i, j)).Buildable)
                         return false;
                 }
 

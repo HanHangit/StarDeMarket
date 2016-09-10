@@ -22,6 +22,10 @@ namespace StarDeMarket
         Texture2D yellowMarkTile;
         Texture2D redMarkTile;
 
+        public Rectangle roadMarkX;
+        public Rectangle roadMarkY;
+        Rectangle roadMark;
+
         Building debugBuild;
 
         public Rectangle markBounds;
@@ -115,6 +119,14 @@ namespace StarDeMarket
             redMarkTile.SetData(redMarkColor);
         }
 
+        public void SetRoadMarkSize(Rectangle bounds)
+        {
+
+            roadMark = bounds;
+            roadMarkX = new Rectangle(bounds.Location, new Point(bounds.Width, BuildingHandler.Instance.map.tilesize));
+            roadMarkY = new Rectangle(new Point(roadMarkX.X + roadMarkX.Width - BuildingHandler.Instance.map.tilesize, roadMarkX.Y + roadMarkX.Height - BuildingHandler.Instance.map.tilesize),new Point(BuildingHandler.Instance.map.tilesize,bounds.Height));
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (plyMode == EPlayerMode.Build)
@@ -132,12 +144,33 @@ namespace StarDeMarket
 
                 spriteBatch.DrawString(fpsFont, BuildingHandler.Instance.map.GetTile(markBounds.Location).ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
+            
+            
+                //Der Marker wird gezeichnet
+                if (BuildingHandler.Instance.map.Buildable(markBounds))
+                    spriteBatch.Draw(yellowMarkTile, markBounds.Location.ToVector2(), Color.White);
+                else
+                    spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
 
-            //Der Marker wird gezeichnet
-            if (BuildingHandler.Instance.map.Buildable(markBounds))
-                spriteBatch.Draw(yellowMarkTile, markBounds.Location.ToVector2(), Color.White);
-            else
-                spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
+                if (plyMode == EPlayerMode.RoadBuild)
+                {
+                if (BuildingHandler.Instance.map.Buildable(roadMarkX)
+                    && BuildingHandler.Instance.map.Buildable(roadMarkY))
+                {
+
+                    for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
+                        spriteBatch.Draw(yellowMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
+                    for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
+                        spriteBatch.Draw(yellowMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                }
+                else
+                {
+                    for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
+                        spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
+                    for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
+                        spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
+                }
+            }
 
             //Die FPS Anzeoge
             spriteBatch.DrawString(fpsFont, "FPS: " + fps, CameraHandler.Instance.screenCamera.position + new Vector2(10, 10), Color.Black);
