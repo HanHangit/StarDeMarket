@@ -18,7 +18,7 @@ namespace StarDeMarket
         Build
     }
 
-
+    
 
 
     class Player
@@ -26,6 +26,14 @@ namespace StarDeMarket
         //Wie bei den Gamestates, wenn sich der Modus ändert, dann wird was geändert.
         EPlayerMode mode;
         EPlayerMode prevMode;
+
+        EBuilding[] EBuildings = {EBuilding.MainBuilding,
+        EBuilding.Mill,
+        EBuilding.FishingHut,
+        EBuilding.Stonemason,
+        EBuilding.Woodcutter};
+
+        int currBuild = 0;
 
 
 
@@ -72,10 +80,7 @@ namespace StarDeMarket
                     case EPlayerMode.View:
                         break;
                     case EPlayerMode.Build:
-                        targetBuild = new BMill(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
-                        targetTypeBuild = EBuilding.Mill;
-                        GUIHandler.Instance.gui.SetBuilding(targetBuild);
-                        GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
+                        targetTypeBuild = EBuildings[currBuild];
                         break;
                     default:
                         break;
@@ -86,17 +91,51 @@ namespace StarDeMarket
             }
 
 
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.D1))
+                currBuild++;
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.D2))
+                currBuild--;
+
+            currBuild = MathHelper.Clamp(currBuild, 0, (int)EBuilding.Count - 1);
+
 
 
             switch (mode)
             {
                 case EPlayerMode.Build:
+                    targetTypeBuild = EBuildings[currBuild];
+                    switch (targetTypeBuild)
+                    {
+
+
+                        case EBuilding.MainBuilding:
+                            targetBuild = new MainBuilding(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            break;
+                        case EBuilding.FishingHut:
+                            targetBuild = new BFishingHut(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            break;
+                        case EBuilding.Mill:
+                            targetBuild = new BMill(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            break;
+                        case EBuilding.Stonemason:
+                            targetBuild = new BStonemason(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            break;
+                        case EBuilding.Woodcutter:
+                            targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            break;
+                    }
+
+                    GUIHandler.Instance.gui.SetBuilding(targetBuild);
+                    GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
+
+
+                    if (InputHandler.Instance.IsLeftMouseButtonPressedOnce())
+                        BuildingHandler.Instance.buildingList.Add(targetBuild);
+
                     break;
                 default:
                     break;
             }
-
-
             prevMode = mode;
         }
 
@@ -120,6 +159,7 @@ namespace StarDeMarket
             CameraHandler.Instance.screenCamera.position = position;
 
             HandlePlayerMode();
+
         }
     }
 

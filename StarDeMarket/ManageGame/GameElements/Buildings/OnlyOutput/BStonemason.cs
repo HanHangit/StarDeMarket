@@ -26,7 +26,7 @@ namespace StarDeMarket
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
-            name = "StneMason";
+            name = "StoneMason";
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

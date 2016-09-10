@@ -86,7 +86,6 @@ namespace StarDeMarket
         /// <param name="size">Größe des Kasten</param>
         public void SetMarkSize(Point size)
         {
-            Console.WriteLine(size);
             markTile = new Texture2D(Graphics.graph.GraphicsDevice, size.X,size.Y);
 
             Color[] markColor = new Color[size.X * size.Y];
