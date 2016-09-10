@@ -19,17 +19,18 @@ namespace StarDeMarket
 
         int fps;
 
-        Texture2D markTile;
+        Texture2D yellowMarkTile;
+        Texture2D redMarkTile;
 
         Building debugBuild;
 
-        public Point markPosition;
+        public Rectangle markBounds;
 
         public EPlayerMode plyMode;
 
         public GUI(ContentManager cont)
         {
-            markPosition = new Point(0, 0);
+            markBounds = new Rectangle(0, 0, 0, 0);
 
             plyMode = EPlayerMode.View;
 
@@ -37,26 +38,12 @@ namespace StarDeMarket
 
             fpsFont = Content.Load<SpriteFont>("Font/FPSFont");
 
-            markTile = new Texture2D(Graphics.graph.GraphicsDevice, BuildingHandler.Instance.map.tilesize, BuildingHandler.Instance.map.tilesize);
+
 
             int tilesize = BuildingHandler.Instance.map.tilesize;
 
-            Color[] markColor = new Color[tilesize * tilesize];
-            Color mark = Color.Yellow;
+            SetMarkSize(new Point(tilesize, tilesize));
 
-            for (int i = 0; i < markColor.Length; ++i)
-            {
-                if (i < tilesize)
-                    markColor[i] = mark;
-                if (i % tilesize == 0)
-                    markColor[i] = mark;
-                if (i % tilesize == tilesize - 1)
-                    markColor[i] = mark;
-                if (i / tilesize == tilesize - 1)
-                    markColor[i] = mark;
-            }
-
-            markTile.SetData(markColor);
         }
 
 
@@ -67,7 +54,7 @@ namespace StarDeMarket
 
 
 
-            markPosition = BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location;
+            markBounds.Location = BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location;
 
 
 
@@ -86,43 +73,76 @@ namespace StarDeMarket
         /// <param name="size">Größe des Kasten</param>
         public void SetMarkSize(Point size)
         {
-            markTile = new Texture2D(Graphics.graph.GraphicsDevice, size.X,size.Y);
 
-            Color[] markColor = new Color[size.X * size.Y];
-            Color mark = Color.Yellow;
+            markBounds.Size = size;
 
-            for (int i = 0; i < markColor.Length; ++i)
+            yellowMarkTile = new Texture2D(Graphics.graph.GraphicsDevice, size.X, size.Y);
+
+            redMarkTile = new Texture2D(Graphics.graph.GraphicsDevice, size.X, size.Y);
+
+
+            Color[] yellMarkColor = new Color[size.X * size.Y];
+            Color yellowMark = Color.Yellow;
+
+            Color[] redMarkColor = new Color[size.X * size.Y];
+            Color redMark = Color.Red;
+
+            for (int i = 0; i < yellMarkColor.Length; ++i)
             {
                 if (i < size.X)
-                    markColor[i] = mark;
+                {
+                    yellMarkColor[i] = yellowMark;
+                    redMarkColor[i] = redMark;
+                }
                 if (i % size.X == 0)
-                    markColor[i] = mark;
+                {
+                    yellMarkColor[i] = yellowMark;
+                    redMarkColor[i] = redMark;
+                }
                 if (i % size.X == size.X - 1)
-                    markColor[i] = mark;
+                {
+                    yellMarkColor[i] = yellowMark;
+                    redMarkColor[i] = redMark;
+                }
                 if (i / size.X == size.Y - 1)
-                    markColor[i] = mark;
+                {
+                    yellMarkColor[i] = yellowMark;
+                    redMarkColor[i] = redMark;
+                }
             }
 
-            markTile.SetData(markColor);
+            yellowMarkTile.SetData(yellMarkColor);
+            redMarkTile.SetData(redMarkColor);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (plyMode == EPlayerMode.Build)
             {
-                spriteBatch.Draw(markTile, markPosition.ToVector2(), Color.White);
+
 
                 spriteBatch.DrawString(fpsFont, "Press 'V' to go to View Mode. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
 
 
                 spriteBatch.DrawString(fpsFont, debugBuild.ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
-            else if(plyMode == EPlayerMode.View)
+            else if (plyMode == EPlayerMode.View)
             {
                 spriteBatch.DrawString(fpsFont, "Press 'B' to Build. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
+
+                spriteBatch.DrawString(fpsFont, BuildingHandler.Instance.map.GetTile(markBounds.Location).ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
 
+            //Der Marker wird gezeichnet
+            if (BuildingHandler.Instance.map.Buildable(markBounds))
+                spriteBatch.Draw(yellowMarkTile, markBounds.Location.ToVector2(), Color.White);
+            else
+                spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
+
+            //Die FPS Anzeoge
             spriteBatch.DrawString(fpsFont, "FPS: " + fps, CameraHandler.Instance.screenCamera.position + new Vector2(10, 10), Color.Black);
+
+            //DIe Position des Mauszeiger
             spriteBatch.DrawString(fpsFont, "Position: " + BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 30), Color.Black);
         }
     }

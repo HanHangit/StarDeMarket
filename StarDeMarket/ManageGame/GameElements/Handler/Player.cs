@@ -18,7 +18,7 @@ namespace StarDeMarket
         Build
     }
 
-    
+
 
 
     class Player
@@ -58,7 +58,7 @@ namespace StarDeMarket
 
         void HandlePlayerMode()
         {
-            
+
             if (InputHandler.Instance.IsKeyPressedOnce(Keys.B))
             {
                 mode = EPlayerMode.Build;
@@ -78,6 +78,7 @@ namespace StarDeMarket
                 switch (mode)
                 {
                     case EPlayerMode.View:
+                        GUIHandler.Instance.gui.SetMarkSize(new Point(BuildingHandler.Instance.map.tilesize, BuildingHandler.Instance.map.tilesize));
                         break;
                     case EPlayerMode.Build:
                         targetTypeBuild = EBuildings[currBuild];
@@ -86,7 +87,7 @@ namespace StarDeMarket
                         break;
                 }
 
-                
+
 
             }
 
@@ -109,28 +110,30 @@ namespace StarDeMarket
 
 
                         case EBuilding.MainBuilding:
-                            targetBuild = new MainBuilding(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            targetBuild = new MainBuilding(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                             break;
                         case EBuilding.FishingHut:
-                            targetBuild = new BFishingHut(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            targetBuild = new BFishingHut(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                             break;
                         case EBuilding.Mill:
-                            targetBuild = new BMill(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            targetBuild = new BMill(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                             break;
                         case EBuilding.Stonemason:
-                            targetBuild = new BStonemason(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            targetBuild = new BStonemason(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                             break;
                         case EBuilding.Woodcutter:
-                            targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                            targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                             break;
                     }
+                    if (targetBuild != null)
+                    {
+                        GUIHandler.Instance.gui.SetBuilding(targetBuild);
+                        GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
 
-                    GUIHandler.Instance.gui.SetBuilding(targetBuild);
-                    GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
 
-
-                    if (InputHandler.Instance.IsLeftMouseButtonPressedOnce())
-                        BuildingHandler.Instance.buildingList.Add(targetBuild);
+                        if (InputHandler.Instance.IsLeftMouseButtonPressedOnce() && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.markBounds))
+                            BuildingHandler.Instance.buildingList.Add(targetBuild);
+                    }
 
                     break;
                 default:

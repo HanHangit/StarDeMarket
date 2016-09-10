@@ -57,7 +57,7 @@ namespace StarDeMarket
         }
         public void SetContentManager(ContentManager _cont)
         {
-            cont = _cont;
+            cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
             buildingList.Add(new BWoodCutter(new Vector2(200, 200), cont));
             buildingList.Add(new BMill(new Vector2(400, 400), cont));
             bMainBuilding = new MainBuilding(new Vector2(700, 300), cont);

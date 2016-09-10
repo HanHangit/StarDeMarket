@@ -135,6 +135,22 @@ namespace StarDeMarket
 
         }
 
+        public void Build(Rectangle bounds, Building building)
+        {
+
+        }
+
+        public bool Buildable(Rectangle bounds)
+        {
+            for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+                {
+                    if (!GetTile(new Point(i, j)).Walkable())
+                        return false;
+                }
+
+            return true;
+        }
 
 
         public Tile GetTile(Point position)
@@ -203,8 +219,8 @@ namespace StarDeMarket
             for (int i = 0; i < textSplitMap.GetLength(0); ++i)
                 for (int j = 0; j < textSplitMap.GetLength(1); ++j)
                 {
-                    Rectangle exactMiniMap = new Rectangle(miniMapRect.X + i * miniMapSize.X / textSplitMap.GetLength(0)  , 
-                        miniMapRect.Y  + j * miniMapSize.X / textSplitMap.GetLength(1)
+                    Rectangle exactMiniMap = new Rectangle(miniMapRect.X + i * miniMapSize.X / textSplitMap.GetLength(0),
+                        miniMapRect.Y + j * miniMapSize.X / textSplitMap.GetLength(1)
                         , miniMapSize.X / textSplitMap.GetLength(0) + 1, miniMapSize.X / textSplitMap.GetLength(1) + 1);
 
                     spriteBatch.Draw(textSplitMap[i, j], exactMiniMap, Color.White);
