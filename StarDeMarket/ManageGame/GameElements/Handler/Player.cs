@@ -158,7 +158,7 @@ namespace StarDeMarket
 
                         
 
-                        int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X - BuildingHandler.Instance.map.tilesize;
+                        int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X + BuildingHandler.Instance.map.tilesize;
                         int roadY = GUIHandler.Instance.gui.markBounds.Location.
                             Y - roadStartPoint.Y;
 
