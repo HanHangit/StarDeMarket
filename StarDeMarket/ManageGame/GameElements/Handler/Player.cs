@@ -23,9 +23,15 @@ namespace StarDeMarket
 
     class Player
     {
-
+        //Wie bei den Gamestates, wenn sich der Modus ändert, dann wird was geändert.
         EPlayerMode mode;
         EPlayerMode prevMode;
+
+
+
+        //Das ausgewählte Gebäude zum bauen
+        Building targetBuild;
+        EBuilding targetTypeBuild;
 
         ContentManager Content;
 
@@ -44,7 +50,20 @@ namespace StarDeMarket
 
         void HandlePlayerMode()
         {
-            if(prevMode != mode)
+            
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.B))
+            {
+                mode = EPlayerMode.Build;
+            }
+
+            if (InputHandler.Instance.IsKeyPressedOnce(Keys.V))
+            {
+                mode = EPlayerMode.View;
+            }
+
+
+            //Falls sich der Modus ändert, wird der Modus an andere Handler weitergegeben
+            if (prevMode != mode)
             {
                 GUIHandler.Instance.gui.plyMode = mode;
 
@@ -53,13 +72,32 @@ namespace StarDeMarket
                     case EPlayerMode.View:
                         break;
                     case EPlayerMode.Build:
-                        GUIHandler.Instance.gui.SetMarkSize(new Point(16, 16));
+                        targetBuild = new BMill(GUIHandler.Instance.gui.markPosition.ToVector2(), Content);
+                        targetTypeBuild = EBuilding.Mill;
+                        GUIHandler.Instance.gui.SetBuilding(targetBuild);
+                        GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
                         break;
                     default:
                         break;
                 }
+
+                
+
             }
 
+
+
+
+            switch (mode)
+            {
+                case EPlayerMode.Build:
+                    break;
+                default:
+                    break;
+            }
+
+
+            prevMode = mode;
         }
 
         public void Update(GameTime gTime)
@@ -81,25 +119,7 @@ namespace StarDeMarket
 
             CameraHandler.Instance.screenCamera.position = position;
 
-
-            if (InputHandler.Instance.IsKeyPressedOnce(Keys.B))
-            {
-                mode = EPlayerMode.Build;
-            }
-
-            if (InputHandler.Instance.IsKeyPressedOnce(Keys.V))
-            {
-                mode = EPlayerMode.View;
-            }
-
-            switch (mode)
-            {
-                case EPlayerMode.Build:
-                    break;
-                default:
-                    break;
-            }
-                HandlePlayerMode();
+            HandlePlayerMode();
         }
     }
 

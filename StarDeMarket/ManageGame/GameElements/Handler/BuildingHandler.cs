@@ -36,7 +36,6 @@ namespace StarDeMarket
             }
         }
 
-
         public void Update(GameTime gTime)
         {
             map.Update(gTime);

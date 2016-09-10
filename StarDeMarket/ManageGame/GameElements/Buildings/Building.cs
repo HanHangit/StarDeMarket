@@ -9,13 +9,49 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
+    //Enums for Buildings
+    enum EBuilding
+    {
+        MainBuilding,
+        Mill,
+        FishingHut,
+        Stonemason,
+        Woodcutter,
+        Count
+    }
+
     public abstract class Building
     {
+
         public abstract void Draw(SpriteBatch spriteBatch);                //Zeichnet
         public abstract void Update(GameTime gTime);
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
 
+        public override string ToString()
+        {
+            return name;
+        }
+
+        //Größe des Gebäudes
+        public Rectangle Bounds
+        {
+            get
+            {
+                if (bounds.Width == 0 || bounds.Height == 0)
+                {
+                    bounds = new Rectangle((int)position.X, (int)position.Y, texture2D.Width, texture2D.Height);
+                }
+
+                return bounds;
+            }
+            set
+            {
+                bounds = value;
+            }
+        }
+
+        protected Rectangle bounds;
         protected ContentManager cont;
         protected List<HWorker> listWorker; 
         protected Texture2D texture2D;
@@ -23,6 +59,7 @@ namespace StarDeMarket
         protected int costs;
         protected int output;
         protected int person;
+        protected string name;
 
 
     }

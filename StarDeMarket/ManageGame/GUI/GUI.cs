@@ -21,6 +21,8 @@ namespace StarDeMarket
 
         Texture2D markTile;
 
+        Building debugBuild;
+
         public Point markPosition;
 
         public EPlayerMode plyMode;
@@ -73,12 +75,18 @@ namespace StarDeMarket
 
         }
 
+        public void SetBuilding(Building target)
+        {
+            debugBuild = target;
+        }
+
         /// <summary>
         /// Setzt die Größe des Auswahlkästchen
         /// </summary>
         /// <param name="size">Größe des Kasten</param>
         public void SetMarkSize(Point size)
         {
+            Console.WriteLine(size);
             markTile = new Texture2D(Graphics.graph.GraphicsDevice, size.X,size.Y);
 
             Color[] markColor = new Color[size.X * size.Y];
@@ -92,7 +100,7 @@ namespace StarDeMarket
                     markColor[i] = mark;
                 if (i % size.X == size.X - 1)
                     markColor[i] = mark;
-                if (i / size.X == size.X - 1)
+                if (i / size.X == size.Y - 1)
                     markColor[i] = mark;
             }
 
@@ -106,6 +114,9 @@ namespace StarDeMarket
                 spriteBatch.Draw(markTile, markPosition.ToVector2(), Color.White);
 
                 spriteBatch.DrawString(fpsFont, "Press 'V' to go to View Mode. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
+
+
+                spriteBatch.DrawString(fpsFont, debugBuild.ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
             else if(plyMode == EPlayerMode.View)
             {

@@ -19,6 +19,7 @@ namespace StarDeMarket
             texture2D = _cont.Load<Texture2D>("Building/Main");
             avaiableWorker = new List<StarDeMarket.HNonWorker>(10);
             listWorker = null;
+            name = "MainBuilding";
         }
 
         public override void Draw(SpriteBatch spriteBatch)

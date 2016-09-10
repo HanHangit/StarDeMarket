@@ -25,6 +25,7 @@ namespace StarDeMarket
             listWorker = new List<HWorker>();
             texture2D = cont.Load<Texture2D>("Building/Mill");
             position = _pos;
+            name = "Mill";
         }
 
         public override void Update(GameTime gTime)

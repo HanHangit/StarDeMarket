@@ -22,6 +22,7 @@ namespace StarDeMarket
         //Tilesize
         public int tilesize = 8;
 
+        //Muss ein Vielfaches der TileSize sein
         public int splitSize = 256;
 
         //Die aufgeteilte TileMap
@@ -150,6 +151,7 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
+            //TODO: Nur Tiles updaten die man sehen kann
             /*
             for (int i = 0; i < tileMap.GetLength(0); ++i)
                 for (int j = 0; j < tileMap.GetLength(1); ++j)
