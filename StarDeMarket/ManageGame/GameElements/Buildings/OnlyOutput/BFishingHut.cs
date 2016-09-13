@@ -28,16 +28,24 @@ namespace StarDeMarket
             {
                 taskQueue.Enqueue(new CollectTask(this, output[i]));
             };
+
+            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
+            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
+            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
 
         }
 
         public override void Update(GameTime gTime)
         {
+            base.Update(gTime);
+            
 
             if(taskQueue.Count == 0)
             {
@@ -45,8 +53,8 @@ namespace StarDeMarket
                 for (int i = 0; i < output.Length; ++i)
                 {
 
-                    if (storage.Check(EItem.Holz, 5))
-                        taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5));
+                    if (storage.Check(output[i], 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5));
                     else
                         taskQueue.Enqueue(new CollectTask(this, output[i]));
                 };

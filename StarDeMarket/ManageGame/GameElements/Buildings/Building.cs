@@ -24,11 +24,20 @@ namespace StarDeMarket
     abstract class Building
     {
 
-        public abstract void Draw(SpriteBatch spriteBatch);                //Zeichnet
-        public abstract void Update(GameTime gTime);
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (Human h in listWorker)
+                h.Draw(spriteBatch);
+        }
+        public virtual void Update(GameTime gTime)
+        {
+            foreach (Human h in listWorker)
+                h.Update(gTime);
+        }
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
 
+        
 
         public override string ToString()
         {

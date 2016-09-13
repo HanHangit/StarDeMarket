@@ -106,7 +106,7 @@ namespace StarDeMarket
             else if (status == EStatus.WorkOnTarget)
             {
                 startTimer += (float)gTime.ElapsedGameTime.TotalSeconds * human.workSpeed;
-                if (startTimer >= 1000f)
+                if (startTimer >= 1f)
                 {
                     startTimer = 0;
                     status = EStatus.BackToBase;
