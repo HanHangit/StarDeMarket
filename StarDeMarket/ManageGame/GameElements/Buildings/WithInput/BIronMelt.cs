@@ -18,11 +18,11 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Eisenbarren };
         int[] outputCount = { 1 };
-        public BIronMelt(Vector2 _pos, ContentManager _cont)
+        public BIronMelt(Vector2 _pos, ContentManager cont)
         {
-            storage = new Storage();
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/IronMelt");
+            storage = new Storage();
             position = _pos;
             name = "IronMelt";
         }

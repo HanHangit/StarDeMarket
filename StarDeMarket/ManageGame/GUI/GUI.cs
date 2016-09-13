@@ -135,7 +135,7 @@ namespace StarDeMarket
 
                 spriteBatch.DrawString(fpsFont, "Press 'V' to go to View Mode. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
 
-
+                if(debugBuild != null)
                 spriteBatch.DrawString(fpsFont, debugBuild.ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
             else if (plyMode == EPlayerMode.View)

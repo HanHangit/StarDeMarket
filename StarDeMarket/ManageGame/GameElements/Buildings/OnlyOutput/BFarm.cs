@@ -17,9 +17,9 @@ namespace StarDeMarket
         EItem[] output = { EItem.Getreide };
         int[] outputCount = { 2 };
 
-        public BFarm(Vector2 _pos, ContentManager _cont)
+        public BFarm(Vector2 _pos, ContentManager cont)
         {
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Farm");
             position = _pos;
             storage = new Storage();

@@ -18,11 +18,11 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Bretter };
         int[] outputCount = { 1 };
-        public BSawmill(Vector2 _pos, ContentManager _cont)
+        public BSawmill(Vector2 _pos, ContentManager cont)
         {
-            storage = new Storage();
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Sawmill");
+            storage = new Storage();
             position = _pos;
             name = "Sawmill";
         }

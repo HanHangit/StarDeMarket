@@ -47,8 +47,8 @@
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />
-    <Compile Include="HanHanTask\HanHanCollect.cs" />
-    <Compile Include="HanHanTask\HanHanTask.cs" />
+    <Compile Include="HanHanTask\CollectTask.cs" />
+    <Compile Include="HanHanTask\Task.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BIronMelt.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BBaker.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BSawmill.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="ManageGame\GameElements\Camera\Graphics.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
     <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
-    <Compile Include="HanHanTask\MyHuman.cs" />
+    <Compile Include="HanHanTask\Human.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
     <Compile Include="GameStates\MainMenu.cs" />

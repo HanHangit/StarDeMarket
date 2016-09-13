@@ -116,26 +116,31 @@ namespace StarDeMarket
             switch (mode)
             {
                 case EPlayerMode.Build:
-                    targetTypeBuild = EBuildings[currBuild];
-                    switch (targetTypeBuild)
+
+                    if (targetTypeBuild != EBuildings[currBuild] ||targetBuild == null)
                     {
+                        targetTypeBuild = EBuildings[currBuild];
+
+                        switch (targetTypeBuild)
+                        {
 
 
-                        case EBuilding.MainBuilding:
-                            targetBuild = new MainBuilding(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
-                            break;
-                        case EBuilding.FishingHut:
-                            targetBuild = new BFishingHut(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
-                            break;
-                        case EBuilding.Mill:
-                            targetBuild = new BMill(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
-                            break;
-                        case EBuilding.Stonemason:
-                            targetBuild = new BStonemason(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
-                            break;
-                        case EBuilding.Woodcutter:
-                            targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
-                            break;
+                            case EBuilding.MainBuilding:
+                                targetBuild = new MainBuilding(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.FishingHut:
+                                targetBuild = new BFishingHut(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Mill:
+                                targetBuild = new BMill(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Stonemason:
+                                targetBuild = new BStonemason(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Woodcutter:
+                                targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                        }
                     }
                     if (targetBuild != null)
                     {
@@ -146,7 +151,9 @@ namespace StarDeMarket
                         if (InputHandler.Instance.IsLeftMouseButtonPressedOnce() && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.markBounds))
                         {
                             Console.WriteLine("Build: " + targetBuild.ToString());
+                            targetBuild.Bounds = GUIHandler.Instance.gui.markBounds;
                             BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, targetBuild);
+                            targetBuild = null;
                         }
                     }
 
@@ -159,7 +166,7 @@ namespace StarDeMarket
                             roadStartPoint = GUIHandler.Instance.gui.markBounds.Location;
                         }
 
-                        
+
 
                         int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X + BuildingHandler.Instance.map.tilesize;
                         int roadY = GUIHandler.Instance.gui.markBounds.Location.

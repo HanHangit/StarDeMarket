@@ -18,7 +18,7 @@ namespace StarDeMarket
         None
     }
 
-    class HanHanCollect : HanHanTask
+    class CollectTask : Task
     {
         EItem toCollect;
 
@@ -31,7 +31,7 @@ namespace StarDeMarket
         Tile targetTile;
 
 
-        public HanHanCollect(Building building, EItem collect) : base(building)
+        public CollectTask(Building building, EItem collect) : base(building)
         {
             toCollect = collect;
             status = EStatus.SearchTarget;

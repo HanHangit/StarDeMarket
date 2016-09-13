@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace StarDeMarket
 {
-    class HanHanToStorage : HanHanTask
+    class HanHanToStorage : Task
     {
 
         EItem item;

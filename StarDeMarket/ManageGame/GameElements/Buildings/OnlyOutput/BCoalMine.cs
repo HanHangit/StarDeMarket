@@ -12,15 +12,16 @@ namespace StarDeMarket
 
     class BCoalMine : OnlyOutput
     {
-        
+
         Storage storage;
         EItem[] output = { EItem.Kohle };
         int[] outputCount = { 2 };
 
-        public BCoalMine(Vector2 _pos, ContentManager _cont)
+        public BCoalMine(Vector2 _pos, ContentManager cont)
         {
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/CoalMine");
+
             position = _pos;
             storage = new Storage();
             name = "CoalMine";
@@ -28,7 +29,7 @@ namespace StarDeMarket
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
+            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
         }
 
         public override void Update(GameTime gTime)
@@ -39,7 +40,7 @@ namespace StarDeMarket
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Bergmann Kohle fehlt!");
-                //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+            //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
         }
 
         public override bool HasFullWorkforce()
@@ -49,5 +50,6 @@ namespace StarDeMarket
             else
                 return false;
         }
+
     }
 }
