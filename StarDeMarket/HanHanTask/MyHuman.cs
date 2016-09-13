@@ -56,13 +56,13 @@ namespace StarDeMarket
 
             if (normMove.Length() < speed)
             {
-                position += normMove * (float)gTime.ElapsedGameTime.TotalSeconds;
+                position += normMove;
                 return true;
             }
             else
             {
                 normMove.Normalize();
-                normMove *= speed;
+                normMove *= speed * (float)gTime.ElapsedGameTime.TotalMilliseconds;
                 position += normMove;
                 return false;
             }
