@@ -44,6 +44,11 @@ namespace StarDeMarket
             workSpeed = 1;
         }
 
+        public void SetBuilding(Building build)
+        {
+            building = build;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
@@ -70,7 +75,6 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-
             if (currTask != null)
             {
                 if (currTask.DoTask(gTime))

@@ -15,14 +15,12 @@ namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<Building> buildingList;
-        public MainBuilding bMainBuilding;
 
         ContentManager cont;
 
         BuildingHandler()
         {
             buildingList = new List<Building>();
-
         }
 
         public static BuildingHandler Instance
@@ -43,7 +41,6 @@ namespace StarDeMarket
             {
                 b.Update(gTime);
             }
-            bMainBuilding.Update(gTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -53,13 +50,11 @@ namespace StarDeMarket
             {
                 b.Draw(spriteBatch);
             }
-            bMainBuilding.Draw(spriteBatch);
         }
         public void SetContentManager(ContentManager _cont)
         {
             cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
-            bMainBuilding = new MainBuilding(new Vector2(200, 800), cont);
-
+            buildingList.Add(new MainBuilding(new Vector2(200, 800), cont));
         }
     }
 }

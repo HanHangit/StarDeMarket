@@ -14,7 +14,7 @@ namespace StarDeMarket
 
         EStatus status;
 
-        Point target;
+        MainBuilding target;
 
         int amount;
 
@@ -22,7 +22,7 @@ namespace StarDeMarket
         {
             this.item = item;
             status = EStatus.OnBase;
-            target = BuildingHandler.Instance.bMainBuilding.Bounds.Location;
+            target = (MainBuilding)BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding);
             amount = _amount;
         }
 
@@ -38,12 +38,12 @@ namespace StarDeMarket
                     status = EStatus.MoveToTarget;
                     return false;
                 case EStatus.MoveToTarget:
-                    human.Target = target;
+                    human.Target = target.Bounds.Location;
                     if (human.MoveToTarget(gTime))
                         status = EStatus.WorkOnTarget;
                     return false;
                 case EStatus.WorkOnTarget:
-                    BuildingHandler.Instance.bMainBuilding.Storage.Add(item, amount);
+                    target.Storage.Add(item, amount);
                     human.storage.Get(item, amount);
                     status = EStatus.BackToBase;
                     human.Target = build.Bounds.Location;

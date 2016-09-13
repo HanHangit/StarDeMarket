@@ -33,6 +33,12 @@ namespace StarDeMarket
         {
             foreach (Human h in listWorker)
                 h.Update(gTime);
+
+
+            if (listWorker.Count < 2)
+            {
+                BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
+            }
         }
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
@@ -42,6 +48,23 @@ namespace StarDeMarket
         public override string ToString()
         {
             return name;
+        }
+
+
+        public bool GetWorker(Building build, int amount)
+        {
+            if (listWorker.Count >= amount)
+            {
+                for (int i = 0; i < amount; ++i)
+                {
+                    Console.WriteLine("Worker Tranferiert");
+                    build.EmployHuman(listWorker[0]);
+                    listWorker[0].SetBuilding(build);
+                    listWorker.RemoveAt(0);
+                }
+                return true;
+            }
+            return false;
         }
 
         //Größe des Gebäudes
@@ -79,7 +102,7 @@ namespace StarDeMarket
 
         public Task GetTask(Human human)
         {
-
+            
             if (taskQueue.Count == 0)
                 return null;
             else

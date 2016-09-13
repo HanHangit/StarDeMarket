@@ -34,20 +34,6 @@ namespace StarDeMarket
             return true;
         }
 
-        public bool GetWorker(Building build, int amount)
-        {
-            if(listWorker.Count >= amount)
-            {
-                for (int i = 0; i < amount; ++i)
-                {
-                    build.EmployHuman(listWorker[0]);
-                    listWorker.RemoveAt(0);
-                }
-                return true;
-            }
-            return false;
-        }
-
         public override void Update(GameTime gTime)
         {
         }

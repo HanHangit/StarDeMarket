@@ -29,10 +29,6 @@ namespace StarDeMarket
                 taskQueue.Enqueue(new CollectTask(this, output[i]));
             };
 
-            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
-            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
-            listWorker.Add(new Human(position, 1, cont.Load<Texture2D>("Human/BasicHuman"), this));
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,9 +41,9 @@ namespace StarDeMarket
         public override void Update(GameTime gTime)
         {
             base.Update(gTime);
-            
 
-            if(taskQueue.Count == 0)
+
+            if (taskQueue.Count == 0)
             {
 
                 for (int i = 0; i < output.Length; ++i)
