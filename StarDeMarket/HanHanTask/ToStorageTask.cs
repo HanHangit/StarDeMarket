@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace StarDeMarket
 {
-    class HanHanToStorage : Task
+    class ToStorageTask : Task
     {
 
         EItem item;
@@ -18,7 +18,7 @@ namespace StarDeMarket
 
         int amount;
 
-        public HanHanToStorage(Building build, EItem item, int _amount) : base(build)
+        public ToStorageTask(Building build, EItem item, int _amount) : base(build)
         {
             this.item = item;
             status = EStatus.OnBase;

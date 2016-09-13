@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\HanHanToStorage.cs" />
+    <Compile Include="HanHanTask\ToStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />

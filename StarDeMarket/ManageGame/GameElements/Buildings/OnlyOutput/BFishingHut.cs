@@ -23,7 +23,11 @@ namespace StarDeMarket
             position = _pos;
             storage = new Storage();
             name = "Fishing Hut";
-            taskQueue.Enqueue(new CollectTask(this, EItem.Holz));
+            
+            for(int i = 0; i < output.Length; ++i)
+            {
+                taskQueue.Enqueue(new CollectTask(this, output[i]));
+            };
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -35,14 +39,17 @@ namespace StarDeMarket
         public override void Update(GameTime gTime)
         {
 
-
-            if (taskQueue.Count == 0)
+            if(taskQueue.Count == 0)
             {
-                if(storage.Check(EItem.Holz,5))
-                    taskQueue.Enqueue(new HanHanToStorage(this, EItem.Holz,5));
-                else
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Holz));
 
+                for (int i = 0; i < output.Length; ++i)
+                {
+
+                    if (storage.Check(EItem.Holz, 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5));
+                    else
+                        taskQueue.Enqueue(new CollectTask(this, output[i]));
+                };
             }
 
         }
