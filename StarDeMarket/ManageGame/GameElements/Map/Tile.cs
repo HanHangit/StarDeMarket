@@ -88,7 +88,7 @@ namespace StarDeMarket
                     break;
                 case ETile.Tree:
                     name = "Tree";
-                    lager.Add(EItem.Holz, 1000);
+                    lager.Add(EItem.Holz, 10);
                     buildable = false;
                     break;
                 default:

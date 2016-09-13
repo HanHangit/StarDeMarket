@@ -27,12 +27,14 @@ namespace StarDeMarket
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
         }
 
 
         public override void Update(GameTime gTime)
         {
+            base.Update(gTime);
             if (taskQueue.Count == 0)
             {
                 if(storage.getCount(EItem.Holz) > 5)
