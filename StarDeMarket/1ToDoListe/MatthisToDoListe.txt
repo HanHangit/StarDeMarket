@@ -1,3 +1,6 @@
 ﻿ToDoListe für Matthis damit er alles hier reinschreiben und dann ruhen kann...
 
 -- Rohstoffsuche mit Boundingboxen machen!!!
+-- Tostorage und collectressource in alle gebäude rein
+-- getRessource from Storage
+-- Eventuell Baustelle und StorageBuilding

@@ -13,7 +13,6 @@ namespace StarDeMarket
     class BStonemason : OnlyOutput
     {
         
-        Storage storage;
         EItem[] output = { EItem.Stein };
         int[] outputCount = { 2 };
 
@@ -27,11 +26,24 @@ namespace StarDeMarket
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
         }
 
         public override void Update(GameTime gTime)
         {
+            base.Update(gTime);
+            if(taskQueue.Count == 0)
+            {
+                if(storage.getCount(EItem.Stein) > 5)
+                {
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Stein, 5));
+                }
+                else
+                {
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Stein));
+                }
+            }
         }
 
         public override void Workerwork()

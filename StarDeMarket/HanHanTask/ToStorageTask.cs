@@ -54,7 +54,6 @@ namespace StarDeMarket
                     return false;
                 default:
                     return true;
-
             }
         }
     }

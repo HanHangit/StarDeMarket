@@ -11,8 +11,6 @@ namespace StarDeMarket
 {
     class BIronMelt : BuildingWithInput
     {
-        Storage storage;
-
         EItem[] input = { EItem.Eisen, EItem.Kohle };
         int[] inputCount = { 2 };
 
