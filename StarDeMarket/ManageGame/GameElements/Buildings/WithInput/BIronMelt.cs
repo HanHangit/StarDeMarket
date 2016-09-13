@@ -27,7 +27,7 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            Production();
+            Production(gTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -41,7 +41,7 @@ namespace StarDeMarket
                 Console.WriteLine("Ein Schmelzer fehlt hier! HILFE!@Matthis");
         }
 
-        public override void Production()
+        public override void Production(GameTime gTime)
         {
             if (CheckRessourcen())
             {

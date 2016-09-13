@@ -32,7 +32,9 @@ namespace StarDeMarket
         EBuilding.Mill,
         EBuilding.FishingHut,
         EBuilding.Stonemason,
-        EBuilding.Woodcutter};
+        EBuilding.Woodcutter,
+        EBuilding.Sawmill,
+            };
 
         int currBuild = 0;
 
@@ -123,8 +125,6 @@ namespace StarDeMarket
 
                         switch (targetTypeBuild)
                         {
-
-
                             case EBuilding.MainBuilding:
                                 targetBuild = new MainBuilding(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
@@ -139,6 +139,9 @@ namespace StarDeMarket
                                 break;
                             case EBuilding.Woodcutter:
                                 targetBuild = new BWoodCutter(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Sawmill:
+                                targetBuild = new BSawmill(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
                         }
                     }

@@ -41,6 +41,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HanHanTask\FromStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="HanHanTask\ToStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />

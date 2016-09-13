@@ -7,9 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace StarDeMarket
 {
-    class ToStorageTask : Task
+    class FromStorageTask : Task
     {
-
         EItem item;
 
         EStatus status;
@@ -18,41 +17,50 @@ namespace StarDeMarket
 
         int amount;
 
-        public ToStorageTask(Building build, EItem item, int _amount) : base(build)
+        public FromStorageTask(Building building, EItem _item, int _amount) : base(building)
         {
-            this.item = item;
-            status = EStatus.OnBase;
-            target = (MainBuilding)BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding);
+
+            item = _item;
+            status = EStatus.Preparing;
             amount = _amount;
+            target = (MainBuilding)BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && (b.Storage.getCount(item) >= amount));
+            if (target == null)
+            {
+                status = EStatus.None;
+            }
         }
 
         public override bool DoTask(GameTime gTime)
         {
-            
-            switch(status)
+            switch (status)
             {
-                case EStatus.OnBase:
-                    if (!build.Storage.Check(item, amount))
-                        return true;
-                    build.Storage.Get(item, amount);
-                    human.storage.Add(item, amount);
+                case EStatus.Preparing:
+                    human.Target = target.Bounds.Location;
                     status = EStatus.MoveToTarget;
                     return false;
                 case EStatus.MoveToTarget:
-                    human.Target = target.Bounds.Location;
                     if (human.MoveToTarget(gTime))
+                    {
                         status = EStatus.WorkOnTarget;
+                    }
                     return false;
                 case EStatus.WorkOnTarget:
-                    target.Storage.Add(item, amount);
-                    human.storage.Get(item, amount);
+                    target.Storage.Get(item, amount);
+                    human.storage.Add(item, amount);
                     status = EStatus.BackToBase;
                     human.Target = build.Bounds.Location;
                     return false;
                 case EStatus.BackToBase:
                     if (human.MoveToTarget(gTime))
-                        return true;
+                    {
+                        status = EStatus.OnBase;
+                    }
                     return false;
+                case EStatus.OnBase:
+                    human.storage.Get(item, amount);
+                    build.Storage.Add(item, amount);
+                    status = EStatus.None;
+                    return true;
                 default:
                     return true;
             }

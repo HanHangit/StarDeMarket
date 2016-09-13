@@ -18,6 +18,9 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Brot };
         int[] outputCount = { 1 };
+
+        bool currentlyProducing;
+
         public BBaker(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -25,11 +28,12 @@ namespace StarDeMarket
             storage = new Storage();
             position = _pos;
             name = "Baker";
+            currentlyProducing = false;
         }
 
         public override void Update(GameTime gTime)
         {
-            Production();
+            Production(gTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -43,19 +47,19 @@ namespace StarDeMarket
                 Console.WriteLine("Ein Bäcker fehlt hier! HILFE!@Matthis");
         }
 
-        public override void Production()
+        public override void Production(GameTime gTime)
         {
-            if (CheckRessourcen())
+            if (CheckRessourcen() && !currentlyProducing)
             {
+                currentlyProducing = true;
                 for (int i = 0; i < input.Length; ++i)
                 {
                     storage.Get(input[i], inputCount[i]);
                 }
-
-                for (int i = 0; i < output.Length; ++i)
-                {
-                    storage.Add(output[i], outputCount[i]);
-                }
+            }
+            if(currentlyProducing)
+            {
+                
             }
         }
 

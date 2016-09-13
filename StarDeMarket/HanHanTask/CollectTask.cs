@@ -15,6 +15,7 @@ namespace StarDeMarket
         WorkOnTarget,
         BackToBase,
         OnBase,
+        Preparing,
         None
     }
 

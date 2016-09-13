@@ -18,6 +18,7 @@ namespace StarDeMarket
         FishingHut,
         Stonemason,
         Woodcutter,
+        Sawmill,
         Count
     }
 
@@ -127,7 +128,6 @@ namespace StarDeMarket
         protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;
-        protected int output;
         protected int person;
         protected string name;
 
