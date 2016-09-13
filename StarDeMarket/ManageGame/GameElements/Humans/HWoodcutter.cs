@@ -17,13 +17,14 @@ namespace StarDeMarket
         {
             position = _position;
             gender = _gender;
-            speed = 2f;
+            speed = 1f;
             cont = _cont;
             texture = cont.Load<Texture2D>("Human/Woodcutter");
         }
 
         public HWoodcutter(Human human, Building _building)
         {
+            
             position = human.position;
             gender = human.gender;
             speed = human.speed;
@@ -45,15 +46,15 @@ namespace StarDeMarket
                 taskList.RemoveAt(0);
             }
             Vector2 move = target - position;
-            float curSpeed = (speed * gTime.ElapsedGameTime.Milliseconds) / 4800;
+            float curSpeed = speed * (float)gTime.ElapsedGameTime.TotalMilliseconds / 20;
             if (Math.Abs(move.X) > curSpeed || Math.Abs(move.Y) > curSpeed)
             {
                 move.Normalize();
                 move *= curSpeed;
             }
+
             if (move.Length() > 2f)
             {
-                Console.WriteLine("uiaeuidaeuiaeuiae");
             }
             position += move;
         }

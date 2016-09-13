@@ -24,6 +24,7 @@ namespace StarDeMarket
 
         public override void ExecuteSpecialTask()
         {
+            Console.WriteLine("ExecuteSpecialTask");
             mainBuilding.avaiableWorker.Remove(nonWorker);
             building.EmployHuman(human);
         }

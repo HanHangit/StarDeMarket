@@ -12,7 +12,6 @@ namespace StarDeMarket
 {
     class Tilemap
     {
-
         //SchriftArt
         SpriteFont font;
 
@@ -46,6 +45,7 @@ namespace StarDeMarket
 
         public Tilemap(string strMap, ContentManager cont)
         {
+
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
 
             //For faster loading
@@ -197,8 +197,10 @@ namespace StarDeMarket
                         Tile tile = GetTile(new Point(i, j));
                         tile.Buildable = false;
                         tile.refBuilding = building;
-                        BuildingHandler.Instance.buildingList.Add(building);
                     }
+
+                BuildingHandler.Instance.buildingList.Add(building);
+
             }
         }
 

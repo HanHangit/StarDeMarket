@@ -22,6 +22,8 @@ namespace StarDeMarket
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
 
+            IsFixedTimeStep = false;
+
             Graphics.graph = graphics;
 
         }

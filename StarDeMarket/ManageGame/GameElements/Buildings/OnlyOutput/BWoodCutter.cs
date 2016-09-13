@@ -36,6 +36,7 @@ namespace StarDeMarket
             }
         }
 
+
         public override void Update(GameTime gTime)
         {
             foreach(HWorker w in listWorker)

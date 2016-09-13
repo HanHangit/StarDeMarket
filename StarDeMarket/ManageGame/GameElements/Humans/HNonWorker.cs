@@ -21,7 +21,6 @@ namespace StarDeMarket
             gender = _gender;
             speed = 2f;
             cont = _cont;
-            Console.WriteLine(cont == null);
             texture = cont.Load<Texture2D>("Human/BasicHuman");
             SetTarget(new Vector2(200, 200));
             mainBuilding = _mainBuilding;
