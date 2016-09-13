@@ -17,9 +17,9 @@ namespace StarDeMarket
         EItem[] output = { EItem.Holz };
         int[] outputCount = { 2 };
 
-        public BWoodCutter(Vector2 _pos, ContentManager cont)
+        public BWoodCutter(Vector2 _pos, ContentManager _cont)
         {
-            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+            cont = _cont;
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
@@ -37,7 +37,11 @@ namespace StarDeMarket
             {
                 if(storage.getCount(EItem.Holz) > 5)
                 {
-                    //
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5));
+                }
+                else
+                {
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Holz));
                 }
             }
         }
