@@ -73,19 +73,14 @@ namespace StarDeMarket
 
             if (currTask != null)
             {
-                currTask.SetHuman(this);
                 if (currTask.DoTask(gTime))
                 {
-                    Console.WriteLine("Finished Job");
-                    Console.WriteLine(building.Storage.ToString());
                     currTask = null;
                 }
             }
             else
             {
-                Console.WriteLine("New Task");
-
-                currTask = building.GetTask;                
+                currTask = building.GetTask(this);                
             }
 
         }

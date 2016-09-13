@@ -65,17 +65,9 @@
     <Compile Include="ManageGame\GameElements\Handler\CameraHandler.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Camera.cs" />
     <Compile Include="ManageGame\GameElements\Camera\Graphics.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Human.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
     <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
     <Compile Include="HanHanTask\MyHuman.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\CollectRessource.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\DropRessource.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\GetNewJob.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\MoveToTarget.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\PickUpNewJob.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\ProduceRessource.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\Tasks\Task.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
     <Compile Include="GameStates\MainMenu.cs" />
@@ -84,9 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ManageGame\GameElements\Map\Tile.cs" />
     <Compile Include="ManageGame\GameElements\Map\Tilemap.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\HNonWorker.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\HWorker.cs" />
-    <Compile Include="ManageGame\GameElements\Humans\HWoodcutter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

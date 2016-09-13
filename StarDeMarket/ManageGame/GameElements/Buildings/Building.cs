@@ -28,7 +28,6 @@ namespace StarDeMarket
         public abstract void Update(GameTime gTime);
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
-        public abstract void EmployHuman(Human _human);
 
 
         public override string ToString()
@@ -68,26 +67,25 @@ namespace StarDeMarket
 
 
 
-        public HanHanTask GetTask
+        public HanHanTask GetTask(MyHuman human)
         {
-            get
-            {
-                if (taskQueue.Count == 0)
-                    return null;
-                else
-                    return taskQueue.Dequeue();
-            }
-            set
-            {
 
+            if (taskQueue.Count == 0)
+                return null;
+            else
+            {
+                HanHanTask t = taskQueue.Dequeue();
+                t.SetHuman(human);
+                return t;
             }
+
         }
 
         protected Queue<HanHanTask> taskQueue = new Queue<HanHanTask>();
 
         protected Rectangle bounds;
         protected ContentManager cont;
-        protected List<HWorker> listWorker;
+        protected List<MyHuman> listWorker;
         protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;

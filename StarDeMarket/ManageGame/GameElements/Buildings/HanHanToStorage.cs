@@ -44,8 +44,6 @@ namespace StarDeMarket
                     return false;
                 case EStatus.WorkOnTarget:
                     BuildingHandler.Instance.bMainBuilding.Storage.Add(item, amount);
-                    Console.WriteLine("MainBuildingStorage");
-                    Console.WriteLine(BuildingHandler.Instance.bMainBuilding.Storage.ToString());
                     human.storage.Get(item, amount);
                     status = EStatus.BackToBase;
                     human.Target = build.Bounds.Location;

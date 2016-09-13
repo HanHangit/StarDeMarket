@@ -16,12 +16,10 @@ namespace StarDeMarket
         Storage storage;
         EItem[] output = { EItem.Holz };
         int[] outputCount = { 2 };
-        HWoodcutter tom;
 
         public BWoodCutter(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
-            listWorker = new List<HWorker>();
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
@@ -30,18 +28,10 @@ namespace StarDeMarket
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
-            foreach(HWorker w in listWorker)
-            {
-                w.Draw(spriteBatch);
-            }
         }
 
         public override void Update(GameTime gTime)
         {
-            foreach(HWorker w in listWorker)
-            {
-                w.Update(gTime);
-            }
         }
 
         public override void Workerwork()
@@ -56,15 +46,6 @@ namespace StarDeMarket
                 return true;
             else
                 return false;
-        }
-
-        public override void EmployHuman(Human _human)
-        {
-            if(HasFullWorkforce())
-            {
-                throw new Exception("AlreadyHasFullWorkforce");
-            }
-            listWorker.Add(new HWoodcutter(_human, this));
         }
     }
 }

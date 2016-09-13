@@ -16,13 +16,10 @@ namespace StarDeMarket
         Storage storage;
         EItem[] output = { EItem.Eisen };
         int[] outputCount = { 2 };
-        //ToDo: Fischer
-        HWoodcutter tom;
 
         public BIronMine(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
-            listWorker = new List<HWorker>();
             texture2D = cont.Load<Texture2D>("Building/IronMine");
             position = _pos;
             storage = new Storage();
@@ -32,14 +29,10 @@ namespace StarDeMarket
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
-            if (tom != null)
-                tom.Draw(spriteBatch);
         }
 
         public override void Update(GameTime gTime)
         {
-            if(tom != null)
-                tom.Update(gTime);
         }
 
         public override void Workerwork()
@@ -55,11 +48,6 @@ namespace StarDeMarket
                 return true;
             else
                 return false;
-        }
-
-        public override void EmployHuman(Human _human)
-        {
-            throw new NotImplementedException();
         }
     }
 }

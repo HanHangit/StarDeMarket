@@ -22,7 +22,6 @@ namespace StarDeMarket
         {
             storage = new Storage();
             cont = _cont;
-            listWorker = new List<HWorker>();
             texture2D = cont.Load<Texture2D>("Building/Mill");
             position = _pos;
             name = "Mill";
@@ -76,11 +75,6 @@ namespace StarDeMarket
                 return true;
             else
                 return false;
-        }
-
-        public override void EmployHuman(Human _human)
-        {
-            throw new NotImplementedException();
         }
     }
 }
