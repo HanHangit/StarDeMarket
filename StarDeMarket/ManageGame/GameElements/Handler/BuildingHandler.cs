@@ -43,7 +43,6 @@ namespace StarDeMarket
             {
                 b.Update(gTime);
             }
-            bMainBuilding.Update(gTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -53,7 +52,6 @@ namespace StarDeMarket
             {
                 b.Draw(spriteBatch);
             }
-            bMainBuilding.Draw(spriteBatch);
         }
         public void SetContentManager(ContentManager _cont)
         {
@@ -67,7 +65,8 @@ namespace StarDeMarket
             buildingList.Add(new BCoalMine(new Vector2(600, 600), cont));
             buildingList.Add(new BFarm(new Vector2(800, 600), cont));
             buildingList.Add(new BBaker(new Vector2(400, 800), cont));
-            bMainBuilding = new MainBuilding(new Vector2(200, 800), cont);
+            buildingList.Add(new MainBuilding(new Vector2(200, 200), cont));
+            
 
         }
     }

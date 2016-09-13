@@ -38,17 +38,22 @@ namespace StarDeMarket
             target = _target;
         }
 
-        void MoveToTarget()
+        void MoveToTarget(GameTime gTime)
         {
             if (position == target)
             {
                 taskList.RemoveAt(0);
             }
             Vector2 move = target - position;
-            if (Math.Abs(move.X) > speed || Math.Abs(move.Y) > speed)
+            float curSpeed = (speed * gTime.ElapsedGameTime.Milliseconds) / 4800;
+            if (Math.Abs(move.X) > curSpeed || Math.Abs(move.Y) > curSpeed)
             {
                 move.Normalize();
-                move *= speed;
+                move *= curSpeed;
+            }
+            if (move.Length() > 2f)
+            {
+                Console.WriteLine("uiaeuidaeuiaeuiae");
             }
             position += move;
         }
@@ -61,7 +66,7 @@ namespace StarDeMarket
                 if(taskList[0] is MoveToTarget)
                 {
                     SetTarget(taskList[0].GetTargetVector());
-                    MoveToTarget();
+                    MoveToTarget(gTime);
                 }
                 if(taskList[0] is PickUpNewJob)
                 {
