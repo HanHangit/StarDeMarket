@@ -18,11 +18,11 @@ namespace StarDeMarket
 
         EItem[] output = { EItem.Brot };
         int[] outputCount = { 1 };
-        public BBaker(Vector2 _pos, ContentManager _cont)
+        public BBaker(Vector2 _pos, ContentManager cont)
         {
-            storage = new Storage();
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Baker");
+            storage = new Storage();
             position = _pos;
             name = "Baker";
         }
@@ -76,6 +76,7 @@ namespace StarDeMarket
             else
                 return false;
         }
+
     }
 }
 

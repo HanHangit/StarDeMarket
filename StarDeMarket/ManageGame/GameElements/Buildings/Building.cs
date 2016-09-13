@@ -49,7 +49,8 @@ namespace StarDeMarket
             }
             set
             {
-                bounds = value;
+                bounds = new Rectangle(value.X, value.Y, value.Width, value.Height);
+                position = bounds.Location.ToVector2();
             }
         }
 
@@ -67,25 +68,30 @@ namespace StarDeMarket
 
 
 
-        public HanHanTask GetTask(MyHuman human)
+        public Task GetTask(Human human)
         {
 
             if (taskQueue.Count == 0)
                 return null;
             else
             {
-                HanHanTask t = taskQueue.Dequeue();
+                Task t = taskQueue.Dequeue();
                 t.SetHuman(human);
                 return t;
             }
 
         }
 
-        protected Queue<HanHanTask> taskQueue = new Queue<HanHanTask>();
+        public void EmployHuman(Human human)
+        {
+            listWorker.Add(human);
+        }
+
+        protected Queue<Task> taskQueue = new Queue<Task>();
 
         protected Rectangle bounds;
         protected ContentManager cont;
-        protected List<MyHuman> listWorker;
+        protected List<Human> listWorker = new List<Human>();
         protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;

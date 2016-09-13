@@ -12,12 +12,15 @@ namespace StarDeMarket
     class MainBuilding : Building
     {
 
-        public MainBuilding(Vector2 _position, ContentManager _cont)
+        public MainBuilding(Vector2 _position, ContentManager cont)
         {
             position = _position;
-            cont = _cont;
-            texture2D = cont.Load<Texture2D>("Building/Main");
             name = "MainBuilding";
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
+            texture2D = cont.Load<Texture2D>("Building/Main");
+            for (int i = 0; i < 100; ++i)
+                listWorker.Add(new Human(position, 5, cont.Load<Texture2D>("Human/BasicHuman"), this));
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -31,13 +34,26 @@ namespace StarDeMarket
             return true;
         }
 
+        public bool GetWorker(Building build, int amount)
+        {
+            if(listWorker.Count >= amount)
+            {
+                for (int i = 0; i < amount; ++i)
+                {
+                    build.EmployHuman(listWorker[0]);
+                    listWorker.RemoveAt(0);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public override void Update(GameTime gTime)
         {
         }
 
         public override void Workerwork()
         {
-
         }
     }
 }

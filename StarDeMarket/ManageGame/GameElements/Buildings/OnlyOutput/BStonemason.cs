@@ -17,9 +17,9 @@ namespace StarDeMarket
         EItem[] output = { EItem.Stein };
         int[] outputCount = { 2 };
 
-        public BStonemason(Vector2 _pos, ContentManager _cont)
+        public BStonemason(Vector2 _pos, ContentManager cont)
         {
-            cont = _cont;
+            this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();

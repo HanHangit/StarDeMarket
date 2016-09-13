@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StarDeMarket
 {
-    class MyHuman
+    class Human
     {
 
         public Vector2 position { get; protected set; }
@@ -16,7 +16,7 @@ namespace StarDeMarket
         public float workSpeed { get; protected set; }
         Texture2D texture;
         Building building;
-        public HanHanTask currTask;
+        public Task currTask;
         Point target;
         public Storage storage;
 
@@ -34,7 +34,7 @@ namespace StarDeMarket
 
 
 
-        public MyHuman(Vector2 pos, float spd, Texture2D text, Building build)
+        public Human(Vector2 pos, float spd, Texture2D text, Building build)
         {
             storage = new Storage();
             position = pos;

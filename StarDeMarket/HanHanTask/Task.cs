@@ -10,19 +10,19 @@ namespace StarDeMarket
 
 
 
-    abstract class HanHanTask
+    abstract class Task
     {
 
-        public HanHanTask(Building building)
+        public Task(Building building)
         {
             build = building;
         }
 
-        protected MyHuman human;
+        protected Human human;
         protected Building build;
 
         public abstract bool DoTask(GameTime gTime);
-        public void SetHuman(MyHuman hum)
+        public void SetHuman(Human hum)
         {
             human = hum;
         }
