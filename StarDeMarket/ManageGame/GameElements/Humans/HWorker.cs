@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StarDeMarket
 {
-    public abstract class HWorker : Human
+    abstract class HWorker : Human
     {
         Storage personalStorage;
 

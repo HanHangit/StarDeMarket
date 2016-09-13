@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using StarDeMarket;
 
 namespace StarDeMarket
 {
@@ -20,7 +21,7 @@ namespace StarDeMarket
         Count
     }
 
-    public abstract class Building
+    abstract class Building
     {
 
         public abstract void Draw(SpriteBatch spriteBatch);                //Zeichnet
@@ -28,6 +29,7 @@ namespace StarDeMarket
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
         public abstract void EmployHuman(Human _human);
+
 
         public override string ToString()
         {
@@ -52,15 +54,48 @@ namespace StarDeMarket
             }
         }
 
+        public Storage Storage
+        {
+            get
+            {
+                return storage;
+            }
+
+            set
+            {
+            }
+        }
+
+
+
+        public HanHanTask GetTask
+        {
+            get
+            {
+                if (taskQueue.Count == 0)
+                    return null;
+                else
+                    return taskQueue.Dequeue();
+            }
+            set
+            {
+
+            }
+        }
+
+        protected Queue<HanHanTask> taskQueue = new Queue<HanHanTask>();
+
         protected Rectangle bounds;
         protected ContentManager cont;
-        protected List<HWorker> listWorker; 
+        protected List<HWorker> listWorker;
         protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;
         protected int output;
         protected int person;
         protected string name;
+
+        protected Storage storage = new Storage();
 
 
     }

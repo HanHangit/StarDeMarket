@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    public abstract class Human
+    abstract class Human
     {
         public enum EGender
         {

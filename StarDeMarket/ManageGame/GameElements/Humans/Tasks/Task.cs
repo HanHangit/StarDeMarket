@@ -12,7 +12,7 @@ namespace StarDeMarket
         MoveToTarget
     }
 
-    public class Task
+    class Task
     {
         public bool hasSubTask { get; protected set; }
         protected Human human;

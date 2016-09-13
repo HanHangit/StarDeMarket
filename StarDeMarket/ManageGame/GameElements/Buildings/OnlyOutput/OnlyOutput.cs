@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarDeMarket
 {
-    public abstract class OnlyOutput : Building
+    abstract class OnlyOutput : Building
     {
 
     }

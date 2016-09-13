@@ -42,10 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\HanHanToStorage.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />
+    <Compile Include="HanHanTask\HanHanCollect.cs" />
+    <Compile Include="HanHanTask\HanHanTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BIronMelt.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BBaker.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BSawmill.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="ManageGame\GameElements\Humans\Human.cs" />
     <Compile Include="GameStates\IGameStates.cs" />
     <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
+    <Compile Include="HanHanTask\MyHuman.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Tasks\CollectRessource.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Tasks\DropRessource.cs" />
     <Compile Include="ManageGame\GameElements\Humans\Tasks\GetNewJob.cs" />

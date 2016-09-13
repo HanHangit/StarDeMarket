@@ -15,7 +15,7 @@ namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<Building> buildingList;
-        MainBuilding bMainBuilding;
+        public MainBuilding bMainBuilding;
 
         ContentManager cont;
 
@@ -58,15 +58,6 @@ namespace StarDeMarket
         public void SetContentManager(ContentManager _cont)
         {
             cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
-            buildingList.Add(new BWoodCutter(new Vector2(200, 400), cont));
-            buildingList.Add(new BMill(new Vector2(400, 400), cont));
-            buildingList.Add(new BSawmill(new Vector2(600, 400), cont));
-            buildingList.Add(new BBaker(new Vector2(800, 600), cont));
-            buildingList.Add(new BIronMelt(new Vector2(200, 600), cont));
-            buildingList.Add(new BIronMine(new Vector2(400, 600), cont));
-            buildingList.Add(new BCoalMine(new Vector2(600, 600), cont));
-            buildingList.Add(new BFarm(new Vector2(800, 600), cont));
-            buildingList.Add(new BBaker(new Vector2(400, 800), cont));
             bMainBuilding = new MainBuilding(new Vector2(200, 800), cont);
 
         }

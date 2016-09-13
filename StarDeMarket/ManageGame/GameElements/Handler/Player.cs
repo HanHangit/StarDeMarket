@@ -144,7 +144,10 @@ namespace StarDeMarket
 
 
                         if (InputHandler.Instance.IsLeftMouseButtonPressedOnce() && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.markBounds))
+                        {
+                            Console.WriteLine("Build: " + targetBuild.ToString());
                             BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, targetBuild);
+                        }
                     }
 
                     break;

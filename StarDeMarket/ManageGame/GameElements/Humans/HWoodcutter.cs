@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    public class HWoodcutter : HWorker
+    class HWoodcutter : HWorker
     {
         Vector2 target;
 

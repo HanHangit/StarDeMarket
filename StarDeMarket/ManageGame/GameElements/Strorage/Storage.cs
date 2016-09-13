@@ -28,11 +28,32 @@ namespace StarDeMarket
 
         int[] system = new int[(int)EItem.Count];
 
-        public void Get(EItem item, int value)
+        public int Get(EItem item, int value)
         {
-            system[(int)item] -= value;
+            if (Check(item, value))
+            {
+                system[(int)item] -= value;
+                return value;
+            }
+            else
+            {
+                int h = system[(int)item];
+                system[(int)item] = 0;
+                return h;
+            }
         }
-         
+
+        public int Get(EItem item)
+        {
+            if (Check(item, 1))
+            {
+                system[(int)item] -= 1;
+                return 1;
+            }
+            else
+                return 0;
+        }
+
 
 
         public bool Check(EItem item, int value)

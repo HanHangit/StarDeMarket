@@ -48,7 +48,7 @@ namespace StarDeMarket
 
         public Rectangle bounds { get; private set; }
 
-        public string name { get; private set; }
+        public string name { get; set; }
 
         bool buildable;
 
@@ -60,7 +60,7 @@ namespace StarDeMarket
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
-            walkable = false;
+            walkable = true;
             refBuilding = null;
             lager = new Storage();
             pos = position;
