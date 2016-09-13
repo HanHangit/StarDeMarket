@@ -13,7 +13,6 @@ namespace StarDeMarket
     class BWoodCutter : OnlyOutput
     {
         
-        Storage storage;
         EItem[] output = { EItem.Holz };
         int[] outputCount = { 2 };
 
