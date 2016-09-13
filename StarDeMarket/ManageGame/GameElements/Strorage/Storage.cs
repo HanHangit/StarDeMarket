@@ -54,8 +54,6 @@ namespace StarDeMarket
                 return 0;
         }
 
-
-
         public bool Check(EItem item, int value)
         {
             if (system[(int)item] >= value)
@@ -64,7 +62,10 @@ namespace StarDeMarket
                 return false;
         }
 
-
+        public int getCount(EItem item)
+        {
+            return system[(int)item];
+        }
 
         public void Add(EItem item)
         {

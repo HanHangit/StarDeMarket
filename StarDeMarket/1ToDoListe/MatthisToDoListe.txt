@@ -1,4 +1,3 @@
-﻿ToDoListe für Matthis damit er niemals Ruhen kann und ewig an diesem Projekt arbeiten muss...
+﻿ToDoListe für Matthis damit er alles hier reinschreiben und dann ruhen kann...
 
--- MainHaus
--- Fischer, Schreiner, BergmannKohle, BergmannEisen, Schmelzer, Steinmetz, Farmer, Müller, Bäcker ... erstellen! (HUMANS)
+-- Rohstoffsuche mit Boundingboxen machen!!!

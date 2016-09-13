@@ -33,6 +33,13 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
+            if (taskQueue.Count == 0)
+            {
+                if(storage.getCount(EItem.Holz) > 5)
+                {
+                    //
+                }
+            }
         }
 
         public override void Workerwork()
