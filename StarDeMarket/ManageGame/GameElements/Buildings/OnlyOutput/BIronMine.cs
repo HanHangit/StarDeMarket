@@ -12,11 +12,6 @@ namespace StarDeMarket
 
     class BIronMine : OnlyOutput
     {
-        
-        Storage storage;
-        EItem[] output = { EItem.Eisen };
-        int[] outputCount = { 2 };
-
         public BIronMine(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -24,6 +19,9 @@ namespace StarDeMarket
             position = _pos;
             storage = new Storage();
             name = "IronMine";
+
+            output = new EItem[] { EItem.Eisen };
+            outputCount = new int[] { 2 };
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -36,7 +34,7 @@ namespace StarDeMarket
         {
             base.Update(gTime);
             if (taskQueue.Count == 0)
-            {
+            { 
                 if (storage.getCount(EItem.Eisen) > 5)
                 {
                     taskQueue.Enqueue(new ToStorageTask(this, EItem.Eisen, 5));

@@ -11,13 +11,6 @@ namespace StarDeMarket
 {
     class BMill : BuildingWithInput
     {
-        Storage storage;
-
-        EItem[] input = { EItem.Getreide};
-        int[] inputCount = { 2};
-
-        EItem[] output = { EItem.Mehl };
-        int[] outputCount = { 1 };
         public BMill(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -25,48 +18,47 @@ namespace StarDeMarket
             storage = new Storage();
             position = _pos;
             name = "Mill";
+
+            productionTime = 3;
+
+            input = new EItem[] { EItem.Getreide };
+            inputCount = new int[] { 2 };
+
+            output = new EItem[] { EItem.Mehl };
+            outputCount = new int[] { 1 };
         }
 
         public override void Update(GameTime gTime)
         {
             Production(gTime);
+            base.Update(gTime);
+            if (taskQueue.Count == 0)
+            {
+                if (storage.getCount(EItem.Getreide) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Getreide, 5));
+                }
+                if (storage.getCount(EItem.Kohle) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5));
+                }
+                if (storage.getCount(EItem.Mehl) > 5)
+                {
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Mehl, 5));
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
+            base.Draw(spriteBatch);
         }
 
         public override void Workerwork()
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Ein Mueller fehlt hier! HILFE!@Matthis");
-        }
-
-        public override void Production(GameTime gTime)
-        {
-            if (CheckRessourcen())
-            {
-                for (int i = 0; i < input.Length; ++i)
-                {
-                    storage.Get(input[i], inputCount[i]);
-                }
-
-                for (int i = 0; i < output.Length; ++i)
-                {
-                    storage.Add(output[i], outputCount[i]);
-                }
-            }
-        }
-
-        public override bool CheckRessourcen()
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (!storage.Check(input[i], inputCount[i]))
-                    return false;
-            }
-            return true;
         }
 
         public override bool HasFullWorkforce()

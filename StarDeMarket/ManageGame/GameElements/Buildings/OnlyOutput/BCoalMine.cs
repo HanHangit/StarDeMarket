@@ -12,11 +12,6 @@ namespace StarDeMarket
 
     class BCoalMine : OnlyOutput
     {
-
-        Storage storage;
-        EItem[] output = { EItem.Kohle };
-        int[] outputCount = { 2 };
-
         public BCoalMine(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -25,6 +20,9 @@ namespace StarDeMarket
             position = _pos;
             storage = new Storage();
             name = "CoalMine";
+
+            output = new EItem[] { EItem.Eisen };
+            outputCount = new int[] { 2 };
         }
 
         public override void Draw(SpriteBatch spriteBatch)
