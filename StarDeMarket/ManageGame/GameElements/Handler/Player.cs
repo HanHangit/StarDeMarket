@@ -155,7 +155,7 @@ namespace StarDeMarket
                         {
                             Console.WriteLine("Build: " + targetBuild.ToString());
                             targetBuild.Bounds = GUIHandler.Instance.gui.markBounds;
-                            BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, targetBuild);
+                            BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, new ConstructionSite(targetBuild,Content));
                             targetBuild = null;
                         }
                     }

@@ -130,6 +130,36 @@ namespace StarDeMarket
         protected int costs;
         protected int person;
         protected string name;
+        protected EItem[] constrRessource;
+        protected int[] amountRessource;
+
+        public EItem[] ConstrRessource
+        {
+            get
+            {
+                if (constrRessource == null)
+                {
+                    constrRessource = new EItem[2];
+                    constrRessource[0] = EItem.Holz;
+                    constrRessource[1] = EItem.Bretter;
+                }
+                    return constrRessource;
+            }
+        }
+
+        public int[] AmountRessource
+        {
+            get
+            {
+                if(amountRessource == null)
+                {
+                    amountRessource = new int[2];
+                    amountRessource[0] = 5;
+                    amountRessource[1] = 4;
+                }
+                return amountRessource;
+            }
+        }
 
         protected Storage storage = new Storage();
 

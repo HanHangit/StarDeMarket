@@ -81,7 +81,7 @@ namespace StarDeMarket
 
             BuildMap(strMap);
 
-
+            Build(new Rectangle(2000, 2000, 128, 128), new MainBuilding(new Vector2(2000, 2000), cont));
 
         }
 
@@ -191,22 +191,17 @@ namespace StarDeMarket
 
             bounds = AbsoluteRect(bounds);
 
-            if (Buildable(bounds))
-            {
+            for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+                {
+                    Tile tile = GetTile(new Point(i, j));
+                    tile.Buildable = false;
+                    tile.WorkAble = false;
+                    tile.refBuilding = building;
+                    tile.storage = building.Storage;
+                }
 
-                for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
-                    for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
-                    {
-                        Tile tile = GetTile(new Point(i, j));
-                        tile.Buildable = false;
-                        tile.WorkAble = false;
-                        tile.refBuilding = building;
-                        tile.storage = building.Storage;
-                    }
-
-                BuildingHandler.Instance.buildingList.Add(building);
-
-            }
+            BuildingHandler.Instance.buildingList.Add(building);
         }
 
         public bool Buildable(Rectangle bounds)
