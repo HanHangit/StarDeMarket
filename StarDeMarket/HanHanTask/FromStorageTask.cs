@@ -37,7 +37,10 @@ namespace StarDeMarket
             {
                 case EStatus.Preparing:
                     human.Target = target.Bounds.Location;
-                    status = EStatus.MoveToTarget;
+                    if (human.MoveToTarget(gTime))
+                    {
+                        status = EStatus.MoveToTarget;
+                    }
                     return false;
                 case EStatus.MoveToTarget:
                     if (human.MoveToTarget(gTime))
@@ -46,8 +49,7 @@ namespace StarDeMarket
                     }
                     return false;
                 case EStatus.WorkOnTarget:
-                    target.Storage.Get(item, amount);
-                    human.storage.Add(item, amount);
+                    human.storage.Add(item, target.Storage.Get(item, amount));
                     status = EStatus.BackToBase;
                     human.Target = build.Bounds.Location;
                     return false;
@@ -58,8 +60,7 @@ namespace StarDeMarket
                     }
                     return false;
                 case EStatus.OnBase:
-                    human.storage.Get(item, amount);
-                    build.Storage.Add(item, amount);
+                    build.Storage.Add(item, human.storage.Get(item, amount));
                     status = EStatus.None;
                     return true;
                 default:

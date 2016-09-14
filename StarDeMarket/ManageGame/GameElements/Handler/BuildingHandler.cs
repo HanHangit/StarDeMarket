@@ -15,12 +15,14 @@ namespace StarDeMarket
         public Tilemap map;
         static BuildingHandler instance;
         public List<Building> buildingList;
+        public List<ConstructionSite> constructionList;
 
         ContentManager cont;
 
         BuildingHandler()
         {
             buildingList = new List<Building>();
+            constructionList = new List<ConstructionSite>();
         }
 
         public static BuildingHandler Instance
@@ -37,18 +39,32 @@ namespace StarDeMarket
         public void Update(GameTime gTime)
         {
             map.Update(gTime);
-            foreach(Building b in buildingList)
+
+            for (int i = 0; i < buildingList.Count; ++i)
+                buildingList[i].Update(gTime);
+
+            for (int i = 0; i < constructionList.Count; ++i)
             {
-                b.Update(gTime);
+                if (constructionList[i].finished)
+                    constructionList.RemoveAt(i--);
+                else
+                    constructionList[i].Update(gTime);
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             map.Draw(spriteBatch);
-            foreach(Building b in buildingList)
+
+            for (int i = 0; i < buildingList.Count; ++i)
+                buildingList[i].Draw(spriteBatch);
+
+            for (int i = 0; i < constructionList.Count; ++i)
             {
-                b.Draw(spriteBatch);
+                if (constructionList[i].finished)
+                    constructionList.RemoveAt(i--);
+                else
+                    constructionList[i].Draw(spriteBatch);
             }
         }
         public void SetContentManager(ContentManager _cont)

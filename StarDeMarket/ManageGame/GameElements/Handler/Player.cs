@@ -155,7 +155,7 @@ namespace StarDeMarket
                         {
                             Console.WriteLine("Build: " + targetBuild.ToString());
                             targetBuild.Bounds = GUIHandler.Instance.gui.markBounds;
-                            BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, targetBuild);
+                            BuildingHandler.Instance.map.Build(GUIHandler.Instance.gui.markBounds, new ConstructionSite(targetBuild,Content));
                             targetBuild = null;
                         }
                     }
@@ -173,7 +173,7 @@ namespace StarDeMarket
 
                         int roadX = GUIHandler.Instance.gui.markBounds.Location.X - roadStartPoint.X + BuildingHandler.Instance.map.tilesize;
                         int roadY = GUIHandler.Instance.gui.markBounds.Location.
-                            Y - roadStartPoint.Y;
+                            Y - roadStartPoint.Y + BuildingHandler.Instance.map.tilesize;
 
 
 
@@ -183,9 +183,10 @@ namespace StarDeMarket
 
                     }
                     else if
-                    (BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkX)
-                    && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkY))
+                    (true)
                     {
+                        //BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkX)
+                    //&& BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.roadMarkY)
                         BuildingHandler.Instance.map.BuildRoad(GUIHandler.Instance.gui.roadMarkX);
                         BuildingHandler.Instance.map.BuildRoad(GUIHandler.Instance.gui.roadMarkY);
                     }
