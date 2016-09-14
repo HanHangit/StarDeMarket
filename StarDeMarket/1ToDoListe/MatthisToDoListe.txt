@@ -1,6 +1,7 @@
 ﻿ToDoListe für Matthis damit er alles hier reinschreiben und dann ruhen kann...
 
 -- Rohstoffsuche mit Boundingboxen machen!!!
+-- Rohstoffsuche mit Graphen machen (Rohstoffe als Knotenpunkte -> suche in der ungefähren richtung -> Mirkos Vorschlag)
 -- Tostorage und collectressource in alle output gebäude rein											[Done]
 -- getRessource from Storage																			[Done]
 -- Eventuell Baustelle und StorageBuilding													
