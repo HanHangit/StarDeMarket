@@ -28,6 +28,15 @@ namespace StarDeMarket
 
         int[] system = new int[(int)EItem.Count];
 
+        public bool IsEmpty()
+        {
+            for(int i = 0; i < system.Length; ++i)
+                if (system[i] != 0)
+                    return false;
+
+            return true;
+        }
+
         public int Get(EItem item, int value)
         {
             if (Check(item, value))

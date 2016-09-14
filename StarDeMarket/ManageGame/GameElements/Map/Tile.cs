@@ -107,7 +107,11 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-
+            if(storage.IsEmpty())
+            {
+                color = tileColorData[(int)ETile.Grass];
+                BuildingHandler.Instance.map.BuildMap(bounds.Location, color);
+            }
         }
 
         public void BuildRoad()

@@ -19,7 +19,7 @@ namespace StarDeMarket
         public Rectangle bounds { get; private set; }
 
         //Tilesize
-        public int tilesize = 8;
+        public int tilesize = 16;
 
         //Muss ein Vielfaches TileSize sein
         public int splitSize = 256;
@@ -37,6 +37,8 @@ namespace StarDeMarket
 
         Texture2D[,] textSplitMap;
 
+        Queue<Tile> updateQueue;
+
         //Die Größe der MiniMap
         Point miniMapSize;
 
@@ -45,6 +47,7 @@ namespace StarDeMarket
 
         public Tilemap(string strMap, ContentManager cont)
         {
+            updateQueue = new Queue<Tile>();
 
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
 
@@ -224,27 +227,37 @@ namespace StarDeMarket
             return true;
         }
 
+        public void UpdateTile(Point position)
+        {
+            updateQueue.Enqueue(GetTile(position));
+        }
+
+        public void UpdateTile(Tile tile)
+        {
+            updateQueue.Enqueue(tile);
+        }
+
 
         public Tile GetTile(Point position)
         {
+            Tile tile;
+
             try
             {
-                return tileMap[position.X / tilesize, position.Y / tilesize];
+                tile = tileMap[position.X / tilesize, position.Y / tilesize];
             }
             catch (IndexOutOfRangeException)
             {
-                return tileMap[0, 0];
+                tile = tileMap[0, 0];
             }
+
+            return tile;
         }
 
         public void Update(GameTime gTime)
         {
-            //TODO: Nur Tiles updaten die man sehen kann
-            /*
-            for (int i = 0; i < tileMap.GetLength(0); ++i)
-                for (int j = 0; j < tileMap.GetLength(1); ++j)
-                    tileMap[i, j].Update(gTime);
-                    */
+            while (updateQueue.Count > 0)
+                updateQueue.Dequeue().Update(gTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
