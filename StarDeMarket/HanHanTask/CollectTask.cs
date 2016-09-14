@@ -90,6 +90,7 @@ namespace StarDeMarket
                 }
 
                 target = targetTile.bounds.Location;
+                targetTile.WorkAble = false;
 
             }
             else if (status == EStatus.MoveToTarget)
@@ -108,6 +109,7 @@ namespace StarDeMarket
                 startTimer += (float)gTime.ElapsedGameTime.TotalSeconds * human.workSpeed;
                 if (startTimer >= 1f)
                 {
+                    targetTile.WorkAble = true;
                     startTimer = 0;
                     if (targetTile.storage.Check(toCollect))
                     {

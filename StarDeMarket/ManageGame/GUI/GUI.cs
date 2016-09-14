@@ -154,8 +154,9 @@ namespace StarDeMarket
 
             if (plyMode == EPlayerMode.RoadBuild)
             {
-                if (BuildingHandler.Instance.map.Buildable(roadMarkX)
-                    && BuildingHandler.Instance.map.Buildable(roadMarkY))
+                //BuildingHandler.Instance.map.Buildable(roadMarkX)
+                    //&& BuildingHandler.Instance.map.Buildable(roadMarkY)
+                if (true)
                 {
                     if (roadMark.Width > 0)
                         for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
