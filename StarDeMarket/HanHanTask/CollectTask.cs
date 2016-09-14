@@ -115,9 +115,13 @@ namespace StarDeMarket
                         human.Target = build.Bounds.Location;
                         human.storage.Add(toCollect);
                         targetTile.storage.Get(toCollect, 1);
+                        targetTile.Update(gTime);
                     }
                     else
+                    {
                         status = EStatus.SearchTarget;
+                        targetTile = null;
+                    }
                 }
             }
             else if (status == EStatus.BackToBase)
