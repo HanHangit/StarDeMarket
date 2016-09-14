@@ -11,15 +11,6 @@ namespace StarDeMarket
 {
     class BSawmill : BuildingWithInput
     {
-        EItem[] input = { EItem.Holz };
-        int[] inputCount = { 2 };
-
-        EItem[] output = { EItem.Bretter };
-        int[] outputCount = { 1 };
-
-        float productionTime;
-        float productionCounter;
-        bool currentlyProducing;
 
         public BSawmill(Vector2 _pos, ContentManager cont)
         {
@@ -29,7 +20,11 @@ namespace StarDeMarket
             position = _pos;
             name = "Sawmill";
             productionTime = 2;
-            currentlyProducing = false;
+
+            input = new EItem[] { EItem.Holz };
+            inputCount = new int[] { 2 };
+            output = new EItem[] { EItem.Bretter };
+            outputCount = new int[] { 1 };  
         }
 
         public override void Update(GameTime gTime)
@@ -59,41 +54,6 @@ namespace StarDeMarket
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Ein Schreiner fehlt hier! HILFE!@Matthis");
-        }
-
-        public override void Production(GameTime gTime)
-        {
-            if (CheckRessourcen() && !currentlyProducing)
-            {
-                currentlyProducing = true;
-                for (int i = 0; i < input.Length; ++i)
-                {
-                    storage.Get(input[i], inputCount[i]);
-                }
-                productionCounter = productionTime;
-            }
-            if (currentlyProducing)
-            {
-                productionCounter -= (float)gTime.ElapsedGameTime.TotalSeconds;
-                if (productionCounter < 0)
-                {
-                    currentlyProducing = false;
-                    for (int i = 0; i < output.Length; i++)
-                    {
-                        storage.Add(output[i], outputCount[i]);
-                    }
-                }
-            }
-        }
-
-        public override bool CheckRessourcen()
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (!storage.Check(input[i], inputCount[i]))
-                    return false;
-            }
-            return true;
         }
 
         public override bool HasFullWorkforce()

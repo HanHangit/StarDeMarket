@@ -11,11 +11,7 @@ namespace StarDeMarket
 {
 
     class BStonemason : OnlyOutput
-    {
-        
-        EItem[] output = { EItem.Stein };
-        int[] outputCount = { 2 };
-
+    { 
         public BStonemason(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -23,6 +19,9 @@ namespace StarDeMarket
             position = _pos;
             storage = new Storage();
             name = "StoneMason";
+
+            output = new EItem[] { EItem.Stein };
+            outputCount = new int[] { 2 };
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

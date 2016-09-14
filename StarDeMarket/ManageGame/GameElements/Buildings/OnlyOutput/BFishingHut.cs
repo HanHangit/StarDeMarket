@@ -12,10 +12,6 @@ namespace StarDeMarket
 
     class BFishingHut : OnlyOutput
     {
-       
-        EItem[] output = { EItem.Fisch };
-        int[] outputCount = { 2 };
-
         public BFishingHut(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
@@ -23,12 +19,14 @@ namespace StarDeMarket
             position = _pos;
             storage = new Storage();
             name = "Fishing Hut";
-            
+
+            output = new EItem[] { EItem.Fisch };
+            outputCount = new int[] { 1 };
+
             for(int i = 0; i < output.Length; ++i)
             {
                 taskQueue.Enqueue(new CollectTask(this, output[i]));
-            };
-
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

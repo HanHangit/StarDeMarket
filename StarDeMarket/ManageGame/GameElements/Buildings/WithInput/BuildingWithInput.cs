@@ -9,8 +9,42 @@ namespace StarDeMarket
 {
     abstract class BuildingWithInput : Building
     {
-        public abstract void Production(GameTime gTime);              //Beginnt mit der Produktion
-        public abstract Boolean CheckRessourcen();      //Überprüft ob alle Ressourcen vorhanden sind.
+        protected bool currentlyProducing = false;
+        protected float productionCounter = 0, productionTime = 0;
 
+        public void Production(GameTime gTime)
+        {
+            if (CheckRessourcen() && !currentlyProducing)
+            {
+                currentlyProducing = true;
+                for (int i = 0; i < input.Length; ++i)
+                {
+                    storage.Get(input[i], inputCount[i]);
+                }
+                productionCounter = productionTime;
+            }
+            if (currentlyProducing)
+            {
+                productionCounter -= (float)gTime.ElapsedGameTime.TotalSeconds;
+                if (productionCounter < 0)
+                {
+                    currentlyProducing = false;
+                    for (int i = 0; i < output.Length; i++)
+                    {
+                        storage.Add(output[i], outputCount[i]);
+                    }
+                }
+            }
+        }
+
+        public bool CheckRessourcen()
+        {
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (!storage.Check(input[i], inputCount[i]))
+                    return false;
+            }
+            return true;
+        }                                           //Überprüft ob alle Ressourcen vorhanden sind.
     }
 }

@@ -10,17 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
     class BBaker : BuildingWithInput
-    {
-        Storage storage;
-
-        EItem[] input = { EItem.Getreide, EItem.Kohle };
-        int[] inputCount = { 2,1 };
-
-        EItem[] output = { EItem.Brot };
-        int[] outputCount = { 1 };
-
-        bool currentlyProducing;
-
+    {        
         public BBaker(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -28,12 +18,35 @@ namespace StarDeMarket
             storage = new Storage();
             position = _pos;
             name = "Baker";
-            currentlyProducing = false;
+
+            productionTime = 5;
+
+            input = new EItem[] { EItem.Mehl, EItem.Kohle };
+            inputCount = new int[] { 2, 1 };
+
+            output = new EItem[] { EItem.Brot };
+            outputCount = new int[] { 1 };
         }
 
         public override void Update(GameTime gTime)
         {
             Production(gTime);
+            base.Update(gTime);
+            if (taskQueue.Count == 0)
+            {
+                if (storage.getCount(EItem.Mehl) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Mehl, 5));
+                }
+                if (storage.getCount(EItem.Kohle) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5));
+                }
+                if (storage.getCount(EItem.Brot) > 5)
+                {
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Brot, 5));
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,32 +58,6 @@ namespace StarDeMarket
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Ein Bäcker fehlt hier! HILFE!@Matthis");
-        }
-
-        public override void Production(GameTime gTime)
-        {
-            if (CheckRessourcen() && !currentlyProducing)
-            {
-                currentlyProducing = true;
-                for (int i = 0; i < input.Length; ++i)
-                {
-                    storage.Get(input[i], inputCount[i]);
-                }
-            }
-            if(currentlyProducing)
-            {
-                
-            }
-        }
-
-        public override bool CheckRessourcen()
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (!storage.Check(input[i], inputCount[i]))
-                    return false;
-            }
-            return true;
         }
 
         public override bool HasFullWorkforce()

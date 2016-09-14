@@ -11,11 +11,6 @@ namespace StarDeMarket
 {
     class BIronMelt : BuildingWithInput
     {
-        EItem[] input = { EItem.Eisen, EItem.Kohle };
-        int[] inputCount = { 2 };
-
-        EItem[] output = { EItem.Eisenbarren };
-        int[] outputCount = { 1 };
         public BIronMelt(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
@@ -23,48 +18,47 @@ namespace StarDeMarket
             storage = new Storage();
             position = _pos;
             name = "IronMelt";
+
+            productionTime = 10;
+
+            input = new EItem[] { EItem.Eisen, EItem.Kohle };
+            inputCount = new int[] { 2 , 1};
+
+            output = new EItem[] { EItem.Eisenbarren };
+            outputCount = new int[] { 1 };
         }
 
         public override void Update(GameTime gTime)
         {
             Production(gTime);
+            base.Update(gTime);
+            if (taskQueue.Count == 0)
+            {
+                if (storage.getCount(EItem.Eisen) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Eisen, 5));
+                }
+                if (storage.getCount(EItem.Kohle) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5));
+                }
+                if (storage.getCount(EItem.Eisenbarren) > 5)
+                {
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Eisenbarren, 5));
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
+            base.Draw(spriteBatch);
         }
 
         public override void Workerwork()
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Ein Schmelzer fehlt hier! HILFE!@Matthis");
-        }
-
-        public override void Production(GameTime gTime)
-        {
-            if (CheckRessourcen())
-            {
-                for (int i = 0; i < input.Length; ++i)
-                {
-                    storage.Get(input[i], inputCount[i]);
-                }
-
-                for (int i = 0; i < output.Length; ++i)
-                {
-                    storage.Add(output[i], outputCount[i]);
-                }
-            }
-        }
-
-        public override bool CheckRessourcen()
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (!storage.Check(input[i], inputCount[i]))
-                    return false;
-            }
-            return true;
         }
 
         public override bool HasFullWorkforce()

@@ -29,11 +29,16 @@ namespace StarDeMarket
         EPlayerMode prevMode;
 
         EBuilding[] EBuildings = {EBuilding.MainBuilding,
-        EBuilding.Mill,
-        EBuilding.FishingHut,
-        EBuilding.Stonemason,
         EBuilding.Woodcutter,
         EBuilding.Sawmill,
+        EBuilding.FishingHut,
+        EBuilding.Stonemason,
+        EBuilding.Farm,
+        EBuilding.Mill,
+        EBuilding.Baker,
+        EBuilding.Coalmine,
+        EBuilding.Ironmine,
+        EBuilding.Ironmelt,
             };
 
         int currBuild = 0;
@@ -143,13 +148,27 @@ namespace StarDeMarket
                             case EBuilding.Sawmill:
                                 targetBuild = new BSawmill(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
+                            case EBuilding.Baker:
+                                targetBuild = new BBaker(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Coalmine:
+                                targetBuild = new BCoalMine(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Ironmine:
+                                targetBuild = new BIronMine(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Ironmelt:
+                                targetBuild = new BIronMelt(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Farm:
+                                targetBuild = new BFarm(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
                         }
                     }
                     if (targetBuild != null)
                     {
                         GUIHandler.Instance.gui.SetBuilding(targetBuild);
                         GUIHandler.Instance.gui.SetMarkSize(targetBuild.Bounds.Size);
-
 
                         if (InputHandler.Instance.IsLeftMouseButtonPressedOnce() && BuildingHandler.Instance.map.Buildable(GUIHandler.Instance.gui.markBounds))
                         {

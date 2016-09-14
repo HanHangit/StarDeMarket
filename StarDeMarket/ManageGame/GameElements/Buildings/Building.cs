@@ -19,6 +19,11 @@ namespace StarDeMarket
         Stonemason,
         Woodcutter,
         Sawmill,
+        Baker,
+        Ironmine,
+        Ironmelt,
+        Coalmine,
+        Farm,
         Count
     }
 
@@ -161,6 +166,12 @@ namespace StarDeMarket
                 return amountRessource;
             }
         }
+
+        protected EItem[] input;
+        protected int[] inputCount;
+
+        protected EItem[] output;
+        protected int[] outputCount;
 
         protected Storage storage = new Storage();
 
