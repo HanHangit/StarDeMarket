@@ -159,8 +159,11 @@ namespace StarDeMarket
                 for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
                     Tile tile = GetTile(new Point(i, j));
-                    tile.BuildRoad();
-                    BuildMap(new Point(i, j), tile.color);
+                    if (tile.Buildable)
+                    {
+                        tile.BuildRoad();
+                        BuildMap(new Point(i, j), tile.color);
+                    }
                 }
         }
 
@@ -171,16 +174,16 @@ namespace StarDeMarket
 
             if (nRect.Width < 0)
             {
-                nRect.X = nRect.Location.X + nRect.Width;
+                nRect.X = nRect.Location.X + nRect.Width - tilesize;
                 nRect.Width *= -1;
-                nRect.Width += tilesize;
+                nRect.Width += tilesize * 2;
             }
 
             if (nRect.Height < 0)
             {
-                nRect.Y = nRect.Location.Y + nRect.Height;
+                nRect.Y = nRect.Location.Y + nRect.Height - tilesize;
                 nRect.Height *= -1;
-                nRect.Height += tilesize;
+                nRect.Height += tilesize * 2;
             }
 
             return nRect;
