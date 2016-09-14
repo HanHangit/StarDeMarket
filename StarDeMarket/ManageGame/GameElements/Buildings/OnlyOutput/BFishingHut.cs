@@ -19,7 +19,7 @@ namespace StarDeMarket
         public BFishingHut(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
-            texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
+            texture2D = cont.Load<Texture2D>("Building/Fisher");
             position = _pos;
             storage = new Storage();
             name = "Fishing Hut";
