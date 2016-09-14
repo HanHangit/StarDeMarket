@@ -196,7 +196,9 @@ namespace StarDeMarket
                     {
                         Tile tile = GetTile(new Point(i, j));
                         tile.Buildable = false;
+                        tile.WorkAble = false;
                         tile.refBuilding = building;
+                        tile.storage = building.Storage;
                     }
 
                 BuildingHandler.Instance.buildingList.Add(building);

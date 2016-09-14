@@ -42,7 +42,7 @@ namespace StarDeMarket
 
         public static Color[][] tileColorData;
 
-        public Storage lager;
+        public Storage storage;
 
         public Color[] color { get; private set; }
 
@@ -54,15 +54,17 @@ namespace StarDeMarket
 
         bool walkable;
 
+        bool workable;
+
 
 
         Vector2 pos;
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
-            walkable = true;
+            walkable = false;
             refBuilding = null;
-            lager = new Storage();
+            storage = new Storage();
             pos = position;
             color = new Color[tilesize * tilesize];
             color = tileColorData[(int)type];
@@ -71,29 +73,34 @@ namespace StarDeMarket
             switch (type)
             {
                 case ETile.Water:
-                    lager.Add(EItem.Fisch, 1000);
+                    storage.Add(EItem.Fisch, 1000);
                     name = "Water";
                     buildable = false;
+                    workable = true;
                     break;
                 case ETile.Rock:
-                    lager.Add(EItem.Eisen, 100);
-                    lager.Add(EItem.Kohle, 100);
-                    lager.Add(EItem.Stein, 300);
+                    storage.Add(EItem.Eisen, 100);
+                    storage.Add(EItem.Kohle, 100);
+                    storage.Add(EItem.Stein, 300);
                     name = "Rock";
                     buildable = true;
+                    workable = true;
                     break;
                 case ETile.Grass:
                     name = "Grass";
                     buildable = true;
+                    workable = true;
                     break;
                 case ETile.Tree:
                     name = "Tree";
-                    lager.Add(EItem.Holz, 10);
+                    storage.Add(EItem.Holz, 10);
                     buildable = false;
+                    workable = true;
                     break;
                 default:
                     name = "NA";
                     buildable = false;
+                    workable = false;
                     break;
             }
         }
@@ -107,6 +114,7 @@ namespace StarDeMarket
         {
             Walkable = true;
             Buildable = false;
+            workable = false;
             color = tileColorData[(int)ETile.Road];
         }
 
@@ -131,6 +139,18 @@ namespace StarDeMarket
             set
             {
                 buildable = value;
+            }
+        }
+
+        public bool WorkAble
+        {
+            get
+            {
+                return workable;
+            }
+            set
+            {
+                workable = value;
             }
         }
 

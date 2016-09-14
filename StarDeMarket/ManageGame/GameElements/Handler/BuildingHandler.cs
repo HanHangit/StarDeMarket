@@ -54,7 +54,6 @@ namespace StarDeMarket
         public void SetContentManager(ContentManager _cont)
         {
             cont = new ContentManager(_cont.ServiceProvider, _cont.RootDirectory);
-            buildingList.Add(new MainBuilding(new Vector2(2000, 2000), cont));
         }
     }
 }

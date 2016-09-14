@@ -20,6 +20,7 @@ namespace StarDeMarket
 
         protected Human human;
         protected Building build;
+        public string name { get; protected set; }
 
         public abstract bool DoTask(GameTime gTime);
         public void SetHuman(Human hum)

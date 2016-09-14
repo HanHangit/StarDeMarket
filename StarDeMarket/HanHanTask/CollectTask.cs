@@ -39,6 +39,7 @@ namespace StarDeMarket
             target = Point.Zero;
             startTimer = 0;
             targetTile = null;
+            name = "CollectTask";
         }
 
         public override bool DoTask(GameTime gTime)
@@ -77,8 +78,6 @@ namespace StarDeMarket
                     {
                         Tile help = queue.Dequeue();
 
-                        help.name = "Falsch";
-
                         if (CheckTile(help))
                         {
                             targetTile = help;
@@ -96,7 +95,7 @@ namespace StarDeMarket
             else if (status == EStatus.MoveToTarget)
             {
                 human.Target = target;
-                
+
                 if (human.MoveToTarget(gTime))
                 {
                     startTimer = 0;
@@ -110,10 +109,15 @@ namespace StarDeMarket
                 if (startTimer >= 1f)
                 {
                     startTimer = 0;
-                    status = EStatus.BackToBase;
-                    human.Target = build.Bounds.Location;
-                    human.storage.Add(toCollect);
-                    targetTile.lager.Get(toCollect, 1);
+                    if (targetTile.storage.Check(toCollect))
+                    {
+                        status = EStatus.BackToBase;
+                        human.Target = build.Bounds.Location;
+                        human.storage.Add(toCollect);
+                        targetTile.storage.Get(toCollect, 1);
+                    }
+                    else
+                        status = EStatus.SearchTarget;
                 }
             }
             else if (status == EStatus.BackToBase)
@@ -138,7 +142,7 @@ namespace StarDeMarket
 
         bool CheckTile(Tile t)
         {
-            if (t.lager.Check(toCollect, 1))
+            if (t.storage.Check(toCollect, 1) && t.WorkAble)
                 return true;
             else
                 return false;

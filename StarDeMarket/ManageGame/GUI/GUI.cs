@@ -142,7 +142,7 @@ namespace StarDeMarket
             {
                 spriteBatch.DrawString(fpsFont, "Press 'B' to Build. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
 
-                spriteBatch.DrawString(fpsFont, BuildingHandler.Instance.map.GetTile(markBounds.Location).ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
+                spriteBatch.DrawString(fpsFont, BuildingHandler.Instance.map.GetTile(markBounds.Location).ToString() + "\n" + BuildingHandler.Instance.map.GetTile(markBounds.Location).storage.ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
 
 

@@ -28,6 +28,7 @@ namespace StarDeMarket
             {
                 status = EStatus.None;
             }
+            name = "ToStorage";
         }
 
         public override bool DoTask(GameTime gTime)

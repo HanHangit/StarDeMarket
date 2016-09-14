@@ -62,6 +62,14 @@ namespace StarDeMarket
                 return false;
         }
 
+        public bool Check(EItem item)
+        {
+            if (system[(int)item] >= 1)
+                return true;
+            else
+                return false;
+        }
+
         public int getCount(EItem item)
         {
             return system[(int)item];
@@ -86,7 +94,7 @@ namespace StarDeMarket
             string str = "";
 
             for (int i = 0; i < system.Length; ++i)
-                str += system[i] + "\n";
+                str += ((EItem)i).ToString() + ": " +  system[i] + "\n";
 
             return str;
         }

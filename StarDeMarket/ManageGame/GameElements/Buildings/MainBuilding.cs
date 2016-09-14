@@ -18,8 +18,7 @@ namespace StarDeMarket
             name = "MainBuilding";
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Main");
-            for (int i = 0; i < 100; ++i)
-                listWorker.Add(new Human(position, 5, cont.Load<Texture2D>("Human/BasicHuman"), this));
+            
 
         }
 
@@ -35,7 +34,9 @@ namespace StarDeMarket
         }
 
         public override void Update(GameTime gTime)
-        {
+        { 
+            if(listWorker.Count < 10)
+                listWorker.Add(new Human(position, 5, cont.Load<Texture2D>("Human/BasicHuman"), this));
         }
 
         public override void Workerwork()
