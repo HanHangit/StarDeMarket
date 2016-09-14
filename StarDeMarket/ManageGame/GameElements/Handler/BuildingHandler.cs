@@ -41,14 +41,13 @@ namespace StarDeMarket
             map.Update(gTime);
 
             for (int i = 0; i < buildingList.Count; ++i)
-                buildingList[i].Update(gTime);
-
-            for (int i = 0; i < constructionList.Count; ++i)
             {
-                if (constructionList[i].finished)
-                    constructionList.RemoveAt(i--);
+                if (buildingList[i].finished)
+                {
+                    buildingList.RemoveAt(i--);
+                }
                 else
-                    constructionList[i].Update(gTime);
+                    buildingList[i].Update(gTime);
             }
         }
 
@@ -57,15 +56,15 @@ namespace StarDeMarket
             map.Draw(spriteBatch);
 
             for (int i = 0; i < buildingList.Count; ++i)
-                buildingList[i].Draw(spriteBatch);
-
-            for (int i = 0; i < constructionList.Count; ++i)
             {
-                if (constructionList[i].finished)
-                    constructionList.RemoveAt(i--);
+                if(buildingList[i].finished)
+                {
+                    buildingList.RemoveAt(i--);
+                }
                 else
-                    constructionList[i].Draw(spriteBatch);
+                    buildingList[i].Draw(spriteBatch);
             }
+            
         }
         public void SetContentManager(ContentManager _cont)
         {

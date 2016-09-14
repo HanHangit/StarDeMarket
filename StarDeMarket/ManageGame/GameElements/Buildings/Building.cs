@@ -132,6 +132,7 @@ namespace StarDeMarket
         protected string name;
         protected EItem[] constrRessource;
         protected int[] amountRessource;
+        public bool finished = false;
 
         public EItem[] ConstrRessource
         {

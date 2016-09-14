@@ -15,8 +15,6 @@ namespace StarDeMarket
         EItem[] buildRessources;
         int[] amount;
 
-        public bool finished;
-
         bool builded;
 
         Building building;
