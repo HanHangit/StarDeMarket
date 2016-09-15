@@ -33,6 +33,9 @@ namespace StarDeMarket
 
         public override bool DoTask(GameTime gTime)
         {
+            if (amount > human.carry)
+                amount = human.carry;
+
             switch (status)
             {
                 case EStatus.Preparing:

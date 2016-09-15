@@ -107,7 +107,7 @@ namespace StarDeMarket
             else if (status == EStatus.WorkOnTarget)
             {
                 startTimer += (float)gTime.ElapsedGameTime.TotalSeconds * human.workSpeed;
-                if (startTimer >= 1f)
+                if (startTimer >= targetTile.WorkTime)
                 {
                     targetTile.WorkAble = true;
                     startTimer = 0;

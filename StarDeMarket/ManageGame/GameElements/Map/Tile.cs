@@ -18,6 +18,9 @@ namespace StarDeMarket
         Rock,
         Tree,
         Road,
+        Coal,
+        Gold,
+        Iron,
         Count
     }
 
@@ -28,10 +31,14 @@ namespace StarDeMarket
         public static Color[] tileColor =
         {
             new Color(),
-            new Color(34,177,76),
-            new Color(63,72,204),
-            new Color(127,127,127),
-            new Color (181,230,29 ),
+            new Color(34,177,76), //Grass
+            new Color(63,72,204), //Water
+            new Color(127,127,127), //Rock
+            new Color (181,230,29 ), //Tree
+            new Color(),  //Road
+            new Color(0,0,0), //Coal
+            new Color(255,242,0), //Gold
+            new Color(128,0,0), //Iron
             new Color()
 
         };
@@ -56,12 +63,17 @@ namespace StarDeMarket
 
         bool workable;
 
+        float workTime;
+
+        ETile type;
+
 
 
         Vector2 pos;
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
+            this.type = type;
             walkable = false;
             refBuilding = null;
             storage = new Storage();
@@ -77,25 +89,48 @@ namespace StarDeMarket
                     name = "Water";
                     buildable = false;
                     workable = true;
+                    WorkTime = 6f;
                     break;
                 case ETile.Rock:
-                    storage.Add(EItem.Eisen, 100);
-                    storage.Add(EItem.Kohle, 100);
-                    storage.Add(EItem.Stein, 300);
                     name = "Rock";
+                    storage.Add(EItem.Stein, 100);
                     buildable = true;
-                    workable = true;
+                    workable = false;
+                    WorkTime = 10f;
                     break;
                 case ETile.Grass:
                     name = "Grass";
                     buildable = true;
                     workable = true;
+                    WorkTime = 1f;
                     break;
                 case ETile.Tree:
                     name = "Tree";
                     storage.Add(EItem.Holz, 10);
                     buildable = false;
                     workable = true;
+                    WorkTime = 4f;
+                    break;
+                case ETile.Coal:
+                    name = "Coal";
+                    storage.Add(EItem.Kohle, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 15f;
+                    break;
+                case ETile.Iron:
+                    name = "Coal";
+                    storage.Add(EItem.Eisen, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 15f;
+                    break;
+                case ETile.Gold:
+                    name = "Coal";
+                    storage.Add(EItem.Gold, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 25f;
                     break;
                 default:
                     name = "NA";
@@ -110,7 +145,9 @@ namespace StarDeMarket
             if(storage.IsEmpty())
             {
                 color = tileColorData[(int)ETile.Grass];
+                buildable = true;
                 BuildingHandler.Instance.map.BuildMap(bounds.Location, color);
+                type = ETile.Grass;
             }
         }
 
@@ -120,6 +157,19 @@ namespace StarDeMarket
             Buildable = false;
             workable = false;
             color = tileColorData[(int)ETile.Road];
+            type = ETile.Road;
+        }
+
+        public float WorkTime
+        {
+            get
+            {
+                return workTime;
+            }
+            set
+            {
+                workTime = value;
+            }
         }
 
         public bool Walkable
