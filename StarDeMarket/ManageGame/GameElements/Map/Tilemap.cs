@@ -252,12 +252,103 @@ namespace StarDeMarket
         {
             Tile tile;
 
-            if(position.X < 0 || position.X > bounds.Width || position.Y < 0 || position.Y > bounds.Height)
+            position = new Point(position.X / tilesize, position.Y / tilesize);
+
+            if(position.X < 0 || position.X >= tileMap.GetLength(0) || position.Y < 0 || position.Y >= tileMap.GetLength(1))
                 tile = tileMap[0, 0];
             else
-                tile = tileMap[position.X / tilesize, position.Y / tilesize];
+                tile = tileMap[position.X, position.Y];
 
             return tile;
+        }
+
+        public Tile SearchTile(Point position, EItem type)
+        {
+            Tile targetTile = null;
+
+            int k = tilesize;
+            int i = position.X;
+            int j = position.Y;
+
+            Queue<Tile> queue = new Queue<Tile>();
+
+            while (targetTile == null)
+            {
+
+
+
+                //TODO: Range des Humans
+                k += tilesize;
+                {
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j - k)));
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j + k)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i - k, s)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i + k, s)));
+                }
+
+                while (queue.Count > 0)
+                {
+                    Tile help = queue.Dequeue();
+
+                    if (help.storage.Check(type) && help.WorkAble)
+                    {
+                        return help;
+                    }
+
+                }
+
+            }
+
+            return targetTile;
+        }
+
+        public Tile SearchTile(Point position, ETile type)
+        {
+            Tile targetTile = null;
+
+            int k = tilesize;
+            int i = position.X;
+            int j = position.Y;
+
+            Queue<Tile> queue = new Queue<Tile>();
+
+            while (targetTile == null && k < 256)
+            {
+
+
+
+                //TODO: Range des Humans
+                k += tilesize;
+                {
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j - k)));
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j + k)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i - k, s)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i + k, s)));
+                }
+
+                while (queue.Count > 0)
+                {
+                    Tile help = queue.Dequeue();
+
+                    if (help.type == type && help.WorkAble)
+                    {
+                        targetTile = help;
+                        return help;
+                    }
+
+                }
+
+            }
+
+            return targetTile;
         }
 
         public void Update(GameTime gTime)

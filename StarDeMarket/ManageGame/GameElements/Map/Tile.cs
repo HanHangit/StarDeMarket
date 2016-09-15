@@ -21,7 +21,10 @@ namespace StarDeMarket
         Coal,
         Gold,
         Iron,
-        Count
+        Count,
+        GrowField
+
+
     }
 
 
@@ -65,7 +68,7 @@ namespace StarDeMarket
 
         float workTime;
 
-        ETile type;
+        public ETile type;
 
 
 
@@ -102,7 +105,67 @@ namespace StarDeMarket
                     name = "Grass";
                     buildable = true;
                     workable = true;
-                    WorkTime = 1f;
+                    WorkTime = 5f;
+                    break;
+                case ETile.Tree:
+                    name = "Tree";
+                    storage.Add(EItem.Holz, 10);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 4f;
+                    break;
+                case ETile.Coal:
+                    name = "Coal";
+                    storage.Add(EItem.Kohle, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 15f;
+                    break;
+                case ETile.Iron:
+                    name = "Coal";
+                    storage.Add(EItem.Eisen, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 15f;
+                    break;
+                case ETile.Gold:
+                    name = "Coal";
+                    storage.Add(EItem.Gold, 100);
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 25f;
+                    break;
+                default:
+                    name = "NA";
+                    buildable = false;
+                    workable = false;
+                    break;
+            }
+        }
+
+        public void Reset(ETile tile)
+        {
+            switch (tile)
+            {
+                case ETile.Water:
+                    storage.Add(EItem.Fisch, 1000);
+                    name = "Water";
+                    buildable = false;
+                    workable = true;
+                    WorkTime = 6f;
+                    break;
+                case ETile.Rock:
+                    name = "Rock";
+                    storage.Add(EItem.Stein, 100);
+                    buildable = true;
+                    workable = false;
+                    WorkTime = 10f;
+                    break;
+                case ETile.Grass:
+                    name = "Grass";
+                    buildable = true;
+                    workable = true;
+                    WorkTime = 5f;
                     break;
                 case ETile.Tree:
                     name = "Tree";
@@ -142,7 +205,7 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
-            if(storage.IsEmpty())
+            if (storage.IsEmpty())
             {
                 color = tileColorData[(int)ETile.Grass];
                 buildable = true;

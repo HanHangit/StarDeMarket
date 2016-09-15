@@ -42,15 +42,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HanHanTask\FromStorageTask.cs" />
+    <Compile Include="HanHanTask\PlantTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="HanHanTask\ToStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\ConstructionSite.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\Farms\Farm.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\Farms\GrowingField.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />
     <Compile Include="HanHanTask\CollectTask.cs" />
     <Compile Include="HanHanTask\Task.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWheatFarm.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BIronMelt.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BBaker.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BSawmill.cs" />

@@ -35,7 +35,7 @@ namespace StarDeMarket
         public CollectTask(Building building, EItem collect) : base(building)
         {
             toCollect = collect;
-            status = EStatus.SearchTarget;
+            status = EStatus.Preparing;
             target = Point.Zero;
             startTimer = 0;
             targetTile = null;
@@ -44,53 +44,24 @@ namespace StarDeMarket
 
         public override bool DoTask(GameTime gTime)
         {
-
-            if (status == EStatus.SearchTarget)
+            if(status == EStatus.Preparing)
             {
+                human.Target = build.Bounds.Location;
+                if (human.MoveToTarget(gTime))
+                    status = EStatus.SearchTarget;
+            }
+            else if (status == EStatus.SearchTarget)
+            {
+                targetTile = BuildingHandler.Instance.map.SearchTile(human.position.ToPoint(), toCollect);
 
-                int i = (int)human.position.X;
-                int j = (int)human.position.Y;
-                int k = 8;
-
-                Queue<Tile> queue = new Queue<Tile>();
-                queue.Enqueue(BuildingHandler.Instance.map.GetTile(new Point(i, j)));
-
-
-                while (targetTile == null)
+                if (targetTile != null)
                 {
-
-
-
-                    //TODO: Range des Humans
-                    k += BuildingHandler.Instance.map.tilesize;
-                    {
-                        for (int s = i - k; s <= i + k; s += BuildingHandler.Instance.map.tilesize)
-                            queue.Enqueue(BuildingHandler.Instance.map.GetTile(new Point(s, j - k)));
-                        for (int s = i - k; s <= i + k; s += BuildingHandler.Instance.map.tilesize)
-                            queue.Enqueue(BuildingHandler.Instance.map.GetTile(new Point(s, j + k)));
-                        for (int s = j - k; s <= j + k; s += BuildingHandler.Instance.map.tilesize)
-                            queue.Enqueue(BuildingHandler.Instance.map.GetTile(new Point(i - k, s)));
-                        for (int s = j - k; s <= j + k; s += BuildingHandler.Instance.map.tilesize)
-                            queue.Enqueue(BuildingHandler.Instance.map.GetTile(new Point(i + k, s)));
-                    }
-
-                    while (queue.Count > 0)
-                    {
-                        Tile help = queue.Dequeue();
-
-                        if (CheckTile(help))
-                        {
-                            targetTile = help;
-                            status = EStatus.MoveToTarget;
-                            break;
-                        }
-
-                    }
-
+                    target = targetTile.bounds.Location;
+                    targetTile.WorkAble = false;
+                    status = EStatus.MoveToTarget;
                 }
-
-                target = targetTile.bounds.Location;
-                targetTile.WorkAble = false;
+                else
+                    status = EStatus.None;
 
             }
             else if (status == EStatus.MoveToTarget)

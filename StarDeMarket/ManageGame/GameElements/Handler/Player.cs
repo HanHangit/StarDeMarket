@@ -161,7 +161,7 @@ namespace StarDeMarket
                                 targetBuild = new BIronMelt(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
                             case EBuilding.Farm:
-                                targetBuild = new BFarm(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                targetBuild = new BWheatFarm(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
                         }
                     }

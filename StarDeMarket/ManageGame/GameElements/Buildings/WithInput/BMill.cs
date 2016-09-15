@@ -21,8 +21,8 @@ namespace StarDeMarket
 
             productionTime = 3;
 
-            input = new EItem[] { EItem.Getreide };
-            inputCount = new int[] { 2 };
+            input = new EItem[] { EItem.Getreide, EItem.Kohle };
+            inputCount = new int[] { 2, 1 };
 
             output = new EItem[] { EItem.Mehl };
             outputCount = new int[] { 1 };
