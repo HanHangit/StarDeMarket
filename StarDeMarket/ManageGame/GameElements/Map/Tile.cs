@@ -98,7 +98,7 @@ namespace StarDeMarket
                     name = "Rock";
                     storage.Add(EItem.Stein, 100);
                     buildable = true;
-                    workable = false;
+                    workable = true;
                     WorkTime = 10f;
                     break;
                 case ETile.Grass:
@@ -158,7 +158,7 @@ namespace StarDeMarket
                     name = "Rock";
                     storage.Add(EItem.Stein, 100);
                     buildable = true;
-                    workable = false;
+                    workable = true;
                     WorkTime = 10f;
                     break;
                 case ETile.Grass:
