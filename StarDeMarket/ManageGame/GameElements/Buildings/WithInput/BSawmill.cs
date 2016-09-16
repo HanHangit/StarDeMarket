@@ -21,10 +21,11 @@ namespace StarDeMarket
             name = "Sawmill";
             productionTime = 2;
 
-            input = new EItem[] { EItem.Holz };
-            inputCount = new int[] { 2 };
+            input = new EItem[] { EItem.Holz, EItem.Fisch };
+            inputCount = new int[] { 2, 4 };
+
             output = new EItem[] { EItem.Bretter };
-            outputCount = new int[] { 1 };  
+            outputCount = new int[] { 1};  
         }
 
         public override void Update(GameTime gTime)
@@ -33,6 +34,10 @@ namespace StarDeMarket
             base.Update(gTime);
             if(taskQueue.Count == 0)
             {
+                if(storage.getCount(EItem.Fisch) < 1)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Fisch, 3));
+                }
                 if(storage.getCount(EItem.Holz) < 3)
                 {
                     taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5));

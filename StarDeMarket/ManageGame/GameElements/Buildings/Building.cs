@@ -29,7 +29,6 @@ namespace StarDeMarket
 
     abstract class Building
     {
-
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach (Human h in listWorker)

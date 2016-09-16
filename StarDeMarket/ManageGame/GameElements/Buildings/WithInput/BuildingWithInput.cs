@@ -14,27 +14,31 @@ namespace StarDeMarket
 
         public void Production(GameTime gTime)
         {
-            if (CheckRessourcen() && !currentlyProducing)
+            if (EnoughFood())
             {
-                currentlyProducing = true;
-                for (int i = 0; i < input.Length; ++i)
+                if (CheckRessourcen() && !currentlyProducing)
                 {
-                    storage.Get(input[i], inputCount[i]);
-                }
-                productionCounter = productionTime;
-            }
-            if (currentlyProducing)
-            {
-                productionCounter -= (float)gTime.ElapsedGameTime.TotalSeconds;
-                if (productionCounter < 0)
-                {
-                    currentlyProducing = false;
-                    for (int i = 0; i < output.Length; i++)
+                    currentlyProducing = true;
+                    for (int i = 0; i < input.Length; ++i)
                     {
-                        storage.Add(output[i], outputCount[i]);
+                        storage.Get(input[i], inputCount[i]);
+                    }
+                    productionCounter = productionTime;
+                }
+                if (currentlyProducing)
+                {
+                    productionCounter -= (float)gTime.ElapsedGameTime.TotalSeconds;
+                    if (productionCounter < 0)
+                    {
+                        currentlyProducing = false;
+                        for (int i = 0; i < output.Length; i++)
+                        {
+                            storage.Add(output[i], outputCount[i]);
+                        }
                     }
                 }
             }
+           
         }
 
         public bool CheckRessourcen()
@@ -45,6 +49,17 @@ namespace StarDeMarket
                     return false;
             }
             return true;
-        }                                           //Überprüft ob alle Ressourcen vorhanden sind.
+        }  
+                                                 //Überprüft ob alle Ressourcen vorhanden sind.
+
+        public bool EnoughFood() //ToDo Chris
+        {
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (!storage.Check(input[i], inputCount[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 }

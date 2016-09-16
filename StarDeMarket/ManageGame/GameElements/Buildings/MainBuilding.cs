@@ -21,6 +21,7 @@ namespace StarDeMarket
 
             storage.Add(EItem.Holz, 1000);
             storage.Add(EItem.Bretter, 3000);
+            storage.Add(EItem.Fisch, 10);
 
 
         }
