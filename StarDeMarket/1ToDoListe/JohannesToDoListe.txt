@@ -1,5 +1,3 @@
 ﻿ToDoListe für Johannes damit er niemals Ruhen kann und ewig an diesem Projekt arbeiten muss...
 
--- GetTile Exception BugFix Performance
--- neue Tiles für Eisen Kohle Stein
 -- Grafik-Updates für die Tiles

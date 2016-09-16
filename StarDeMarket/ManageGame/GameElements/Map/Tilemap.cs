@@ -272,7 +272,7 @@ namespace StarDeMarket
 
             Queue<Tile> queue = new Queue<Tile>();
 
-            while (targetTile == null)
+            while (targetTile == null && k < 256)
             {
 
 
