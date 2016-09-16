@@ -19,8 +19,8 @@ namespace StarDeMarket
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Main");
 
-            storage.Add(EItem.Holz, 30);
-            storage.Add(EItem.Bretter, 30);
+            storage.Add(EItem.Holz, 1000);
+            storage.Add(EItem.Bretter, 3000);
 
 
         }

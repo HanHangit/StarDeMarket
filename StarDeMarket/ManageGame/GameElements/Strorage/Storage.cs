@@ -19,6 +19,7 @@ namespace StarDeMarket
         Kohle,
         Eisen,
         Eisenbarren,
+        Gold,
         Count
     }
 
@@ -30,7 +31,7 @@ namespace StarDeMarket
 
         public bool IsEmpty()
         {
-            for(int i = 0; i < system.Length; ++i)
+            for (int i = 0; i < system.Length; ++i)
                 if (system[i] != 0)
                     return false;
 
@@ -103,7 +104,10 @@ namespace StarDeMarket
             string str = "";
 
             for (int i = 0; i < system.Length; ++i)
-                str += ((EItem)i).ToString() + ": " +  system[i] + "\n";
+            {
+                if (system[i] > 0)
+                    str += ((EItem)i).ToString() + ": " + system[i] + "\n";
+            }
 
             return str;
         }

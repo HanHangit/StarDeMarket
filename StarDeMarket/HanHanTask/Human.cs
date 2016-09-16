@@ -14,6 +14,7 @@ namespace StarDeMarket
         public Vector2 position { get; protected set; }
         public float speed { get; protected set; }
         public float workSpeed { get; protected set; }
+        public int carry;
         Texture2D texture;
         Building building;
         public Task currTask;
@@ -42,6 +43,7 @@ namespace StarDeMarket
             texture = text;
             building = build;
             workSpeed = 1;
+            carry = 3;
         }
 
         public void SetBuilding(Building build)

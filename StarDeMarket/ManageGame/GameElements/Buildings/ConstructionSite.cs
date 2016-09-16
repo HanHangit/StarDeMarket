@@ -15,8 +15,6 @@ namespace StarDeMarket
         EItem[] buildRessources;
         int[] amount;
 
-        public bool finished;
-
         bool builded;
 
         Building building;
@@ -43,7 +41,7 @@ namespace StarDeMarket
                 for (int i = 0; i < amount.Length; ++i)
                 {
                     if (amount[i] > storage.getCount(buildRessources[i]))
-                        taskQueue.Enqueue(new FromStorageTask(this, buildRessources[i], amount[i]));
+                        taskQueue.Enqueue(new FromStorageTask(this, buildRessources[i], amount[i] - storage.getCount(buildRessources[i])));
                 }
             }
 

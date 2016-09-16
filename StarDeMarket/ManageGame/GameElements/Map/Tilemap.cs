@@ -60,6 +60,9 @@ namespace StarDeMarket
             Tile.tileColorData[3] = new Color[tilesize * tilesize];
             Tile.tileColorData[4] = new Color[tilesize * tilesize];
             Tile.tileColorData[5] = new Color[tilesize * tilesize];
+            Tile.tileColorData[6] = new Color[tilesize * tilesize];
+            Tile.tileColorData[7] = new Color[tilesize * tilesize];
+            Tile.tileColorData[8] = new Color[tilesize * tilesize];
 
             Tile.tileText[0] = Content.Load<Texture2D>("Tile/Grass01");
             Tile.tileText[1] = Content.Load<Texture2D>("Tile/Grass01");
@@ -67,6 +70,9 @@ namespace StarDeMarket
             Tile.tileText[3] = Content.Load<Texture2D>("Tile/Rock01");
             Tile.tileText[4] = Content.Load<Texture2D>("Tile/Tree01");
             Tile.tileText[5] = Content.Load<Texture2D>("Tile/road01");
+            Tile.tileText[6] = Content.Load<Texture2D>("Tile/Coal01");
+            Tile.tileText[7] = Content.Load<Texture2D>("Tile/Gold01");
+            Tile.tileText[8] = Content.Load<Texture2D>("Tile/Iron01");
 
             for (int i = 0; i < Tile.tileText.Length; ++i)
             {
@@ -123,6 +129,12 @@ namespace StarDeMarket
                         tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
                     else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Tree]))
                         tileMap[i, j] = new Tile(ETile.Tree, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Coal]))
+                        tileMap[i, j] = new Tile(ETile.Coal, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Iron]))
+                        tileMap[i, j] = new Tile(ETile.Iron, new Vector2(i * tilesize, j * tilesize), tilesize);
+                    else if (color[i + j * map.Width].Equals(Tile.tileColor[(int)ETile.Gold]))
+                        tileMap[i, j] = new Tile(ETile.Gold, new Vector2(i * tilesize, j * tilesize), tilesize);
                     else
                         tileMap[i, j] = new Tile(ETile.Grass, new Vector2(i * tilesize, j * tilesize), tilesize);
                     if (j == 0)
@@ -194,8 +206,8 @@ namespace StarDeMarket
 
             bounds = AbsoluteRect(bounds);
 
-            for (int i = bounds.X; i <= bounds.X + bounds.Width; i += tilesize)
-                for (int j = bounds.Y; j <= bounds.Y + bounds.Height; j += tilesize)
+            for (int i = bounds.X; i < bounds.X + bounds.Width; i += tilesize)
+                for (int j = bounds.Y; j < bounds.Y + bounds.Height; j += tilesize)
                 {
                     Tile tile = GetTile(new Point(i, j));
                     tile.Buildable = false;
@@ -240,16 +252,103 @@ namespace StarDeMarket
         {
             Tile tile;
 
-            try
-            {
-                tile = tileMap[position.X / tilesize, position.Y / tilesize];
-            }
-            catch (IndexOutOfRangeException)
-            {
+            position = new Point(position.X / tilesize, position.Y / tilesize);
+
+            if(position.X < 0 || position.X >= tileMap.GetLength(0) || position.Y < 0 || position.Y >= tileMap.GetLength(1))
                 tile = tileMap[0, 0];
-            }
+            else
+                tile = tileMap[position.X, position.Y];
 
             return tile;
+        }
+
+        public Tile SearchTile(Point position, EItem type)
+        {
+            Tile targetTile = null;
+
+            int k = tilesize;
+            int i = position.X;
+            int j = position.Y;
+
+            Queue<Tile> queue = new Queue<Tile>();
+
+            while (targetTile == null)
+            {
+
+
+
+                //TODO: Range des Humans
+                k += tilesize;
+                {
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j - k)));
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j + k)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i - k, s)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i + k, s)));
+                }
+
+                while (queue.Count > 0)
+                {
+                    Tile help = queue.Dequeue();
+
+                    if (help.storage.Check(type) && help.WorkAble)
+                    {
+                        return help;
+                    }
+
+                }
+
+            }
+
+            return targetTile;
+        }
+
+        public Tile SearchTile(Point position, ETile type)
+        {
+            Tile targetTile = null;
+
+            int k = tilesize;
+            int i = position.X;
+            int j = position.Y;
+
+            Queue<Tile> queue = new Queue<Tile>();
+
+            while (targetTile == null && k < 256)
+            {
+
+
+
+                //TODO: Range des Humans
+                k += tilesize;
+                {
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j - k)));
+                    for (int s = i - k; s <= i + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(s, j + k)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i - k, s)));
+                    for (int s = j - k; s <= j + k; s += tilesize)
+                        queue.Enqueue(GetTile(new Point(i + k, s)));
+                }
+
+                while (queue.Count > 0)
+                {
+                    Tile help = queue.Dequeue();
+
+                    if (help.type == type && help.WorkAble)
+                    {
+                        targetTile = help;
+                        return help;
+                    }
+
+                }
+
+            }
+
+            return targetTile;
         }
 
         public void Update(GameTime gTime)
