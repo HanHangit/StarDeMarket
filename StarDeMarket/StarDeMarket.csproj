@@ -49,6 +49,7 @@
     <Compile Include="ManageGame\GameElements\Buildings\Farms\Farm.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Farms\GrowingField.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BHerbalist.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />

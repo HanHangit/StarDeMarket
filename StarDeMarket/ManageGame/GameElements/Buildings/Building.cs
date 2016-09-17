@@ -25,6 +25,7 @@ namespace StarDeMarket
         Ironmelt,
         Coalmine,
         Farm,
+        Herbalist,
         Count
     }
 
