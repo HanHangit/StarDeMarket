@@ -77,6 +77,7 @@ namespace StarDeMarket
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
+            Random rnd = UsefullStuff.Instance.Random;
             this.type = type;
             walkable = false;
             refBuilding = null;
@@ -84,15 +85,15 @@ namespace StarDeMarket
             pos = position;
             color = new Color[tilesize * tilesize];
 
-            if (UsefullStuff.Instance.Random.Next(101) > 90)
+            if (rnd.Next(101) > 90)
             {
-                int numTile =UsefullStuff.Instance.Random.Next(0, tileColorData[(int)type].Length);
+                int numTile = rnd.Next(0, tileColorData[(int)type].Length);
                 color = tileColorData[(int)type][numTile];
             }
             else
                 color = tileColorData[(int)type][0];
 
-
+            
 
             bounds = new Rectangle((int)position.X, (int)position.Y, tilesize, tilesize);
 
@@ -121,6 +122,8 @@ namespace StarDeMarket
                 case ETile.Tree:
                     name = "Tree";
                     storage.Add(EItem.Holz, 10);
+                    if (rnd.Next(100) > 70)
+                        storage.Add(EItem.Pilze, 5);
                     buildable = false;
                     workable = true;
                     WorkTime = 4f;

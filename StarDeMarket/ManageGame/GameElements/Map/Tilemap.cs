@@ -59,7 +59,7 @@ namespace StarDeMarket
             Tile.tileColorData = new Color[(int)ETile.Count][][];
 
             Tile.tileText[0] = new[] { Content.Load<Texture2D>("Tile/Grass01") };
-            Tile.tileText[1] = new[] { Content.Load<Texture2D>("Tile/Grass01") };
+            Tile.tileText[1] = new[] { Content.Load<Texture2D>("Tile/Grass01"), Content.Load<Texture2D>("Tile/Grass02") };
             Tile.tileText[2] = new[] { Content.Load<Texture2D>("Tile/Water01") };
             Tile.tileText[3] = new[] { Content.Load<Texture2D>("Tile/Rock01"), Content.Load<Texture2D>("Tile/Rock02") };
             Tile.tileText[4] = new[] { Content.Load<Texture2D>("Tile/Tree02") };
