@@ -1,0 +1,5 @@
+﻿-- storage.CheckFood() storage.GetFood() implementieren.
+	-- .GetFood() brauchen wir einen RückgabeWert der uns sowohl ART des Essens(EItem), als auch die Anzahl(int) zurückgeben
+	-- eventuell ein Struct dafür einführen. OutItem(EItem type, int amount);
+-- Task GetFood auf .CheckFood und .getFood() verallgemeinern.
+-- Reservierungssystem für die Baustelle, sodass nicht zuviele Ressourcen verschwendet werden.

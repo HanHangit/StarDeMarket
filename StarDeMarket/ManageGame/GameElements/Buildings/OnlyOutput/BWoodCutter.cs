@@ -13,7 +13,7 @@ namespace StarDeMarket
 
     class BWoodCutter : BuildingWithInput
     {
-        
+
 
 
         public BWoodCutter(Vector2 _pos, ContentManager _cont)
@@ -34,34 +34,27 @@ namespace StarDeMarket
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width,texture2D.Height)), Color.White);
+            spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
         }
 
 
         public override void Update(GameTime gTime)
         {
-            if (foodWatch.ElapsedMilliseconds / 1000 <= 10)
-            {
-                base.Update(gTime);
-            }
-            if (foodWatch.ElapsedMilliseconds / 1000 >= 10)
-            {
-                ConsumeFood();
+            base.Update(gTime);
 
-            }
             if (taskQueue.Count == 0)
             {
-                if (storage.getCount(EItem.Fisch) < 1)
+                if (storage.getCount(EItem.Fisch) < 5)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Fisch, 3));
+                    taskQueue.Enqueue(new GetFood(this), 1);
                 }
                 if (storage.getCount(EItem.Holz) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5),1);
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5), 2);
                 }
                 else
                 {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Holz),2);
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Holz), 3);
                 }
             }
         }
@@ -70,7 +63,7 @@ namespace StarDeMarket
         {
             if (HasFullWorkforce())
                 Console.WriteLine("Matthis hat scheiße gebaut");
-                //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
+            //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
         }
         public override bool HasFullWorkforce()
         {

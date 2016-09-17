@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HanHanTask\FromStorageTask.cs" />
+    <Compile Include="HanHanTask\GetFood.cs" />
     <Compile Include="HanHanTask\PlantTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="HanHanTask\ToStorageTask.cs" />
@@ -102,6 +103,7 @@
     <Content Include="1ToDoListe\ChrisToDoListe.txt" />
     <Content Include="1ToDoListe\JohannesToDoListe.txt" />
     <Content Include="1ToDoListe\MatthisToDoListe.txt" />
+    <Content Include="1ToDoListe\OpenToDosListe.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Priority Queue\Priority Queue.csproj" />
   </ItemGroup>

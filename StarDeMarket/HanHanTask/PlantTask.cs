@@ -10,8 +10,6 @@ namespace StarDeMarket
     class PlantTask : Task
     {
 
-        EStatus status;
-
         EItem item;
 
         ETile tile;

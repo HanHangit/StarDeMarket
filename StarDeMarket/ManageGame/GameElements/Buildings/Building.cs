@@ -119,6 +119,10 @@ namespace StarDeMarket
             {
                 Task t = taskQueue.Dequeue();
                 t.SetHuman(human);
+                if (!(storage.Check(EItem.Fisch) || t is GetFood))
+                    t = null;
+                if(!(t is GetFood))
+                    storage.Get(EItem.Fisch);
                 return t;
             }
 

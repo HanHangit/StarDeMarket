@@ -12,8 +12,6 @@ namespace StarDeMarket
 
         EItem item;
 
-        EStatus status;
-
         MainBuilding target;
 
         int amount;
