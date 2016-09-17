@@ -20,6 +20,7 @@ namespace StarDeMarket
         Eisen,
         Eisenbarren,
         Gold,
+        Pilze,
         Count
     }
 

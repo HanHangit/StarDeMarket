@@ -25,7 +25,7 @@ namespace StarDeMarket
 
             for(int i = 0; i < output.Length; ++i)
             {
-                taskQueue.Enqueue(new CollectTask(this, output[i]));
+                taskQueue.Enqueue(new CollectTask(this, output[i]),1);
             }
         }
 
@@ -48,9 +48,9 @@ namespace StarDeMarket
                 {
 
                     if (storage.Check(output[i], 5))
-                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5));
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5),1);
                     else
-                        taskQueue.Enqueue(new CollectTask(this, output[i]));
+                        taskQueue.Enqueue(new CollectTask(this, output[i]),2);
                 };
             }
 

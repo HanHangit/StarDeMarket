@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,8 @@ namespace StarDeMarket
         //ContentManager
         ContentManager Content;
 
+        
+
         public Tilemap(string strMap, ContentManager cont)
         {
             updateQueue = new Queue<Tile>();
@@ -52,31 +55,27 @@ namespace StarDeMarket
             Content = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
 
             //For faster loading
-            Tile.tileText = new Texture2D[(int)ETile.Count];
-            Tile.tileColorData = new Color[(int)ETile.Count][];
-            Tile.tileColorData[0] = new Color[tilesize * tilesize];
-            Tile.tileColorData[1] = new Color[tilesize * tilesize];
-            Tile.tileColorData[2] = new Color[tilesize * tilesize];
-            Tile.tileColorData[3] = new Color[tilesize * tilesize];
-            Tile.tileColorData[4] = new Color[tilesize * tilesize];
-            Tile.tileColorData[5] = new Color[tilesize * tilesize];
-            Tile.tileColorData[6] = new Color[tilesize * tilesize];
-            Tile.tileColorData[7] = new Color[tilesize * tilesize];
-            Tile.tileColorData[8] = new Color[tilesize * tilesize];
+            Tile.tileText = new Texture2D[(int)ETile.Count][];
+            Tile.tileColorData = new Color[(int)ETile.Count][][];
 
-            Tile.tileText[0] = Content.Load<Texture2D>("Tile/Grass01");
-            Tile.tileText[1] = Content.Load<Texture2D>("Tile/Grass01");
-            Tile.tileText[2] = Content.Load<Texture2D>("Tile/Water01");
-            Tile.tileText[3] = Content.Load<Texture2D>("Tile/Rock01");
-            Tile.tileText[4] = Content.Load<Texture2D>("Tile/Tree01");
-            Tile.tileText[5] = Content.Load<Texture2D>("Tile/road01");
-            Tile.tileText[6] = Content.Load<Texture2D>("Tile/Coal01");
-            Tile.tileText[7] = Content.Load<Texture2D>("Tile/Gold01");
-            Tile.tileText[8] = Content.Load<Texture2D>("Tile/Iron01");
+            Tile.tileText[0] = new[] { Content.Load<Texture2D>("Tile/Grass01") };
+            Tile.tileText[1] = new[] { Content.Load<Texture2D>("Tile/Grass01"), Content.Load<Texture2D>("Tile/Grass02") };
+            Tile.tileText[2] = new[] { Content.Load<Texture2D>("Tile/Water01") };
+            Tile.tileText[3] = new[] { Content.Load<Texture2D>("Tile/Rock01"), Content.Load<Texture2D>("Tile/Rock02") };
+            Tile.tileText[4] = new[] { Content.Load<Texture2D>("Tile/Tree02") };
+            Tile.tileText[5] = new[] { Content.Load<Texture2D>("Tile/Road01") };
+            Tile.tileText[6] = new[] { Content.Load<Texture2D>("Tile/Coal01") };
+            Tile.tileText[7] = new[] { Content.Load<Texture2D>("Tile/Gold01") };
+            Tile.tileText[8] = new[] { Content.Load<Texture2D>("Tile/Iron01") };
 
             for (int i = 0; i < Tile.tileText.Length; ++i)
             {
-                Tile.tileText[i].GetData(Tile.tileColorData[i]);
+                Tile.tileColorData[i] = new Color[Tile.tileText[i].Length][];
+                for (int j = 0; j < Tile.tileText[i].Length; ++j)
+                {
+                    Tile.tileColorData[i][j] = new Color[tilesize * tilesize];
+                    Tile.tileText[i][j].GetData(Tile.tileColorData[i][j]);
+                }
             }
 
             miniMapBackground = cont.Load<Texture2D>("Map/MiniMapBack");
@@ -85,7 +84,11 @@ namespace StarDeMarket
 
             font = Content.Load<SpriteFont>("Font/FPSFont");
 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             BuildMap(strMap);
+            watch.Stop();
+            Console.WriteLine("Needed Time: " + watch.Elapsed.ToString());
 
             Build(new Rectangle(2000, 2000, 128, 128), new MainBuilding(new Vector2(2000, 2000), cont));
 

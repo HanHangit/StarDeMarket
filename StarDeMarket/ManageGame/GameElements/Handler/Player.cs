@@ -39,6 +39,7 @@ namespace StarDeMarket
         EBuilding.Coalmine,
         EBuilding.Ironmine,
         EBuilding.Ironmelt,
+        EBuilding.Herbalist
             };
 
         int currBuild = 0;
@@ -162,6 +163,9 @@ namespace StarDeMarket
                                 break;
                             case EBuilding.Farm:
                                 targetBuild = new BWheatFarm(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                break;
+                            case EBuilding.Herbalist:
+                                targetBuild = new BHerbalist(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
                         }
                     }

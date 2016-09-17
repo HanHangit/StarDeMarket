@@ -39,6 +39,7 @@ namespace StarDeMarket
             //ToDo Chris, Human dürfen noch Ressourcen abbauen!
             if (foodWatch.ElapsedMilliseconds / 1000 <= 10)
             {
+<<<<<<< HEAD
                 Production(gTime);
                 base.Update(gTime);
             }
@@ -61,6 +62,15 @@ namespace StarDeMarket
                     {
                         taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5));
                     }
+=======
+                if(storage.getCount(EItem.Holz) < 3)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5),2);
+                }
+                if(storage.getCount(EItem.Bretter) > 5)
+                {
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5),1);
+>>>>>>> c76752e869a334d170fa90b776faa38fef3ee21c
                 }
 
 

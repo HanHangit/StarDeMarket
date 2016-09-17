@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace StarDeMarket
 {
@@ -48,9 +49,9 @@ namespace StarDeMarket
 
         public Building refBuilding { get; set; }
 
-        public static Texture2D[] tileText;
+        public static Texture2D[][] tileText;
 
-        public static Color[][] tileColorData;
+        public static Color[][][] tileColorData;
 
         public Storage storage;
 
@@ -76,13 +77,24 @@ namespace StarDeMarket
 
         public Tile(ETile type, Vector2 position, int tilesize)
         {
+            Random rnd = UsefullStuff.Instance.Random;
             this.type = type;
             walkable = false;
             refBuilding = null;
             storage = new Storage();
             pos = position;
             color = new Color[tilesize * tilesize];
-            color = tileColorData[(int)type];
+
+            if (rnd.Next(101) > 90)
+            {
+                int numTile = rnd.Next(0, tileColorData[(int)type].Length);
+                color = tileColorData[(int)type][numTile];
+            }
+            else
+                color = tileColorData[(int)type][0];
+
+            
+
             bounds = new Rectangle((int)position.X, (int)position.Y, tilesize, tilesize);
 
             switch (type)
@@ -110,6 +122,8 @@ namespace StarDeMarket
                 case ETile.Tree:
                     name = "Tree";
                     storage.Add(EItem.Holz, 10);
+                    if (rnd.Next(100) > 70)
+                        storage.Add(EItem.Pilze, 5);
                     buildable = false;
                     workable = true;
                     WorkTime = 4f;
@@ -207,7 +221,7 @@ namespace StarDeMarket
         {
             if (storage.IsEmpty())
             {
-                color = tileColorData[(int)ETile.Grass];
+                color = tileColorData[(int)ETile.Grass][0];
                 buildable = true;
                 BuildingHandler.Instance.map.BuildMap(bounds.Location, color);
                 type = ETile.Grass;
@@ -219,7 +233,7 @@ namespace StarDeMarket
             Walkable = true;
             Buildable = false;
             workable = false;
-            color = tileColorData[(int)ETile.Road];
+            color = tileColorData[(int)ETile.Road][0];
             type = ETile.Road;
         }
 

@@ -1,27 +1,27 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-
-    class BCoalMine : BuildingWithInput
+    class BHerbalist : Building
     {
-        public BCoalMine(Vector2 _pos, ContentManager cont)
+
+        public BHerbalist(Vector2 _pos, ContentManager cont)
         {
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
-            texture2D = cont.Load<Texture2D>("Building/CoalMine");
+            texture2D = cont.Load<Texture2D>("Building/Herbalist");
 
             position = _pos;
             storage = new Storage();
             name = "CoalMine";
 
-            output = new EItem[] { EItem.Eisen };
+            output = new EItem[] { EItem.Pilze };
             outputCount = new int[] { 2 };
         }
 
@@ -38,29 +38,24 @@ namespace StarDeMarket
             {
                 if (storage.getCount(EItem.Kohle) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Kohle, 5),1);
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Pilze, 5), 1);
                 }
                 else
                 {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Kohle),2);
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Pilze), 2);
                 }
             }
         }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Bergmann Kohle fehlt!");
-            //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
-        }
 
         public override bool HasFullWorkforce()
         {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
+            throw new NotImplementedException();
         }
 
+        public override void Workerwork()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
