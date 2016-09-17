@@ -36,19 +36,22 @@ namespace StarDeMarket
         }
         public virtual void Update(GameTime gTime)
         {
-            foreach (Human h in listWorker)
-                h.Update(gTime);
+
+                foreach (Human h in listWorker)
+                    h.Update(gTime);
 
 
-            if (listWorker.Count < 2)
-            {
-                BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
-            }
+                if (listWorker.Count < 2)
+                {
+                    BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
+                }
+
+
         }
         public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
         public abstract bool HasFullWorkforce();
 
-        
+
 
         public override string ToString()
         {
@@ -168,6 +171,9 @@ namespace StarDeMarket
 
         protected EItem[] input;
         protected int[] inputCount;
+
+        protected EItem[] foodInput;
+        protected int[] foodCount;
 
         protected EItem[] output;
         protected int[] outputCount;

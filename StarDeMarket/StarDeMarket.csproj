@@ -61,7 +61,6 @@
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BStonemason.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFishingHut.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWoodCutter.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\OnlyOutput.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BuildingWithInput.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\WithInput\BMill.cs" />
     <Compile Include="ManageGame\GameElements\Handler\GUIHandler.cs" />

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BCoalMine : OnlyOutput
+    class BCoalMine : BuildingWithInput
     {
         public BCoalMine(Vector2 _pos, ContentManager cont)
         {

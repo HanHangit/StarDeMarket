@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BFarm : OnlyOutput
+    class BFarm : BuildingWithInput
     {
         
         Storage storage;

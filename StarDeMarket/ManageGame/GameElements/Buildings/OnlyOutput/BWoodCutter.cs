@@ -6,18 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace StarDeMarket
 {
 
-    class BWoodCutter : OnlyOutput
+    class BWoodCutter : BuildingWithInput
     {
         
-        EItem[] output = { EItem.Holz };
-        int[] outputCount = { 2 };
+
 
         public BWoodCutter(Vector2 _pos, ContentManager _cont)
         {
+            foodWatch = new Stopwatch();
+            foodWatch.Start();
+
+            foodInput = new EItem[] { EItem.Fisch, EItem.Brot };
+            EItem[] output = { EItem.Holz };
+            int[] outputCount = { 2 };
+
             cont = _cont;
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
@@ -33,10 +40,22 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            base.Update(gTime);
+            if (foodWatch.ElapsedMilliseconds / 1000 <= 10)
+            {
+                base.Update(gTime);
+            }
+            if (foodWatch.ElapsedMilliseconds / 1000 >= 10)
+            {
+                ConsumeFood();
+
+            }
             if (taskQueue.Count == 0)
             {
-                if(storage.getCount(EItem.Holz) > 5)
+                if (storage.getCount(EItem.Fisch) < 1)
+                {
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Fisch, 3));
+                }
+                if (storage.getCount(EItem.Holz) > 5)
                 {
                     taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5));
                 }

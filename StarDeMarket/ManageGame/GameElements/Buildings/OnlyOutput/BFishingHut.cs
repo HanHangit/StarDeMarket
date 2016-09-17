@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BFishingHut : OnlyOutput
+    class BFishingHut : BuildingWithInput
     {
         public BFishingHut(Vector2 _pos, ContentManager _cont)
         {

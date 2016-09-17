@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BIronMine : OnlyOutput
+    class BIronMine : BuildingWithInput
     {
         public BIronMine(Vector2 _pos, ContentManager cont)
         {

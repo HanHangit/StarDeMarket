@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace StarDeMarket
 {
 
-    class BStonemason : OnlyOutput
+    class BStonemason : BuildingWithInput
     { 
         public BStonemason(Vector2 _pos, ContentManager cont)
         {

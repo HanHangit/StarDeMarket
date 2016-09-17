@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace StarDeMarket
 {
+  
     abstract class BuildingWithInput : Building
     {
         protected bool currentlyProducing = false;
         protected float productionCounter = 0, productionTime = 0;
+        protected Stopwatch foodWatch;
 
         public void Production(GameTime gTime)
         {
-            if (EnoughFood())
-            {
+
                 if (CheckRessourcen() && !currentlyProducing)
                 {
                     currentlyProducing = true;
@@ -37,7 +39,7 @@ namespace StarDeMarket
                         }
                     }
                 }
-            }
+
            
         }
 
@@ -49,17 +51,21 @@ namespace StarDeMarket
                     return false;
             }
             return true;
-        }  
-                                                 //Überprüft ob alle Ressourcen vorhanden sind.
-
-        public bool EnoughFood() //ToDo Chris
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (!storage.Check(input[i], inputCount[i]))
-                    return false;
-            }
-            return true;
         }
+        public virtual void ConsumeFood()
+        {
+            if (storage.Check(EItem.Fisch) || storage.Check(EItem.Brot))
+            {
+                if (storage.getCount(EItem.Fisch) >= 1)
+                    storage.Get(EItem.Fisch);
+                else if (storage.getCount(EItem.Brot) >= 1)
+                    storage.Get(EItem.Brot);
+                foodWatch.Restart();
+            }
+        }
+
+        //Überprüft ob alle Ressourcen vorhanden sind.
+
+
     }
 }

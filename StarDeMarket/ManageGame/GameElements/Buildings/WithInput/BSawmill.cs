@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace StarDeMarket
 {
@@ -14,6 +15,8 @@ namespace StarDeMarket
 
         public BSawmill(Vector2 _pos, ContentManager cont)
         {
+            foodWatch = new Stopwatch();
+            foodWatch.Start();
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Sawmill");
             storage = new Storage();
@@ -21,8 +24,11 @@ namespace StarDeMarket
             name = "Sawmill";
             productionTime = 2;
 
-            input = new EItem[] { EItem.Holz, EItem.Fisch };
-            inputCount = new int[] { 2, 4 };
+            input = new EItem[] { EItem.Holz};
+            inputCount = new int[] { 2 };
+
+            foodInput = new EItem[] { EItem.Fisch, EItem.Brot };
+            //foodCount = new int[] { 4, 4 };
 
             output = new EItem[] { EItem.Bretter };
             outputCount = new int[] { 1};  
@@ -30,23 +36,35 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            Production(gTime);
-            base.Update(gTime);
-            if(taskQueue.Count == 0)
+            //ToDo Chris, Human dürfen noch Ressourcen abbauen!
+            if (foodWatch.ElapsedMilliseconds / 1000 <= 10)
             {
-                if(storage.getCount(EItem.Fisch) < 1)
-                {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Fisch, 3));
-                }
-                if(storage.getCount(EItem.Holz) < 3)
-                {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5));
-                }
-                if(storage.getCount(EItem.Bretter) > 5)
-                {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5));
-                }
+                Production(gTime);
+                base.Update(gTime);
             }
+            if (foodWatch.ElapsedMilliseconds / 1000 >= 10)
+            {
+                ConsumeFood();
+
+            }
+            if (taskQueue.Count == 0)
+                {
+                    if (storage.getCount(EItem.Fisch) < 1)
+                    {
+                        taskQueue.Enqueue(new FromStorageTask(this, EItem.Fisch, 3));
+                    }
+                    if (storage.getCount(EItem.Holz) < 3)
+                    {
+                        taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5));
+                    }
+                    if (storage.getCount(EItem.Bretter) > 5)
+                    {
+                        taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5));
+                    }
+                }
+
+
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
