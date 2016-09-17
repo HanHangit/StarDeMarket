@@ -38,11 +38,11 @@ namespace StarDeMarket
             {
                 if (storage.getCount(EItem.Kohle) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Kohle, 5));
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Kohle, 5),1);
                 }
                 else
                 {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Kohle));
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Kohle),2);
                 }
             }
         }

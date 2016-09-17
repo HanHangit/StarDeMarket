@@ -35,11 +35,11 @@ namespace StarDeMarket
             {
                 if(storage.getCount(EItem.Holz) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5));
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Holz, 5),2);
                 }
                 if(storage.getCount(EItem.Bretter) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5));
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Bretter, 5),1);
                 }
             }
         }

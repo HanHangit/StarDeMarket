@@ -36,15 +36,15 @@ namespace StarDeMarket
             {
                 if (storage.getCount(EItem.Eisen) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Eisen, 5));
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Eisen, 5),1);
                 }
                 if (storage.getCount(EItem.Kohle) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5));
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5),1);
                 }
                 if (storage.getCount(EItem.Eisenbarren) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Eisenbarren, 5));
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Eisenbarren, 5),1);
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace StarDeMarket
         public BWheatFarm(Vector2 _pos, ContentManager _cont)
         {
             cont = _cont;
-            texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
+            texture2D = cont.Load<Texture2D>("Building/WheatFarm");
             position = _pos;
             storage = new Storage();
             name = "WheatFarm";
@@ -27,22 +27,18 @@ namespace StarDeMarket
             if(taskQueue.Count == 0)
             {
                 if (storage.getCount(EItem.Getreide) >= 5)
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Getreide, 5));
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Getreide, 5),1);
 
-                bool newField = true;
-                foreach(GrowingField f in fields)
-                    if(f.finished && fields.Count > listWorker.Count * 2)
-                    {
-                        newField = false;
-                    }
 
-                if (newField)
-                    taskQueue.Enqueue(new PlantTask(this, EItem.Getreide,ETile.Grass));
+                bool newPlants = true;
+                foreach (GrowingField f in fields)
+                    if (f.finished)
+                        newPlants = false;
+
+                if(newPlants)
+                    taskQueue.Enqueue(new PlantTask(this, EItem.Getreide,ETile.Grass),3);
                 else
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Getreide));
-
-                
-
+                    taskQueue.Enqueue(new CollectTask(this, EItem.Getreide),2);
             }
         }
 

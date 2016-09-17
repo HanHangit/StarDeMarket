@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using StarDeMarket;
+using Priority_Queue;
 
 namespace StarDeMarket
 {
@@ -125,7 +126,7 @@ namespace StarDeMarket
             listWorker.Add(human);
         }
 
-        protected Queue<Task> taskQueue = new Queue<Task>();
+        protected SimplePriorityQueue<Task> taskQueue = new SimplePriorityQueue<Task>();
 
         protected Rectangle bounds;
         protected ContentManager cont;

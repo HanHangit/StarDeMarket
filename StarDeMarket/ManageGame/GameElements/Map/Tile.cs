@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace StarDeMarket
 {
@@ -48,9 +49,9 @@ namespace StarDeMarket
 
         public Building refBuilding { get; set; }
 
-        public static Texture2D[] tileText;
+        public static Texture2D[][] tileText;
 
-        public static Color[][] tileColorData;
+        public static Color[][][] tileColorData;
 
         public Storage storage;
 
@@ -82,7 +83,17 @@ namespace StarDeMarket
             storage = new Storage();
             pos = position;
             color = new Color[tilesize * tilesize];
-            color = tileColorData[(int)type];
+
+            if (UsefullStuff.Instance.Random.Next(101) > 90)
+            {
+                int numTile =UsefullStuff.Instance.Random.Next(0, tileColorData[(int)type].Length);
+                color = tileColorData[(int)type][numTile];
+            }
+            else
+                color = tileColorData[(int)type][0];
+
+
+
             bounds = new Rectangle((int)position.X, (int)position.Y, tilesize, tilesize);
 
             switch (type)
@@ -207,7 +218,7 @@ namespace StarDeMarket
         {
             if (storage.IsEmpty())
             {
-                color = tileColorData[(int)ETile.Grass];
+                color = tileColorData[(int)ETile.Grass][0];
                 buildable = true;
                 BuildingHandler.Instance.map.BuildMap(bounds.Location, color);
                 type = ETile.Grass;
@@ -219,7 +230,7 @@ namespace StarDeMarket
             Walkable = true;
             Buildable = false;
             workable = false;
-            color = tileColorData[(int)ETile.Road];
+            color = tileColorData[(int)ETile.Road][0];
             type = ETile.Road;
         }
 
