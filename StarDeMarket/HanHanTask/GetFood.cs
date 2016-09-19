@@ -24,6 +24,8 @@ namespace StarDeMarket
             {
                 case EStatus.Preparing:
                     target = BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.Storage.CheckFood());
+                    if (target == null)
+                        return true;
                     status = EStatus.MoveToTarget;
                     human.Target = target.Bounds.Location;
                     return false;
