@@ -53,7 +53,6 @@ namespace StarDeMarket
                         taskQueue.Enqueue(new CollectTask(this, output[i]),2);
                 };
             }
-
         }
 
         public override void Workerwork()

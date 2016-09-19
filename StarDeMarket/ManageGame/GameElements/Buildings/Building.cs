@@ -39,14 +39,14 @@ namespace StarDeMarket
         public virtual void Update(GameTime gTime)
         {
 
-                foreach (Human h in listWorker)
-                    h.Update(gTime);
+            foreach (Human h in listWorker)
+                h.Update(gTime);
 
 
-                if (listWorker.Count < 2)
-                {
-                    BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
-                }
+            if (listWorker.Count < 2)
+            {
+                BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
+            }
 
 
         }
@@ -112,17 +112,27 @@ namespace StarDeMarket
 
         public Task GetTask(Human human)
         {
-            
+
             if (taskQueue.Count == 0)
                 return null;
             else
             {
                 Task t = taskQueue.Dequeue();
                 t.SetHuman(human);
-                if (!(storage.Check(EItem.Fisch) || t is GetFood))
-                    t = null;
-                if(!(t is GetFood))
-                    storage.Get(EItem.Fisch);
+
+                if (!(this is ConstructionSite))
+                {
+                    if (storage.FoodCount() < listWorker.Count)
+                    {
+                        taskQueue.Enqueue(new GetFood(this), 1);
+                    }
+
+                    if (!(storage.CheckFood() || t is GetFood))
+                        t = null;
+                    if (!(t is GetFood))
+                        storage.GetFood(1);
+                }
+
                 return t;
             }
 
@@ -157,7 +167,7 @@ namespace StarDeMarket
                     constrRessource[0] = EItem.Holz;
                     constrRessource[1] = EItem.Bretter;
                 }
-                    return constrRessource;
+                return constrRessource;
             }
         }
 
@@ -165,7 +175,7 @@ namespace StarDeMarket
         {
             get
             {
-                if(amountRessource == null)
+                if (amountRessource == null)
                 {
                     amountRessource = new int[2];
                     amountRessource[0] = 5;

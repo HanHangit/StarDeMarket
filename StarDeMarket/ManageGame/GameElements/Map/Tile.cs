@@ -69,6 +69,8 @@ namespace StarDeMarket
 
         float workTime;
 
+        public int collectAmount;
+
         public ETile type;
 
 
@@ -104,7 +106,8 @@ namespace StarDeMarket
                     name = "Water";
                     buildable = false;
                     workable = true;
-                    WorkTime = 6f;
+                    WorkTime = 1f;
+                    collectAmount = 3;
                     break;
                 case ETile.Rock:
                     name = "Rock";
@@ -112,12 +115,14 @@ namespace StarDeMarket
                     buildable = true;
                     workable = true;
                     WorkTime = 10f;
+                    collectAmount = 2;
                     break;
                 case ETile.Grass:
                     name = "Grass";
                     buildable = true;
                     workable = true;
                     WorkTime = 5f;
+                    collectAmount = 3;
                     break;
                 case ETile.Tree:
                     name = "Tree";
@@ -127,6 +132,7 @@ namespace StarDeMarket
                     buildable = false;
                     workable = true;
                     WorkTime = 4f;
+                    collectAmount = 2;
                     break;
                 case ETile.Coal:
                     name = "Coal";
@@ -134,6 +140,7 @@ namespace StarDeMarket
                     buildable = false;
                     workable = true;
                     WorkTime = 15f;
+                    collectAmount = 1;
                     break;
                 case ETile.Iron:
                     name = "Coal";
@@ -141,6 +148,7 @@ namespace StarDeMarket
                     buildable = false;
                     workable = true;
                     WorkTime = 15f;
+                    collectAmount = 1;
                     break;
                 case ETile.Gold:
                     name = "Coal";
@@ -148,6 +156,7 @@ namespace StarDeMarket
                     buildable = false;
                     workable = true;
                     WorkTime = 25f;
+                    collectAmount = 1;
                     break;
                 default:
                     name = "NA";

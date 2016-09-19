@@ -29,6 +29,7 @@ namespace StarDeMarket
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
             position = _pos;
             storage = new Storage();
+            storage.Add(EItem.Brot, 100);
             name = "WoodCutter";
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -44,10 +45,7 @@ namespace StarDeMarket
 
             if (taskQueue.Count == 0)
             {
-                if (storage.getCount(EItem.Fisch) < 5)
-                {
-                    taskQueue.Enqueue(new GetFood(this), 1);
-                }
+                
                 if (storage.getCount(EItem.Holz) > 5)
                 {
                     taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5), 2);

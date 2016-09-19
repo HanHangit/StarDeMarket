@@ -38,8 +38,6 @@ namespace StarDeMarket
             base.Update(gTime);
             if (taskQueue.Count == 0)
             {
-                if (!storage.Check(EItem.Fisch))
-                    taskQueue.Enqueue(new GetFood(this), 0.5f);
 
                 for (int i = 0; i < amount.Length; ++i)
                 {

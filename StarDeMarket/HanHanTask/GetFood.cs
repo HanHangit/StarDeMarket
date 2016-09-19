@@ -23,7 +23,7 @@ namespace StarDeMarket
             switch (status)
             {
                 case EStatus.Preparing:
-                    target = BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.Storage.Check(EItem.Fisch));
+                    target = BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.Storage.CheckFood());
                     status = EStatus.MoveToTarget;
                     human.Target = target.Bounds.Location;
                     return false;
@@ -32,7 +32,7 @@ namespace StarDeMarket
                         status = EStatus.WorkOnTarget;
                     return false;
                 case EStatus.WorkOnTarget:
-                    human.storage.Add(EItem.Fisch, target.Storage.Get(EItem.Fisch,human.carry));
+                    human.storage.Add(target.Storage.GetFood(5));
                     human.Target = build.Bounds.Location;
                     status = EStatus.BackToBase;
                     return false;
@@ -41,7 +41,7 @@ namespace StarDeMarket
                         status = EStatus.OnBase;
                     return false;
                 case EStatus.OnBase:
-                    build.Storage.Add(EItem.Fisch, human.storage.Get(EItem.Fisch, human.carry));
+                    build.Storage.Add(human.storage.GetFood(human.storage.FoodCount()));
                     return true;
                 default:
                     return true;
