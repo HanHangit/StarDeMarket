@@ -101,7 +101,7 @@ namespace StarDeMarket
 
                 if (human.MoveToTarget(gTime))
                 {
-                    build.Storage.Add(toCollect, human.storage.Get(toCollect,5));
+                    build.Storage.Add(toCollect, human.storage.Get(toCollect,100));
                     status = EStatus.None;
                     return true;
                 }

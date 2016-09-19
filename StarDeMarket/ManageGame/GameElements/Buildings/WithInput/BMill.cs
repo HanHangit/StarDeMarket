@@ -55,18 +55,5 @@ namespace StarDeMarket
             base.Draw(spriteBatch);
         }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Ein Mueller fehlt hier! HILFE!@Matthis");
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
-        }
     }
 }

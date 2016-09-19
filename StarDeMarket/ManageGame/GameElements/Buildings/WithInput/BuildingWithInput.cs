@@ -64,6 +64,12 @@ namespace StarDeMarket
             }
         }
 
+        public override void Update(GameTime gTime)
+        {
+            base.Update(gTime);
+
+        }
+
         //Überprüft ob alle Ressourcen vorhanden sind.
 
 

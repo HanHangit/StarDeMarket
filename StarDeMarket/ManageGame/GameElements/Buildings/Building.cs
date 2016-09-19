@@ -43,15 +43,13 @@ namespace StarDeMarket
                 h.Update(gTime);
 
 
-            if (listWorker.Count < 2)
+            if (listWorker.Count < maxWorker)
             {
-                BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && b.GetWorker(this, 1));
+                BuildingHandler.Instance.buildingList.Find(b => b is BHome && b.GetWorker(this, 1));
             }
 
 
         }
-        public abstract void Workerwork();          //Erstellt Instanz vom Arbeiter und weist ihnen die Arbeit zu
-        public abstract bool HasFullWorkforce();
 
 
 
@@ -119,19 +117,12 @@ namespace StarDeMarket
             {
                 Task t = taskQueue.Dequeue();
                 t.SetHuman(human);
-
-                if (!(this is ConstructionSite))
+                
+                if (!(this is ConstructionSite) && storage.FoodCount() < listWorker.Count)
                 {
-                    if (storage.FoodCount() < listWorker.Count)
-                    {
-                        taskQueue.Enqueue(new GetFood(this), 1);
-                    }
-
-                    if (!(storage.CheckFood() || t is GetFood))
-                        t = null;
-                    if (!(t is GetFood))
-                        storage.GetFood(1);
+                    taskQueue.Enqueue(new GetFood(this), 1);
                 }
+
 
                 return t;
             }
@@ -151,7 +142,7 @@ namespace StarDeMarket
         protected Texture2D texture2D;
         protected Vector2 position;
         protected int costs;
-        protected int person;
+        protected int maxWorker = 2;
         protected string name;
         protected EItem[] constrRessource;
         protected int[] amountRessource;

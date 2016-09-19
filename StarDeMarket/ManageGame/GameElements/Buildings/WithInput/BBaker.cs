@@ -55,20 +55,6 @@ namespace StarDeMarket
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
         }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Ein Bäcker fehlt hier! HILFE!@Matthis");
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
-        }
-
     }
 }
 

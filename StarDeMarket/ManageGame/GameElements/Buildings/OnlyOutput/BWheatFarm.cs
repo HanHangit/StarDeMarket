@@ -48,16 +48,6 @@ namespace StarDeMarket
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
         }
 
-        public override bool HasFullWorkforce()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Workerwork()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void PlantField(Point plantPos)
         {
             fields.Add(new GrowingField(plantPos, new[] { cont.Load<Texture2D>("Tile/GrowingField01"), cont.Load<Texture2D>("Tile/WheatField01") },10,EItem.Getreide));

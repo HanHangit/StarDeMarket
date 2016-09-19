@@ -132,7 +132,7 @@ namespace StarDeMarket
                         switch (targetTypeBuild)
                         {
                             case EBuilding.MainBuilding:
-                                targetBuild = new MainBuilding(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
+                                targetBuild = new BHome(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);
                                 break;
                             case EBuilding.FishingHut:
                                 targetBuild = new BFishingHut(GUIHandler.Instance.gui.markBounds.Location.ToVector2(), Content);

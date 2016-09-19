@@ -11,7 +11,7 @@ namespace StarDeMarket
     {
         EItem item;
 
-        MainBuilding target;
+        BStorage target;
 
         int amount;
 
@@ -21,7 +21,7 @@ namespace StarDeMarket
             item = _item;
             status = EStatus.Preparing;
             amount = _amount;
-            target = (MainBuilding)BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding && (b.Storage.getCount(item) >= amount));
+            target = (BStorage)BuildingHandler.Instance.buildingList.Find(b => b is BStorage && (b.Storage.getCount(item) >= amount));
             if (target == null)
             {
                 status = EStatus.None;

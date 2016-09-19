@@ -20,6 +20,8 @@ namespace StarDeMarket
         public Task currTask;
         Point target;
         public Storage storage;
+        public float currPower;
+        public float maxPower;
 
         public Point Target
         {
@@ -44,6 +46,8 @@ namespace StarDeMarket
             building = build;
             workSpeed = 1;
             carry = 3;
+            currPower = 30;
+            maxPower = 30;
         }
 
         public void SetBuilding(Building build)
@@ -77,16 +81,26 @@ namespace StarDeMarket
 
         public void Update(GameTime gTime)
         {
+
+
             if (currTask != null)
             {
                 if (currTask.DoTask(gTime))
                 {
                     currTask = null;
+                    return;
                 }
+                if(!(building is ConstructionSite))
+                    currPower -= (float)gTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
-                currTask = building.GetTask(this);                
+                currTask = building.GetTask(this);
+                if ((!(currTask is GetFood) && !(currTask is EatFood)) && currPower <= 0)
+                {
+                    currTask = new EatFood(building);
+                    currTask.SetHuman(this);
+                }
             }
 
         }

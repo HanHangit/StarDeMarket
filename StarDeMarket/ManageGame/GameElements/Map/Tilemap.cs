@@ -90,7 +90,8 @@ namespace StarDeMarket
             watch.Stop();
             Console.WriteLine("Needed Time: " + watch.Elapsed.ToString());
 
-            Build(new Rectangle(2000, 2000, 128, 128), new MainBuilding(new Vector2(2000, 2000), cont));
+            Build(new Rectangle(2000, 2000, 128, 128), new BHome(new Vector2(2000, 2000), cont));
+            Build(new Rectangle(1600, 2000, 128, 128), new BStorage(new Vector2(1600, 2000), cont));
 
         }
 
