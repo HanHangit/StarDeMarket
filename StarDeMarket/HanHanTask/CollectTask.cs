@@ -23,14 +23,11 @@ namespace StarDeMarket
     {
         EItem toCollect;
 
-        EStatus status;
-
         Point target;
 
         float startTimer;
 
         Tile targetTile;
-
 
         public CollectTask(Building building, EItem collect) : base(building)
         {

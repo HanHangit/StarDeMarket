@@ -30,21 +30,23 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            Production(gTime);
             base.Update(gTime);
             if (taskQueue.Count == 0)
             {
+                if (CheckRessourcen())
+                    taskQueue.Enqueue(new ProduceTask(this), 3);
+
                 if (storage.getCount(EItem.Mehl) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Mehl, 5),1);
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Mehl, 5),5);
                 }
                 if (storage.getCount(EItem.Kohle) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5),1);
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5),5);
                 }
                 if (storage.getCount(EItem.Brot) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Brot, 5),1);
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Brot, 5),2);
                 }
             }
         }

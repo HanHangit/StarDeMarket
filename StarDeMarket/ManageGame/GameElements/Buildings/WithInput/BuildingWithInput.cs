@@ -12,10 +12,10 @@ namespace StarDeMarket
     abstract class BuildingWithInput : Building
     {
         protected bool currentlyProducing = false;
-        protected float productionCounter = 0, productionTime = 0;
+        public float productionCounter = 0, productionTime = 0;
         protected Stopwatch foodWatch;
 
-        public void Production(GameTime gTime)
+        public bool Production(GameTime gTime)
         {
 
                 if (CheckRessourcen() && !currentlyProducing)
@@ -39,6 +39,8 @@ namespace StarDeMarket
                         }
                     }
                 }
+
+            return currentlyProducing;
 
            
         }

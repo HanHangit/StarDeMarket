@@ -45,6 +45,7 @@
     <Compile Include="HanHanTask\FromStorageTask.cs" />
     <Compile Include="HanHanTask\GetFood.cs" />
     <Compile Include="HanHanTask\PlantTask.cs" />
+    <Compile Include="HanHanTask\ProduceTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="HanHanTask\ToStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\ConstructionSite.cs" />
