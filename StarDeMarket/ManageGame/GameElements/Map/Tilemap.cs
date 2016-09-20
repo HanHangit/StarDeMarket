@@ -240,6 +240,104 @@ namespace StarDeMarket
             return true;
         }
 
+        public List<Point> GetAllRoadsOfBounds(Rectangle bounds)
+        {
+            List<Point> result = new List<Point>();
+
+            int x = bounds.X;
+            int y = bounds.Y - tilesize;
+            for (; x < (bounds.X + bounds.Width); x += tilesize)
+                AddWalkableTileToList(x, y, result);
+            y = bounds.Y + bounds.Height + tilesize;
+            x = bounds.X;
+            for (; x < (bounds.X + bounds.Width); x += tilesize)
+                AddWalkableTileToList(x, y, result);
+            x = bounds.X - tilesize;
+            y = bounds.Y;
+            for (; y < bounds.Y + bounds.Height; y += tilesize)
+                AddWalkableTileToList(x, y, result);
+            x = bounds.X + bounds.Width;
+            y = bounds.Y;
+            for (; y < bounds.Y + bounds.Height; y += tilesize)
+                AddWalkableTileToList(x, y, result);
+
+            RemoveTheNeighborhood(result);
+
+            Console.WriteLine("Having " + result.Count + " Streets closeby");
+            if(result.Count == 0)
+            {
+                return null;
+            }
+
+            return result;
+        }
+
+        private void RemoveTheNeighborhood(List<Point> neighborhood)
+        {
+            Queue<Point> currentStreet = new Queue<Point>();
+            List<Point> marked = new List<Point>();
+            List<Point> buffer = new List<Point>();
+            Point p;
+            while (neighborhood.Count != marked.Count)
+            {
+                marked.Add(neighborhood[0]);
+                currentStreet.Enqueue(neighborhood[0]);
+                while (currentStreet.Count != 0)
+                {
+                    Point curP = currentStreet.Dequeue();
+                    marked.Add(curP);
+                    buffer = new List<Point>();
+                    p = curP + new Point(0, tilesize);
+                    Console.WriteLine(p.ToString());
+                    if (ListContainsPoint(p, neighborhood))
+                        buffer.Add(p);
+                    p = curP + new Point(0, -tilesize);
+                    Console.WriteLine(p.ToString());
+                    if (ListContainsPoint(p, neighborhood))
+                        buffer.Add(p);
+                    p = curP + new Point(tilesize, 0);
+                    Console.WriteLine(p.ToString());
+                    if (ListContainsPoint(p, neighborhood))
+                        buffer.Add(p);
+                    p = curP + new Point(-tilesize, 0);
+                    Console.WriteLine(p.ToString());
+                    if (ListContainsPoint(p, neighborhood))
+                        buffer.Add(p);
+                    foreach (Point _p in buffer)
+                    {
+                        Console.WriteLine("buffer");
+                        currentStreet.Enqueue(_p);
+                        neighborhood.Remove(_p);
+                    }
+                    
+                }
+            }
+        }
+
+        private bool ListContainsPoint(Point p, List<Point> pList)
+        {
+            foreach(Point _p in pList)
+            {
+                if (ComparePoints(p, _p))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool ComparePoints(Point a, Point b)
+        {
+            return (a.X == b.X && a.Y == b.Y);
+        }
+
+        private void AddWalkableTileToList(int x, int y, List<Point> result)
+        {
+            Point p = new Point(x, y);
+            if (GetTile(new Point(x, y)).Walkable)
+            {
+                result.Add(p);
+            }
+        }
+
         public void UpdateTile(Point position)
         {
             updateQueue.Enqueue(GetTile(position));

@@ -38,6 +38,8 @@ namespace StarDeMarket
             {
                 case EStatus.Preparing:
                     human.Target = target.Bounds.Location;
+                    //BuildingHandler.Instance.map.GetAllRoadsOfBounds(target.Bounds);
+                    //BuildingHandler.Instance.map.GetAllRoadsOfBounds(build.Bounds);
                     if (human.MoveToTarget(gTime))
                     {
                         status = EStatus.MoveToTarget;

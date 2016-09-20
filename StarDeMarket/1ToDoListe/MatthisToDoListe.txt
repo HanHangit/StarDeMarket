@@ -4,4 +4,4 @@
 -- Rohstoffsuche mit Graphen machen (Rohstoffe als Knotenpunkte -> suche in der ungefähren richtung -> Mirkos Vorschlag)
 -- Tostorage und collectressource in alle output gebäude rein											[Done]
 -- getRessource from Storage																			[Done]
--- Eventuell Baustelle und StorageBuilding													
+								
