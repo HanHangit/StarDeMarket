@@ -60,6 +60,13 @@ namespace StarDeMarket
             spriteBatch.Draw(texture, position, Color.White);
         }
 
+        /// <summary>
+        /// Schickt den Human zu seinem Ziel.
+        /// Gibt True zurück, wenn er angekommen ist.
+        /// Ansonsten False.
+        /// </summary>
+        /// <param name="gTime">GameTime</param>
+        /// <returns></returns>
         public bool MoveToTarget(GameTime gTime)
         {
 

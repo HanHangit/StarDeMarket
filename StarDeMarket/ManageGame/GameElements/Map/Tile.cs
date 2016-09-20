@@ -143,7 +143,7 @@ namespace StarDeMarket
                     collectAmount = 1;
                     break;
                 case ETile.Iron:
-                    name = "Coal";
+                    name = "Iron";
                     storage.Add(EItem.Eisen, 100);
                     buildable = false;
                     workable = true;
@@ -151,7 +151,7 @@ namespace StarDeMarket
                     collectAmount = 1;
                     break;
                 case ETile.Gold:
-                    name = "Coal";
+                    name = "Gold";
                     storage.Add(EItem.Gold, 100);
                     buildable = false;
                     workable = true;
@@ -205,14 +205,14 @@ namespace StarDeMarket
                     WorkTime = 15f;
                     break;
                 case ETile.Iron:
-                    name = "Coal";
+                    name = "Iron";
                     storage.Add(EItem.Eisen, 100);
                     buildable = false;
                     workable = true;
                     WorkTime = 15f;
                     break;
                 case ETile.Gold:
-                    name = "Coal";
+                    name = "Gold";
                     storage.Add(EItem.Gold, 100);
                     buildable = false;
                     workable = true;
