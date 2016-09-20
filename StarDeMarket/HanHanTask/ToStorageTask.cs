@@ -12,7 +12,7 @@ namespace StarDeMarket
 
         EItem item;
 
-        MainBuilding target;
+        BStorage target;
 
         int amount;
 
@@ -20,7 +20,7 @@ namespace StarDeMarket
         {
             this.item = item;
             status = EStatus.OnBase;
-            target = (MainBuilding)BuildingHandler.Instance.buildingList.Find(b => b is MainBuilding);
+            target = (BStorage)BuildingHandler.Instance.buildingList.Find(b => b is BStorage);
             amount = _amount;
         }
 

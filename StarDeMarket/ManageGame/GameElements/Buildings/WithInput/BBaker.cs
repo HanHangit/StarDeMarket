@@ -30,21 +30,23 @@ namespace StarDeMarket
 
         public override void Update(GameTime gTime)
         {
-            Production(gTime);
             base.Update(gTime);
             if (taskQueue.Count == 0)
             {
+                if (CheckRessourcen())
+                    taskQueue.Enqueue(new ProduceTask(this), 3);
+
                 if (storage.getCount(EItem.Mehl) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Mehl, 5),1);
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Mehl, 5),5);
                 }
                 if (storage.getCount(EItem.Kohle) < 3)
                 {
-                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5),1);
+                    taskQueue.Enqueue(new FromStorageTask(this, EItem.Kohle, 5),5);
                 }
                 if (storage.getCount(EItem.Brot) > 5)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Brot, 5),1);
+                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Brot, 5),2);
                 }
             }
         }
@@ -53,20 +55,6 @@ namespace StarDeMarket
         {
             base.Draw(spriteBatch);
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), new Point(texture2D.Width, texture2D.Height)), Color.White);
-        }
-
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Ein Bäcker fehlt hier! HILFE!@Matthis");
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
         }
 
     }

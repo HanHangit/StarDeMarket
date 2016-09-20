@@ -129,6 +129,8 @@ namespace StarDeMarket
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
+            //Wenn man im BauModus ist
             if (plyMode == EPlayerMode.Build)
             {
 
@@ -138,7 +140,7 @@ namespace StarDeMarket
                 if(debugBuild != null)
                 spriteBatch.DrawString(fpsFont, debugBuild.ToString(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 80), Color.Black);
             }
-            else if (plyMode == EPlayerMode.View)
+            else if (plyMode == EPlayerMode.View) //Wenn man im View, normaler Modus, ist.
             {
                 spriteBatch.DrawString(fpsFont, "Press 'B' to Build. ", CameraHandler.Instance.screenCamera.position + new Vector2(10, 55), Color.Black);
 
@@ -152,6 +154,8 @@ namespace StarDeMarket
             else
                 spriteBatch.Draw(redMarkTile, markBounds.Location.ToVector2(), Color.White);
 
+
+            //Wenn man im BauModus der Straße ist.
             if (plyMode == EPlayerMode.RoadBuild)
             {
                 //BuildingHandler.Instance.map.Buildable(roadMarkX)
@@ -172,29 +176,17 @@ namespace StarDeMarket
                         for (int i = -1 * roadMark.Height; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
                             spriteBatch.Draw(yellowMarkTile, roadMarkY.Location.ToVector2() - new Vector2(0, i), Color.White);
                 }
-                else
-                {
-                    if (roadMark.Width > 0)
-                        for (int i = 0; i < roadMark.Width; i += BuildingHandler.Instance.map.tilesize)
-                            spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() + new Vector2(i, 0), Color.White);
-                    else
-                        for (int i = -1 * roadMark.Width; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
-                            spriteBatch.Draw(redMarkTile, roadMarkX.Location.ToVector2() - new Vector2(i, 0), Color.White);
-
-                    if (roadMark.Height > 0)
-                        for (int i = 0; i < roadMark.Height; i += BuildingHandler.Instance.map.tilesize)
-                            spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() + new Vector2(0, i), Color.White);
-                    else
-                        for (int i = -1 * roadMark.Height; i >= 0; i -= BuildingHandler.Instance.map.tilesize)
-                            spriteBatch.Draw(redMarkTile, roadMarkY.Location.ToVector2() - new Vector2(0, i), Color.White);
-                }
             }
 
-            //Die FPS Anzeoge
+            //Die FPS Anzeige
             spriteBatch.DrawString(fpsFont, "FPS: " + fps, CameraHandler.Instance.screenCamera.position + new Vector2(10, 10), Color.Black);
 
-            //DIe Position des Mauszeiger
+            //Die Position des Mauszeiger
             spriteBatch.DrawString(fpsFont, "Position: " + BuildingHandler.Instance.map.GetTile(CameraHandler.Instance.screenCamera.position.ToPoint() + Mouse.GetState().Position).bounds.Location.ToVector2(), CameraHandler.Instance.screenCamera.position + new Vector2(10, 30), Color.Black);
+
+
+            //Das Datum wird gezeichnet
+            spriteBatch.DrawString(fpsFont, "Datum: " + TimeHandler.Instance.DateString(), CameraHandler.Instance.screenCamera.position + new Vector2(640, 10), Color.Black);
         }
     }
 }

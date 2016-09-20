@@ -23,14 +23,11 @@ namespace StarDeMarket
     {
         EItem toCollect;
 
-        EStatus status;
-
         Point target;
 
         float startTimer;
 
         Tile targetTile;
-
 
         public CollectTask(Building building, EItem collect) : base(building)
         {
@@ -86,8 +83,7 @@ namespace StarDeMarket
                     {
                         status = EStatus.BackToBase;
                         human.Target = build.Bounds.Location;
-                        human.storage.Add(toCollect);
-                        targetTile.storage.Get(toCollect, 1);
+                        human.storage.Add(toCollect, targetTile.storage.Get(toCollect, targetTile.collectAmount));
                         targetTile.Update(gTime);
                     }
                     else
@@ -102,8 +98,7 @@ namespace StarDeMarket
 
                 if (human.MoveToTarget(gTime))
                 {
-                    build.Storage.Add(toCollect);
-                    human.storage.Get(toCollect);
+                    build.Storage.Add(toCollect, human.storage.Get(toCollect,100));
                     status = EStatus.None;
                     return true;
                 }

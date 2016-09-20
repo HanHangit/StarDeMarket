@@ -21,8 +21,7 @@ namespace StarDeMarket
             storage = new Storage();
             name = "CoalMine";
 
-            output = new EItem[] { EItem.Eisen };
-            outputCount = new int[] { 2 };
+            output = new EItem[] { EItem.Kohle };
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -34,32 +33,19 @@ namespace StarDeMarket
         public override void Update(GameTime gTime)
         {
             base.Update(gTime);
+
             if (taskQueue.Count == 0)
             {
-                if (storage.getCount(EItem.Kohle) > 5)
+
+                for (int i = 0; i < output.Length; ++i)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Kohle, 5),1);
-                }
-                else
-                {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Kohle),2);
-                }
+
+                    if (storage.Check(output[i], 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5), 2);
+                    else
+                        taskQueue.Enqueue(new CollectTask(this, output[i]), 3);
+                };
             }
-        }
-
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Bergmann Kohle fehlt!");
-            //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
         }
 
     }

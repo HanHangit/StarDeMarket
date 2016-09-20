@@ -21,7 +21,6 @@ namespace StarDeMarket
             name = "StoneMason";
 
             output = new EItem[] { EItem.Stein };
-            outputCount = new int[] { 2 };
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -32,31 +31,19 @@ namespace StarDeMarket
         public override void Update(GameTime gTime)
         {
             base.Update(gTime);
-            if(taskQueue.Count == 0)
-            {
-                if(storage.getCount(EItem.Stein) > 5)
-                {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Stein, 5),1);
-                }
-                else
-                {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Stein),2);
-                }
-            }
-        }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Matthis hat scheiße gebaut");
-                //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
-        }
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
+            if (taskQueue.Count == 0)
+            {
+
+                for (int i = 0; i < output.Length; ++i)
+                {
+
+                    if (storage.Check(output[i], 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5), 2);
+                    else
+                        taskQueue.Enqueue(new CollectTask(this, output[i]), 3);
+                };
+            }
         }
     }
 }

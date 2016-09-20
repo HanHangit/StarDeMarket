@@ -41,19 +41,21 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HanHanTask\EatFood.cs" />
     <Compile Include="HanHanTask\FromStorageTask.cs" />
     <Compile Include="HanHanTask\GetFood.cs" />
     <Compile Include="HanHanTask\PlantTask.cs" />
+    <Compile Include="HanHanTask\ProduceTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Building.cs" />
     <Compile Include="HanHanTask\ToStorageTask.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\ConstructionSite.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Farms\Farm.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\Farms\GrowingField.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\MainBuilding.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\Misc\BHome.cs" />
+    <Compile Include="ManageGame\GameElements\Buildings\Misc\BStorage.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BHerbalist.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BIronMine.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BCoalMine.cs" />
-    <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BFarm.cs" />
     <Compile Include="HanHanTask\CollectTask.cs" />
     <Compile Include="HanHanTask\Task.cs" />
     <Compile Include="ManageGame\GameElements\Buildings\OnlyOutput\BWheatFarm.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="GameStates\IGameStates.cs" />
     <Compile Include="ManageGame\GameElements\Handler\Player.cs" />
     <Compile Include="HanHanTask\Human.cs" />
+    <Compile Include="ManageGame\GameElements\Handler\TimeHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\UsefullStuff.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />

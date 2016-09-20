@@ -19,10 +19,9 @@ namespace StarDeMarket
 
             position = _pos;
             storage = new Storage();
-            name = "CoalMine";
+            name = "Herbalist";
 
             output = new EItem[] { EItem.Pilze };
-            outputCount = new int[] { 2 };
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -34,28 +33,19 @@ namespace StarDeMarket
         public override void Update(GameTime gTime)
         {
             base.Update(gTime);
+
             if (taskQueue.Count == 0)
             {
-                if (storage.getCount(EItem.Kohle) > 5)
+
+                for (int i = 0; i < output.Length; ++i)
                 {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Pilze, 5), 1);
-                }
-                else
-                {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Pilze), 2);
-                }
+
+                    if (storage.Check(output[i], 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5), 2);
+                    else
+                        taskQueue.Enqueue(new CollectTask(this, output[i]), 3);
+                };
             }
-        }
-
-
-        public override bool HasFullWorkforce()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Workerwork()
-        {
-            throw new NotImplementedException();
         }
     }
 }

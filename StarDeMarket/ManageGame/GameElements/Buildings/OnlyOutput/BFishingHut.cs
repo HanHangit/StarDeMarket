@@ -21,12 +21,6 @@ namespace StarDeMarket
             name = "Fishing Hut";
 
             output = new EItem[] { EItem.Fisch };
-            outputCount = new int[] { 1 };
-
-            for(int i = 0; i < output.Length; ++i)
-            {
-                taskQueue.Enqueue(new CollectTask(this, output[i]),1);
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -40,7 +34,6 @@ namespace StarDeMarket
         {
             base.Update(gTime);
 
-
             if (taskQueue.Count == 0)
             {
 
@@ -48,27 +41,12 @@ namespace StarDeMarket
                 {
 
                     if (storage.Check(output[i], 5))
-                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5),1);
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5), 2);
                     else
-                        taskQueue.Enqueue(new CollectTask(this, output[i]),2);
+                        taskQueue.Enqueue(new CollectTask(this, output[i]), 3);
                 };
             }
-
         }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Matthis hat scheiße gebaut");
-                //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
-        }
     }
 }

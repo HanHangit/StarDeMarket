@@ -18,12 +18,8 @@ namespace StarDeMarket
 
         public BWoodCutter(Vector2 _pos, ContentManager _cont)
         {
-            foodWatch = new Stopwatch();
-            foodWatch.Start();
 
-            foodInput = new EItem[] { EItem.Fisch, EItem.Brot };
-            EItem[] output = { EItem.Holz };
-            int[] outputCount = { 2 };
+            output = new EItem[] { EItem.Holz };
 
             cont = _cont;
             texture2D = cont.Load<Texture2D>("Building/Woodcutter01");
@@ -44,33 +40,16 @@ namespace StarDeMarket
 
             if (taskQueue.Count == 0)
             {
-                if (storage.getCount(EItem.Fisch) < 5)
-                {
-                    taskQueue.Enqueue(new GetFood(this), 1);
-                }
-                if (storage.getCount(EItem.Holz) > 5)
-                {
-                    taskQueue.Enqueue(new ToStorageTask(this, EItem.Holz, 5), 2);
-                }
-                else
-                {
-                    taskQueue.Enqueue(new CollectTask(this, EItem.Holz), 3);
-                }
-            }
-        }
 
-        public override void Workerwork()
-        {
-            if (HasFullWorkforce())
-                Console.WriteLine("Matthis hat scheiße gebaut");
-            //tom = new HWoodcutter(new Vector2(1, 2), Human.EGender.Male, cont.Load<Texture2D>("Human/Hunter"));
-        }
-        public override bool HasFullWorkforce()
-        {
-            if (listWorker.Count == 2)
-                return true;
-            else
-                return false;
+                for (int i = 0; i < output.Length; ++i)
+                {
+
+                    if (storage.Check(output[i], 5))
+                        taskQueue.Enqueue(new ToStorageTask(this, output[i], 5), 2);
+                    else
+                        taskQueue.Enqueue(new CollectTask(this, output[i]), 3);
+                };
+            }
         }
     }
 }

@@ -54,10 +54,10 @@ namespace StarDeMarket
         public EGameState Update(GameTime gTime)
         {
             player.Update(gTime);
-
             GUIHandler.Instance.gui.Update(gTime);
             BuildingHandler.Instance.Update(gTime);
             //BuildingHandler.Instance.map.Update(gTime);
+            TimeHandler.Instance.Update(gTime);
 
             return EGameState.PlayState;
         }

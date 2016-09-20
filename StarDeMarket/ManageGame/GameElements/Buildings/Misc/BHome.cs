@@ -9,19 +9,20 @@ using Microsoft.Xna.Framework.Content;
 
 namespace StarDeMarket
 {
-    class MainBuilding : Building
+    class BHome : Building
     {
 
-        public MainBuilding(Vector2 _position, ContentManager cont)
+        public BHome(Vector2 _position, ContentManager cont)
         {
             position = _position;
-            name = "MainBuilding";
+            name = "Wohnhaus";
             this.cont = new ContentManager(cont.ServiceProvider, cont.RootDirectory);
             texture2D = cont.Load<Texture2D>("Building/Main");
 
-            storage.Add(EItem.Holz, 1000);
-            storage.Add(EItem.Bretter, 3000);
-            storage.Add(EItem.Fisch, 100);
+            for(int i = 0; i < 10; ++i)
+            {
+                listWorker.Add(new Human(position, 3, cont.Load<Texture2D>("Human/BasicHuman"),this));
+            }
 
 
         }
@@ -31,20 +32,14 @@ namespace StarDeMarket
             spriteBatch.Draw(texture2D, new Rectangle(position.ToPoint(), texture2D.Bounds.Size.ToVector2().ToPoint()), Color.White);
         }
 
-        // should not yet be used
-        public override bool HasFullWorkforce()
-        {
-            return true;
-        }
-
         public override void Update(GameTime gTime)
         { 
-            if(listWorker.Count < 10)
-                listWorker.Add(new Human(position, 5, cont.Load<Texture2D>("Human/BasicHuman"), this));
+            
         }
 
-        public override void Workerwork()
+        public override string ToString()
         {
+            return name + "\nAvailableWorker: " + listWorker.Count;
         }
     }
 }

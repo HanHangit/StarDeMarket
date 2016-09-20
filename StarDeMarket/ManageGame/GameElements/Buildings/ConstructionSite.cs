@@ -38,8 +38,6 @@ namespace StarDeMarket
             base.Update(gTime);
             if (taskQueue.Count == 0)
             {
-                if (!storage.Check(EItem.Fisch))
-                    taskQueue.Enqueue(new GetFood(this), 0.5f);
 
                 for (int i = 0; i < amount.Length; ++i)
                 {
@@ -60,6 +58,9 @@ namespace StarDeMarket
             {
                 builded = true;
                 BuildingHandler.Instance.map.Build(bounds, building);
+                Building home = BuildingHandler.Instance.buildingList.Find(b => b is BHome);
+                for (int i = 0; i < listWorker.Count; ++i)
+                    home.EmployHuman(listWorker[i]);
             }
 
         }
@@ -68,16 +69,6 @@ namespace StarDeMarket
         {
             base.Draw(spriteBatch);
             spriteBatch.Draw(texture2D, Bounds, Color.White);
-        }
-
-        public override bool HasFullWorkforce()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Workerwork()
-        {
-            throw new NotImplementedException();
         }
     }
 }
