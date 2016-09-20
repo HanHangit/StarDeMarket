@@ -241,6 +241,7 @@ namespace StarDeMarket
             return true;
         }
 
+        // Gets all Points that are direct Neighbours of the Rectangle and are Walkable/Have Roads
         public List<Point> GetAllRoadsOfBounds(Rectangle bounds)
         {
             List<Point> result = new List<Point>();
@@ -261,6 +262,7 @@ namespace StarDeMarket
             y = bounds.Y;
             for (; y < bounds.Y + bounds.Height; y += tilesize)
                 AddWalkableTileToList(x, y, result);
+            Console.WriteLine("Currently " + result.Count + " in the list");
 
             RemoveTheNeighborhood(result);
 
@@ -273,61 +275,100 @@ namespace StarDeMarket
             return result;
         }
 
-        private void RemoveTheNeighborhood(List<Point> neighborhood)
+        // takes in a List and removes all but one directly connected Points from the list
+        /*private List<Point> GetListWithRemovedNeighbours(List<Point> neighborhood)
         {
+            if (neighborhood.Count == 0)
+                return null;
             Queue<Point> currentStreet = new Queue<Point>();
-            List<Point> marked = new List<Point>();
+            List<Point> unMarked = new List<Point>();
             List<Point> buffer = new List<Point>();
-            Point p;
-            while (neighborhood.Count != marked.Count)
+            foreach(Point _p in neighborhood)
             {
-                marked.Add(neighborhood[0]);
-                currentStreet.Enqueue(neighborhood[0]);
+                unMarked.Add(_p);
+            }
+            neighborhood.RemoveAll(b => true);
+            Point p;
+            while (unMarked.Count > neighborhood.Count)
+            {
+                currentStreet.Enqueue(unMarked[0]);
+                neighborhood.Add(unMarked[0]);
+                unMarked.RemoveAt(0);
                 while (currentStreet.Count != 0)
                 {
                     Point curP = currentStreet.Dequeue();
-                    marked.Add(curP);
                     buffer = new List<Point>();
                     p = curP + new Point(0, tilesize);
-                    Console.WriteLine(p.ToString());
-                    if (ListContainsPoint(p, neighborhood))
+                    if (unMarked.Contains(p))
                         buffer.Add(p);
                     p = curP + new Point(0, -tilesize);
-                    Console.WriteLine(p.ToString());
-                    if (ListContainsPoint(p, neighborhood))
+                    if (unMarked.Contains(p))
                         buffer.Add(p);
                     p = curP + new Point(tilesize, 0);
-                    Console.WriteLine(p.ToString());
-                    if (ListContainsPoint(p, neighborhood))
+                    if (unMarked.Contains(p))
                         buffer.Add(p);
                     p = curP + new Point(-tilesize, 0);
-                    Console.WriteLine(p.ToString());
-                    if (ListContainsPoint(p, neighborhood))
+                    if (unMarked.Contains(p))
                         buffer.Add(p);
                     foreach (Point _p in buffer)
                     {
-                        Console.WriteLine("buffer");
                         currentStreet.Enqueue(_p);
-                        neighborhood.Remove(_p);
+                        unMarked.Remove(_p);
                     }
-                    
                 }
             }
         }
+        */
 
-        private bool ListContainsPoint(Point p, List<Point> pList)
+        // TODO: always use the building with less Connections to the road
+        public List<Point> GetPathBetweenBuildings(Building start, Building target)
         {
-            foreach(Point _p in pList)
-            {
-                if (ComparePoints(p, _p))
-                    return true;
-            }
-            return false;
+            List<Point> result = new List<Point>();
+
+            List<Point> startNeighbours = GetAllRoadsOfBounds(start.Bounds);
+            List<Point> targetNeighbours = GetAllRoadsOfBounds(target.Bounds);
+
+            
+
+            // search for Paths from all Points
+            
+
+
+            // check if startingNeighbours are on the path -> make them the startingPoint
+
+            // check if targetNeighbours are on the path -> make them the endPoints
+
+            return result;
         }
 
-        private bool ComparePoints(Point a, Point b)
+        private List<Point> GetPathToBuilding(Point StartingPoint, )
         {
-            return (a.X == b.X && a.Y == b.Y);
+            List<Point> path = new List<Point>();
+
+            
+
+            return path;
+        }
+
+        private List<Point> GetWalkableNeighbours(Point curP)
+        {
+            List<Point> result = new List<Point>();
+            Point p;
+
+            p = curP + new Point(0, tilesize);
+            if (BuildingHandler.Instance.map.GetTile(p).Walkable)
+                result.Add(p);
+            p = curP + new Point(0, -tilesize);
+            if (BuildingHandler.Instance.map.GetTile(p).Walkable)
+                result.Add(p);
+            p = curP + new Point(tilesize, 0);
+            if (BuildingHandler.Instance.map.GetTile(p).Walkable)
+                result.Add(p);
+            p = curP + new Point(-tilesize, 0);
+            if (BuildingHandler.Instance.map.GetTile(p).Walkable)
+                result.Add(p);
+
+            return result;
         }
 
         private void AddWalkableTileToList(int x, int y, List<Point> result)
@@ -509,12 +550,7 @@ namespace StarDeMarket
 
                     spriteBatch.Draw(textSplitMap[i, j], exactMiniMap, Color.White);
                 }
-
-
-
             spriteBatch.Draw(miniMapCurrentView, miniMapCameraRect, new Color(Color.White, 128));
         }
-
-
     }
 }
