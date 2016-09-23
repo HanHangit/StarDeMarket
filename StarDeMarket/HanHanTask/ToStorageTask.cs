@@ -19,7 +19,7 @@ namespace StarDeMarket
         public ToStorageTask(Building build, EItem item, int _amount) : base(build)
         {
             this.item = item;
-            status = EStatus.OnBase;
+            status = EStatus.Preparing;
             target = (BStorage)BuildingHandler.Instance.buildingList.Find(b => b is BStorage);
             amount = _amount;
         }
@@ -29,27 +29,58 @@ namespace StarDeMarket
             
             switch(status)
             {
+                case EStatus.Preparing:
+                    human.Target = build.Bounds.Location;
+                    if (human.MoveToTarget(gTime))
+                        status = EStatus.OnBase;
+                    return false;
                 case EStatus.OnBase:
                     if (!build.Storage.Check(item, amount))
                         return true;
                     build.Storage.Get(item, amount);
                     human.storage.Add(item, amount);
-                    status = EStatus.MoveToTarget;
+                    
+                    // this is just here to test the Pathfinding
+                    human.SetPath(BuildingHandler.Instance.map.GetPathBetweenBuildings(build, target));
+                    status = EStatus.MoveOnPath;
+                    if (human.path == null)
+                    {
+                        human.Target = target.Bounds.Location;
+                        status = EStatus.MoveToTarget;
+                    }
                     return false;
                 case EStatus.MoveToTarget:
-                    human.Target = target.Bounds.Location;
                     if (human.MoveToTarget(gTime))
                         status = EStatus.WorkOnTarget;
+                    return false;
+                case EStatus.MoveOnPath:
+                    if (human.FollowPath(gTime))
+                    {
+                        status = EStatus.WorkOnTarget;
+                    }
                     return false;
                 case EStatus.WorkOnTarget:
                     target.Storage.Add(item, amount);
                     human.storage.Get(item, amount);
                     status = EStatus.BackToBase;
-                    human.Target = build.Bounds.Location;
+                    human.SetPath(BuildingHandler.Instance.map.GetPathBetweenBuildings(target, build));
+                    if (human.path == null)
+                    {
+                        human.Target = build.Bounds.Location;
+                    }
                     return false;
                 case EStatus.BackToBase:
-                    if (human.MoveToTarget(gTime))
-                        return true;
+                    if (human.path == null)
+                    {
+                        if (human.MoveToTarget(gTime))
+                        {
+                            status = EStatus.OnBase;
+                        }
+                    }
+                    if (human.FollowPath(gTime))
+                    {
+                        status = EStatus.OnBase;
+                    }
                     return false;
                 default:
                     return true;

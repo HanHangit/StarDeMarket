@@ -12,6 +12,7 @@ namespace StarDeMarket
     {
         SearchTarget,
         MoveToTarget,
+        MoveOnPath,
         WorkOnTarget,
         BackToBase,
         OnBase,

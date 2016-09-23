@@ -264,19 +264,21 @@ namespace StarDeMarket
                 AddWalkableTileToList(x, y, result);
             Console.WriteLine("Currently " + result.Count + " in the list");
 
-            RemoveTheNeighborhood(result);
+            result = GetListWithRemovedNeighbours(result);
 
-            Console.WriteLine("Having " + result.Count + " Streets closeby");
-            if(result.Count == 0)
+            
+            if(result == null || result.Count == 0)
             {
                 return null;
             }
+
+            Console.WriteLine("Having " + result.Count + " Streets closeby");
 
             return result;
         }
 
         // takes in a List and removes all but one directly connected Points from the list
-        /*private List<Point> GetListWithRemovedNeighbours(List<Point> neighborhood)
+        private List<Point> GetListWithRemovedNeighbours(List<Point> neighborhood)
         {
             if (neighborhood.Count == 0)
                 return null;
@@ -317,8 +319,9 @@ namespace StarDeMarket
                     }
                 }
             }
+            return neighborhood;
         }
-        */
+        
 
         // TODO: always use the building with less Connections to the road
         public List<Point> GetPathBetweenBuildings(Building start, Building target)
@@ -328,11 +331,14 @@ namespace StarDeMarket
             List<Point> startNeighbours = GetAllRoadsOfBounds(start.Bounds);
             List<Point> targetNeighbours = GetAllRoadsOfBounds(target.Bounds);
 
-            
-
+            if (startNeighbours == null || startNeighbours.Count == 0 || targetNeighbours == null || targetNeighbours.Count == 0)
+            {
+                Console.WriteLine("Ahhh shit no roads there");
+                return null;
+            }
             // search for Paths from all Points
-            
 
+            result = GetPathToBuilding(startNeighbours[0], targetNeighbours[0]);
 
             // check if startingNeighbours are on the path -> make them the startingPoint
 
@@ -341,13 +347,79 @@ namespace StarDeMarket
             return result;
         }
 
-        private List<Point> GetPathToBuilding(Point StartingPoint, )
+        // Simple Version of the a*-algorithm
+        private List<Point> GetPathToBuilding(Point StartingPoint, Point target)
         {
             List<Point> path = new List<Point>();
 
-            
+            Priority_Queue.SimplePriorityQueue<Node> open = new Priority_Queue.SimplePriorityQueue<Node>();
+            List<Node> closed = new List<Node>();
 
-            return path;
+            open.Enqueue(new Node(StartingPoint, target), 0);
+
+            Node currentNode;
+
+            while (open.Count != 0)
+            {
+                currentNode = open.Dequeue();
+
+                if (currentNode.p == target)
+                {
+                    // return super epic path here
+                    Console.WriteLine("I got a freaking path...");
+                    while(currentNode.prev != null)
+                    {
+                        path.Add(currentNode.p);
+                        currentNode = currentNode.prev;
+                    }
+                    path.Add(StartingPoint);
+                    path.Reverse();
+                    return path;
+                }
+
+                closed.Add(currentNode);
+
+                // Woring current Node
+                {
+                    List<Point> neighbours = GetWalkableNeighbours(currentNode.p);
+                    foreach(Point p in neighbours)
+                    {
+                        if (NodeListContainsPoint(closed, p))
+                            continue;
+                        Node currentSuccessor = new Node(p, currentNode, target);
+
+                        if (open.Contains(currentSuccessor) && (currentSuccessor.g >= PriorityQueueFind(open, currentSuccessor).g))
+                            continue;
+
+                        if (open.Contains(currentSuccessor))
+                            open.UpdatePriority(currentSuccessor, currentSuccessor.f);
+                        else
+                            open.Enqueue(currentSuccessor, currentSuccessor.f);
+                    }
+                }
+            }
+            Console.WriteLine("No path to targetbuilding");
+            return null;
+        }
+
+        private bool NodeListContainsPoint(List<Node> list, Point p)
+        {
+            foreach (Node n in list)
+            {
+                if (p == n.p)
+                    return true;
+            }
+            return false;
+        }
+
+        private Node PriorityQueueFind(Priority_Queue.SimplePriorityQueue<Node> prio, Node _n)
+        {
+            foreach(Node n in prio)
+            {
+                if (n == _n)
+                    return n;
+            }
+            return null;
         }
 
         private List<Point> GetWalkableNeighbours(Point curP)

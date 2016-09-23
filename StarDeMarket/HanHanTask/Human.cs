@@ -19,6 +19,7 @@ namespace StarDeMarket
         Building building;
         public Task currTask;
         Point target;
+        public List<Point> path;
         public Storage storage;
         public float currPower;
         public float maxPower;
@@ -35,7 +36,46 @@ namespace StarDeMarket
             }
         }
 
+        public void SetPath(List<Point> _path)
+        {
+            if (_path == null)
+            {
+                Console.WriteLine("No path exists");
+                return;
+            }
+            path = _path;
+            Console.WriteLine("path.Count: " + _path.Count);
 
+            target = path[0];
+        }
+
+        public bool FollowPath(GameTime gTime)
+        {
+            if (path == null)
+            {
+                Console.WriteLine("No path exists");
+                return false;
+            }
+            
+            if (path.Count != 0)
+            {
+                if(MoveToTarget(gTime))
+                {
+                    path.RemoveAt(0);
+                    if(path.Count == 0)
+                    {
+                        path = null;
+                        return true;
+                    }
+                    target = path[0];
+                }
+                return false;
+            }
+
+            path = null;
+
+            return true;
+        }
 
         public Human(Vector2 pos, float spd, Texture2D text, Building build)
         {

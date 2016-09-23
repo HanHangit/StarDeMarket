@@ -79,6 +79,7 @@
     <Compile Include="HanHanTask\Human.cs" />
     <Compile Include="ManageGame\GameElements\Handler\TimeHandler.cs" />
     <Compile Include="ManageGame\GameElements\Handler\UsefullStuff.cs" />
+    <Compile Include="ManageGame\GameElements\Map\Node.cs" />
     <Compile Include="ManageGame\GameElements\Strorage\Storage.cs" />
     <Compile Include="ManageGame\GUI\GUI.cs" />
     <Compile Include="GameStates\MainMenu.cs" />

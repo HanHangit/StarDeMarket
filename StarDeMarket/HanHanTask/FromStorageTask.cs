@@ -37,16 +37,27 @@ namespace StarDeMarket
             switch (status)
             {
                 case EStatus.Preparing:
-                    human.Target = target.Bounds.Location;
-                    BuildingHandler.Instance.map.GetAllRoadsOfBounds(target.Bounds);
-                    BuildingHandler.Instance.map.GetAllRoadsOfBounds(build.Bounds);
+                    human.Target = build.Bounds.Location;
                     if (human.MoveToTarget(gTime))
                     {
-                        status = EStatus.MoveToTarget;
+                        // this is just here to test the Pathfinding
+                        human.SetPath(BuildingHandler.Instance.map.GetPathBetweenBuildings(build, target));
+                        status = EStatus.MoveOnPath;
+                        if (human.path == null)
+                        {
+                            human.Target = target.Bounds.Location;
+                            status = EStatus.MoveToTarget;
+                        }
+                    }
+                    return false;
+                case EStatus.MoveOnPath:
+                    if (human.FollowPath(gTime))
+                    {
+                        status = EStatus.WorkOnTarget;
                     }
                     return false;
                 case EStatus.MoveToTarget:
-                    if (human.MoveToTarget(gTime))
+                    if(human.MoveToTarget(gTime))
                     {
                         status = EStatus.WorkOnTarget;
                     }
@@ -54,10 +65,21 @@ namespace StarDeMarket
                 case EStatus.WorkOnTarget:
                     human.storage.Add(item, target.Storage.Get(item, amount));
                     status = EStatus.BackToBase;
-                    human.Target = build.Bounds.Location;
+                    human.SetPath(BuildingHandler.Instance.map.GetPathBetweenBuildings(target, build));
+                    if(human.path == null)
+                    {
+                        human.Target = build.Bounds.Location;
+                    }
                     return false;
                 case EStatus.BackToBase:
-                    if (human.MoveToTarget(gTime))
+                    if (human.path == null)
+                    {
+                        if(human.MoveToTarget(gTime))
+                        {
+                            status = EStatus.OnBase;
+                        }
+                    }
+                    if (human.FollowPath(gTime))
                     {
                         status = EStatus.OnBase;
                     }
